@@ -75,7 +75,12 @@ public class AutoDDS extends LinearOpMode{
         rwb.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         rwa.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
-        double motorspeed = 0.8;
+        lwa.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        rwa.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        lwb.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        rwb.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+
+       // double motorspeed = 0.8;
 
         //int zVal = 0;
         int heading = 0;
@@ -92,32 +97,41 @@ public class AutoDDS extends LinearOpMode{
             sleep(10);
         }
 
-        ddspivot.setPosition(1);
+        /*
+        scoopArm.setPower(0.5);
+        sleep(750);
+        scoopArm.setPower(0);
+        sleep(100);
+        */
+        wrist.setPosition(1);
+        sleep(100);
+        /*
+        scoopArm.setPower(-0.5);
+        sleep(500);
+        scoopArm.setPower(0);
+        sleep(100);
+        */
+
+        ddspivot.setPosition(0.50);
         ddsclaw.setPosition(0);
         sleep(500);
 
         //24 in. is 1.9 rotations is 2750 counts
 
-        lwa.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        lwb.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        rwb.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        rwa.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        while(rwa.getCurrentPosition() < 7900) {
 
-            lwa.setTargetPosition(1100000);
-            lwb.setTargetPosition(1100000);
-            rwa.setTargetPosition(1100000);
-            rwb.setTargetPosition(1100000);
-
-            lwa.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            lwb.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            rwa.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            rwb.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            telemetry.addData("LeftA Position", lwa.getCurrentPosition());
+            telemetry.addData("LeftB Position", lwb.getCurrentPosition());
+            telemetry.addData("RightA Position", rwa.getCurrentPosition());
+            telemetry.addData("RightB Position", rwb.getCurrentPosition());
 
             lwa.setPower(0.8);
             lwb.setPower(0.8);
             rwa.setPower(0.8);
             rwb.setPower(0.8);
             sleep(10);
+
+        }
 
 
         sleep(1000);
@@ -171,18 +185,24 @@ public class AutoDDS extends LinearOpMode{
 
         sleep(100);
 
-        heading = 0;
+        heading = 359;
         sleep(100);
 
-        while (heading < 45) {
-            heading = Gyro.getHeading();
-            lwa.setPower(0.8);
-            lwb.setPower(0.8);
-            rwb.setPower(-0.8);
-            rwa.setPower(-0.8);
-            waitOneFullHardwareCycle();
-            telemetry.addData("h", String.format("%03d", heading));
+        lwa.setPower(-0.6);
+        lwb.setPower(-0.6);
+        rwb.setPower(0.6);
+        rwa.setPower(0.6);
+        sleep(500);
 
+        while (heading > 225) {
+
+            lwa.setPower(-0.6);
+            lwb.setPower(-0.6);
+            rwb.setPower(0.6);
+            rwa.setPower(0.6);
+            sleep(10);
+            telemetry.addData("h", String.format("%03d", heading));
+            heading = Gyro.getHeading();
         }
 
 
@@ -193,9 +213,23 @@ public class AutoDDS extends LinearOpMode{
         rwb.setPower(0);
         rwa.setPower(0);
 
-        sleep(100);
+        sleep(1000);
 
+        lwa.setPower(-0.8);
+        lwb.setPower(-0.8);
+        rwb.setPower(-0.8);
+        rwa.setPower(-0.8);
 
+        sleep(600);
+
+        lwa.setPower(0);
+        lwb.setPower(0);
+        rwb.setPower(0);
+        rwa.setPower(0);
+
+        sleep(1000);
+
+        ddsclaw.setPosition(0.75);
     }
 }
 

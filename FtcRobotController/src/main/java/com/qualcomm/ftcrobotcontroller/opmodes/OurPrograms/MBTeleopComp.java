@@ -210,7 +210,37 @@ public class  MBTeleopComp extends OpMode {
 			leftComb.setPosition(0);
 		}
 
+		if(gamepad1.y)
+		{
+			lwa.setPower(0.20);
+			lwb.setPower(0.20);
+			rwa.setPower(0.20);
+			rwb.setPower(0.20);
+		}
 
+		if(gamepad1.a)
+		{
+			lwa.setPower(-0.20);
+			lwb.setPower(-0.20);
+			rwa.setPower(-0.20);
+			rwb.setPower(-0.20);
+		}
+
+		if(gamepad1.b)
+		{
+			lwa.setPower(-0.50);
+			lwb.setPower(-0.50);
+			rwa.setPower(0.50);
+			rwb.setPower(0.50);
+		}
+
+		if(gamepad1.x)
+		{
+			lwa.setPower(0.50);
+			lwb.setPower(0.50);
+			rwa.setPower(-0.50);
+			rwb.setPower(-0.50);
+		}
 
 
 
