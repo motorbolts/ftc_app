@@ -81,6 +81,8 @@ sleep(100);
 
         waitForStart();
 
+        double rightMotorspeed = 0.8;
+        double leftMotorspeed = 0.8;
 
         while(rwa.getCurrentPosition() < 9000) {
 
@@ -89,11 +91,25 @@ sleep(100);
             telemetry.addData("RightA Position", rwa.getCurrentPosition());
             telemetry.addData("RightB Position", rwb.getCurrentPosition());
 
-            lwa.setPower(0.8);
-            lwb.setPower(0.8);
-            rwa.setPower(0.8);
-            rwb.setPower(0.8);
+
+            if((lwb.getCurrentPosition() - 500) > rwb.getCurrentPosition())
+            {
+                leftMotorspeed = 0.6;
+            }
+            else
+            {
+                rightMotorspeed = 0.8;
+                leftMotorspeed = 0.8;
+            }
+
+
+            lwa.setPower(leftMotorspeed);
+            lwb.setPower(leftMotorspeed);
+            rwa.setPower(rightMotorspeed);
+            rwb.setPower(rightMotorspeed);
             sleep(10);
+
+
 
         }
 

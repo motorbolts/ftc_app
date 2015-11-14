@@ -112,13 +112,13 @@ public class AutoDDS extends LinearOpMode{
         sleep(100);
         */
 
-        ddspivot.setPosition(0.50);
+        ddspivot.setPosition(1);
         ddsclaw.setPosition(0);
         sleep(500);
 
         //24 in. is 1.9 rotations is 2750 counts
 
-        while(rwa.getCurrentPosition() < 7900) {
+        while(rwa.getCurrentPosition() < 8500) {
 
             telemetry.addData("LeftA Position", lwa.getCurrentPosition());
             telemetry.addData("LeftB Position", lwb.getCurrentPosition());
@@ -146,14 +146,6 @@ public class AutoDDS extends LinearOpMode{
         rwa.setPower(0);
 
         /*
-        //unpack arm/scoop
-        scoopArm.setPower(0.2);
-        sleep(800);    //UNTESTED VALUE
-        scoopArm.setPower(0);
-
-        wrist.setPosition(0.8);
-        sleep(200);
-
 
         //keep going
         //70 in. is 5.57 rotations is 8022 counts
@@ -194,12 +186,12 @@ public class AutoDDS extends LinearOpMode{
         rwa.setPower(0.6);
         sleep(500);
 
-        while (heading > 225) {
+        while (heading > 220) {
 
-            lwa.setPower(-0.6);
-            lwb.setPower(-0.6);
-            rwb.setPower(0.6);
-            rwa.setPower(0.6);
+            lwa.setPower(-0.75);
+            lwb.setPower(-0.75);
+            rwb.setPower(0.75);
+            rwa.setPower(0.75);
             sleep(10);
             telemetry.addData("h", String.format("%03d", heading));
             heading = Gyro.getHeading();
@@ -220,7 +212,7 @@ public class AutoDDS extends LinearOpMode{
         rwb.setPower(-0.8);
         rwa.setPower(-0.8);
 
-        sleep(600);
+        sleep(500);
 
         lwa.setPower(0);
         lwb.setPower(0);
@@ -229,7 +221,9 @@ public class AutoDDS extends LinearOpMode{
 
         sleep(1000);
 
+
         ddsclaw.setPosition(0.75);
+        sleep(100);
     }
 }
 
