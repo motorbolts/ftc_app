@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
-public class AutoDDS extends LinearOpMode{
+public class BLUEAutoDDS extends LinearOpMode{
 
     DcMotor rwa; // P0 port 1
     DcMotor rwb; // P0 port 2
@@ -91,45 +91,62 @@ public class AutoDDS extends LinearOpMode{
 
         // Wait for the start button to be pressed
         waitForStart();
-
+/*
         if(Gyro.isCalibrating())
         {
             sleep(10);
         }
+*/
 
-        /*
         scoopArm.setPower(0.5);
         sleep(750);
         scoopArm.setPower(0);
         sleep(100);
-        */
+
         wrist.setPosition(1);
         sleep(100);
-        /*
+
         scoopArm.setPower(-0.5);
         sleep(500);
         scoopArm.setPower(0);
         sleep(100);
-        */
+
 
         ddspivot.setPosition(1);
         ddsclaw.setPosition(0);
         sleep(500);
 
+        double leftMotorspeed = 0.5;
+        double rightMotorspeed = 0.8;
+
         //24 in. is 1.9 rotations is 2750 counts
 
-        while(rwa.getCurrentPosition() < 8500) {
+        while(rwa.getCurrentPosition() < 9000) {
 
             telemetry.addData("LeftA Position", lwa.getCurrentPosition());
             telemetry.addData("LeftB Position", lwb.getCurrentPosition());
             telemetry.addData("RightA Position", rwa.getCurrentPosition());
             telemetry.addData("RightB Position", rwb.getCurrentPosition());
 
-            lwa.setPower(0.8);
-            lwb.setPower(0.8);
-            rwa.setPower(0.8);
-            rwb.setPower(0.8);
+
+            if((lwb.getCurrentPosition() - 150) > rwb.getCurrentPosition())
+            {
+                 leftMotorspeed = 0.5;
+                rightMotorspeed = 0.8;
+            }
+            else
+            {
+                rightMotorspeed = 0.8;
+               leftMotorspeed = 0.8;
+            }
+
+            lwa.setPower(leftMotorspeed);
+            lwb.setPower(leftMotorspeed);
+            rwa.setPower(rightMotorspeed);
+            rwb.setPower(rightMotorspeed);
             sleep(10);
+
+
 
         }
 
@@ -212,14 +229,14 @@ public class AutoDDS extends LinearOpMode{
         rwb.setPower(-0.8);
         rwa.setPower(-0.8);
 
-        sleep(500);
+        sleep(800);
 
         lwa.setPower(0);
         lwb.setPower(0);
         rwb.setPower(0);
         rwa.setPower(0);
 
-        sleep(1000);
+        sleep(4000);
 
 
         ddsclaw.setPosition(0.75);

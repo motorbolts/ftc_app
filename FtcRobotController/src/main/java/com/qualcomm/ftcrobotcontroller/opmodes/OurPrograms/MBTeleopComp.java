@@ -87,6 +87,7 @@ public class  MBTeleopComp extends OpMode {
 		ddspivot = hardwareMap.servo.get("ddspivot");
 		ddsclaw = hardwareMap.servo.get("ddsclaw");
 
+
 	}
 
 	@Override
@@ -145,6 +146,8 @@ public class  MBTeleopComp extends OpMode {
 
 
 
+
+
 // collector spinning
 
 //		if (gamepad2.b){
@@ -172,7 +175,7 @@ public class  MBTeleopComp extends OpMode {
 		*/
 // Zipline release control
 		if(gamepad2.right_bumper) {
-		trigL.setPosition(0.15);
+		trigL.setPosition(0.22);
 		}
 		else{
 			trigL.setPosition(1.0);
@@ -198,7 +201,6 @@ public class  MBTeleopComp extends OpMode {
 		{
 			rightComb.setPosition(0);
 		}
-
 
 
 		if(gamepad2.right_trigger<0.5)
@@ -242,7 +244,15 @@ public class  MBTeleopComp extends OpMode {
 			rwb.setPower(-0.50);
 		}
 
+if(gamepad2.x)
+{
+	ddsclaw.setPosition(0.75);
+}
 
+		if(gamepad1.right_bumper || gamepad1.right_bumper)
+		{
+			ddspivot.setPosition(1);
+		}
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
