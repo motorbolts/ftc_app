@@ -3,12 +3,11 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-public class BLUEAutoDDS extends LinearOpMode{
+public class BLUEAutoLine extends LinearOpMode{
 
     DcMotor rwa; // P0 port 1
     DcMotor rwb; // P0 port 2
@@ -29,7 +28,7 @@ public class BLUEAutoDDS extends LinearOpMode{
     DcMotor lwb; // P5 port 2
 
     GyroSensor Gyro;
-
+    ColorSensor Color;
     /*
     final static int ENCODER_CPR = 1440;     //Encoder Counts per Revolution
     final static double GEAR_RATIO = 2;      //Gear Ratio
@@ -71,15 +70,7 @@ public class BLUEAutoDDS extends LinearOpMode{
 
         Gyro = hardwareMap.gyroSensor.get("gyro");
 
-        //lwa.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        lwb.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        rwb.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        rwa.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-
-        lwa.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        rwa.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        lwb.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        rwb.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        telemetry.addData("Clear", Color.alpha());
 
     }
 }

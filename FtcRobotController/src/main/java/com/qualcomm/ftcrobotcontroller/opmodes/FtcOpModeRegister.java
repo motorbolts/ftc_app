@@ -34,12 +34,14 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.ftcrobotcontroller.opmodes.IntelitekSolutions.ExampleDriveWithEncoders;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.AutoForward;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BLUEAutoDDS;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BlueTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DriveToTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.EncoderTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.LiftTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBChassisOnly;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBTeleopComp;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.REDAutoDDS;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedTeleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -66,21 +68,25 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     //manager.register("NullOp", NullOp.class);
 
-    manager.register("MBTeleopComp", MBTeleopComp.class);
+  //  manager.register("MBTeleopComp", MBTeleopComp.class);
 
-    //manager.register("MBChassisOnly", MBChassisOnly.class);
+    manager.register("MBChassisOnly", MBChassisOnly.class);
+
+    manager.register("RedTeleop", RedTeleop.class);
+
+    manager.register("BlueTeleop" , BlueTeleop.class);
 
     manager.register("BLUEAutoDDS", BLUEAutoDDS.class);
 
     manager.register("REDAutoDDS", REDAutoDDS.class);
 
-    manager.register("EncoderTest", EncoderTest.class);
+    //manager.register("EncoderTest", EncoderTest.class);
 
-    manager.register("DriveToTest", DriveToTest.class);
+    //manager.register("DriveToTest", DriveToTest.class);
 
-    manager.register("AutoForward", AutoForward.class);
+  //  manager.register("AutoForward", AutoForward.class);
 
-    manager.register("LiftTest", LiftTest.class);
+//    manager.register("LiftTest", LiftTest.class);
 
    //manager.register("ExampleDriveWithEncoders", ExampleDriveWithEncoders.class);
 
@@ -95,7 +101,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */
-    manager.register("MR Gyro Test", MRGyroTest.class);
+    // manager.register("MR Gyro Test", MRGyroTest.class);
 
     //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
