@@ -1,33 +1,3 @@
-/* Copyright (c) 2014 Qualcomm Technologies Inc
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted (subject to the limitations in the disclaimer below) provided that
-the following conditions are met:
-
-Redistributions of source code must retain the above copyright notice, this list
-of conditions and the following disclaimer.
-
-Redistributions in binary form must reproduce the above copyright notice, this
-list of conditions and the following disclaimer in the documentation and/or
-other materials provided with the distribution.
-
-Neither the name of Qualcomm Technologies Inc nor the names of its contributors
-may be used to endorse or promote products derived from this software without
-specific prior written permission.
-
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
-LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 //
@@ -44,105 +14,105 @@ import com.qualcomm.robotcore.util.Range;
 
 public class BlueTeleop extends OpMode {
 
-	DcMotor rwa; // P0 port 1
-	DcMotor rwb; // P0 port 2
-	DcMotor liftL; // P1 port 1
-	DcMotor liftR; // P1 port 2
-	Servo leftComb; // P2 channel 1
-	Servo rightComb; // P2 channel 2
-	Servo trigL; // P2 channel 3
-	Servo trigR; // P2 channel 4
-	DcMotor collector; // P3 port 1
-	Servo leftCR; // Not on robot- P4 channel 1
-	Servo rightCR; //Not on robot- P4 channel 2
-	Servo dds; // P4 channel 3
-	DcMotor lwa; // P5 port 1
-	DcMotor lwb; // P5 port 2
-	Servo leftPivot;
-	Servo rightPivot;
+    DcMotor rwa; // P0 port 1
+    DcMotor rwb; // P0 port 2
+    DcMotor liftL; // P1 port 1
+    DcMotor liftR; // P1 port 2
+    Servo leftComb; // P2 channel 1
+    Servo rightComb; // P2 channel 2
+    Servo trigL; // P2 channel 3
+    Servo trigR; // P2 channel 4
+    DcMotor collector; // P3 port 1
+    Servo leftCR; // Not on robot- P4 channel 1
+    Servo rightCR; //Not on robot- P4 channel 2
+    Servo dds; // P4 channel 3
+    DcMotor lwa; // P5 port 1
+    DcMotor lwb; // P5 port 2
+    Servo leftPivot;
+    Servo rightPivot;
 
 
-	@Override
-	public void init() {
+    @Override
+    public void init() {
 
-		lwa = hardwareMap.dcMotor.get("leftwheelA");
-		lwb = hardwareMap.dcMotor.get("leftwheelB");
-		rwa = hardwareMap.dcMotor.get("rightwheelA");
+        lwa = hardwareMap.dcMotor.get("leftwheelA");
+        lwb = hardwareMap.dcMotor.get("leftwheelB");
+        rwa = hardwareMap.dcMotor.get("rightwheelA");
         rwb = hardwareMap.dcMotor.get("rightwheelB");
-		rwa.setDirection(DcMotor.Direction.REVERSE);
-		rwb.setDirection(DcMotor.Direction.REVERSE);
-		liftL = hardwareMap.dcMotor.get("liftL");
-		liftR = hardwareMap.dcMotor.get("liftR");
-		liftR.setDirection(DcMotor.Direction.REVERSE);
-		liftL.setDirection(DcMotor.Direction.REVERSE);
-		collector = hardwareMap.dcMotor.get("collector");
-		rightCR = hardwareMap.servo.get("rightCR");
-		leftCR = hardwareMap.servo.get("leftCR");
-		leftComb = hardwareMap.servo.get("leftComb");
-		rightComb = hardwareMap.servo.get("rightComb");
-		trigL = hardwareMap.servo.get("trigL");
-		trigR = hardwareMap.servo.get("trigR");
-		dds = hardwareMap.servo.get("dds");
-		leftPivot = hardwareMap.servo.get("leftPivot");
-		rightPivot = hardwareMap.servo.get("rightPivot");
+        rwa.setDirection(DcMotor.Direction.REVERSE);
+        rwb.setDirection(DcMotor.Direction.REVERSE);
+        liftL = hardwareMap.dcMotor.get("liftL");
+        liftR = hardwareMap.dcMotor.get("liftR");
+        liftR.setDirection(DcMotor.Direction.REVERSE);
+        liftL.setDirection(DcMotor.Direction.REVERSE);
+        collector = hardwareMap.dcMotor.get("collector");
+        rightCR = hardwareMap.servo.get("rightCR");
+        leftCR = hardwareMap.servo.get("leftCR");
+        leftComb = hardwareMap.servo.get("leftComb");
+        rightComb = hardwareMap.servo.get("rightComb");
+        trigL = hardwareMap.servo.get("trigL");
+        trigR = hardwareMap.servo.get("trigR");
+        dds = hardwareMap.servo.get("dds");
+        leftPivot = hardwareMap.servo.get("leftPivot");
+        rightPivot = hardwareMap.servo.get("rightPivot");
 
 
-		leftPivot.setPosition(0);
-		rightPivot.setPosition(1);
-		leftComb.setPosition(0);
-		rightComb.setPosition(1);
-		trigL.setPosition(0.7);
-		trigR.setPosition(0.35);
-		leftCR.setPosition(0.5);
-		rightCR.setPosition(0.5);
-	}
+        leftPivot.setPosition(0);
+        rightPivot.setPosition(1);
+        leftComb.setPosition(0);
+        rightComb.setPosition(1);
+        trigL.setPosition(0.7);
+        trigR.setPosition(0.35);
+        leftCR.setPosition(0.5);
+        rightCR.setPosition(0.5);
+    }
 
-	double lPivot = 0;
-	double rPivot = 1;
+    double lPivot = 0;
+    double rPivot = 1;
 
 
-	@Override
-	public void loop() {
+    @Override
+    public void loop() {
 
 
 
 // wheel control
-		float left = -gamepad1.left_stick_y;
-		float right = -gamepad1.right_stick_y;
+        float left = -gamepad1.left_stick_y;
+        float right = -gamepad1.right_stick_y;
 
-		// clip the right/left values so that the values never exceed +/- 1
-		right = Range.clip(right, -1, 1);
-		left = Range.clip(left, -1, 1);
+        // clip the right/left values so that the values never exceed +/- 1
+        right = Range.clip(right, -1, 1);
+        left = Range.clip(left, -1, 1);
 
-		rwa.setPower(right);
-		rwb.setPower(right);
+        rwa.setPower(right);
+        rwb.setPower(right);
         lwa.setPower(left);
         lwb.setPower(left);
 
 // lift control
-		float lift = gamepad2.left_stick_y;
+        float lift = gamepad2.left_stick_y;
 
-		// clip the right/left values so that the values never exceed +/- 1
-		lift = Range.clip(lift, -1, 1);
+        // clip the right/left values so that the values never exceed +/- 1
+        lift = Range.clip(lift, -1, 1);
 
-		liftL.setPower(lift);
-		liftR.setPower(lift);
+        liftL.setPower(lift);
+        liftR.setPower(lift);
 
 
-		if (gamepad2.b){
-			collector.setPower(1);
-		}
-		else {
-		collector.setPower(0);
-		}
+        if (gamepad2.b){
+            collector.setPower(1);
+        }
+        else {
+            collector.setPower(0);
+        }
 
-		//collector vertical control
+        //collector vertical control
 
-		float collLift = gamepad2.right_stick_y;
-		float collLiftPower = ((collLift + 1)/2);
+        float collLift = gamepad2.right_stick_y;
+        float collLiftPower = ((collLift + 1)/2);
 
-		leftCR.setPosition(collLiftPower);
-		rightCR.setPosition(Math.abs(collLiftPower - 1));
+        leftCR.setPosition(collLiftPower);
+        rightCR.setPosition(Math.abs(collLiftPower - 1));
 
 
 // Zipline release control
@@ -154,12 +124,12 @@ public class BlueTeleop extends OpMode {
 		}
 */
 
-		if(gamepad1.right_bumper || gamepad1.left_bumper) {
-			trigR.setPosition(1);
-		}
-		else{
-			trigR.setPosition(0.35);
-		}
+        if(gamepad1.right_bumper || gamepad1.left_bumper) {
+            trigR.setPosition(1);
+        }
+        else{
+            trigR.setPosition(0.35);
+        }
 
 
 
@@ -175,70 +145,70 @@ public class BlueTeleop extends OpMode {
 		}
 	*/
 
-		if(gamepad2.right_trigger > 0.5)
-		{
-			leftComb.setPosition(1);
-		}
-		else
-		{
-			leftComb.setPosition(0);
-		}
+        if(gamepad2.right_trigger > 0.5)
+        {
+            leftComb.setPosition(1);
+        }
+        else
+        {
+            leftComb.setPosition(0);
+        }
 
-		if(gamepad2.left_trigger > 0.5)
-		{
-			leftComb.setPosition(1);
-		}
+        if(gamepad2.left_trigger > 0.5)
+        {
+            leftComb.setPosition(1);
+        }
 
-		if(gamepad1.y)
-		{
-			lwa.setPower(0.20);
-			lwb.setPower(0.20);
-			rwa.setPower(0.20);
-			rwb.setPower(0.20);
-		}
+        if(gamepad1.y)
+        {
+            lwa.setPower(0.20);
+            lwb.setPower(0.20);
+            rwa.setPower(0.20);
+            rwb.setPower(0.20);
+        }
 
-		if(gamepad1.a)
-		{
-			lwa.setPower(-0.20);
-			lwb.setPower(-0.20);
-			rwa.setPower(-0.20);
-			rwb.setPower(-0.20);
-		}
+        if(gamepad1.a)
+        {
+            lwa.setPower(-0.20);
+            lwb.setPower(-0.20);
+            rwa.setPower(-0.20);
+            rwb.setPower(-0.20);
+        }
 
-		if(gamepad1.b)
-		{
-			lwa.setPower(-0.50);
-			lwb.setPower(-0.50);
-			rwa.setPower(0.50);
-			rwb.setPower(0.50);
-		}
+        if(gamepad1.b)
+        {
+            lwa.setPower(-0.50);
+            lwb.setPower(-0.50);
+            rwa.setPower(0.50);
+            rwb.setPower(0.50);
+        }
 
-		if(gamepad1.x)
-		{
-			lwa.setPower(0.50);
-			lwb.setPower(0.50);
-			rwa.setPower(-0.50);
-			rwb.setPower(-0.50);
-		}
+        if(gamepad1.x)
+        {
+            lwa.setPower(0.50);
+            lwb.setPower(0.50);
+            rwa.setPower(-0.50);
+            rwb.setPower(-0.50);
+        }
 
-		rPivot = Range.clip(rPivot, 0.01, 0.99);
-		lPivot = Range.clip(lPivot, 0.01, 0.99);
+        rPivot = Range.clip(rPivot, 0.01, 0.99);
+        lPivot = Range.clip(lPivot, 0.01, 0.99);
 
-		if(gamepad2.right_bumper)
-		{
-			lPivot = (lPivot + 0.01);
-			leftPivot.setPosition(lPivot);
-			rPivot = (rPivot - 0.01);
-			rightPivot.setPosition(rPivot);
-		}
+        if(gamepad2.right_bumper)
+        {
+            lPivot = (lPivot + 0.01);
+            leftPivot.setPosition(lPivot);
+            rPivot = (rPivot - 0.01);
+            rightPivot.setPosition(rPivot);
+        }
 
-		if(gamepad2.left_bumper)
-		{
-			lPivot = (lPivot - 0.01);
-			leftPivot.setPosition(lPivot);
-			rPivot = (rPivot + 0.01);
-			rightPivot.setPosition(rPivot);
-		}
+        if(gamepad2.left_bumper)
+        {
+            lPivot = (lPivot - 0.01);
+            leftPivot.setPosition(lPivot);
+            rPivot = (rPivot + 0.01);
+            rightPivot.setPosition(rPivot);
+        }
 
 
 
@@ -253,7 +223,7 @@ public class BlueTeleop extends OpMode {
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 
 
-	}
+    }
 
 	/*
 	 * Code to run when the op mode is first disabled goes here

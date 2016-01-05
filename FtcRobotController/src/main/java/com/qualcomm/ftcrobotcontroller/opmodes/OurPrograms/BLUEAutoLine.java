@@ -69,6 +69,7 @@ public class BLUEAutoLine extends LinearOpMode{
         ddsclaw = hardwareMap.servo.get("ddsclaw");
 
         Gyro = hardwareMap.gyroSensor.get("gyro");
+        Color = hardwareMap.colorSensor.get("color");
 
         telemetry.addData("Clear", Color.alpha());
 
