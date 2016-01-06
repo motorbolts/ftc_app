@@ -149,7 +149,7 @@ public class BlueDDS_CH extends LinearOpMode {
     lwb.setPower(50);
     sleep(100);
 
-    while(distanceSensorValue < 17);
+    while(distanceSensorValue < 17)
     {
       lineSensorValue = lineSensor.getLightDetectedRaw();
       distanceSensorValue = distanceSensor.getLightDetectedRaw();
