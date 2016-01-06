@@ -58,6 +58,7 @@ public class BlueDDS_CH extends LinearOpMode {
   DcMotor lwb;
   Servo leftPivot;
   Servo rightPivot;
+  OpticalDistanceSensor lineSensor;
   OpticalDistanceSensor distanceSensor;
 
   @Override
@@ -86,7 +87,8 @@ public class BlueDDS_CH extends LinearOpMode {
     dds = hardwareMap.servo.get("dds");
     leftPivot = hardwareMap.servo.get("leftPivot");
     rightPivot = hardwareMap.servo.get("rightPivot");
-    distanceSensor = hardwareMap.opticalDistanceSensor.get("dist1");
+    lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
+    distanceSensor = hardwareMap.opticalDistanceSensor.get("dist2");
 
 
     leftPivot.setPosition(0.5);
@@ -98,17 +100,20 @@ public class BlueDDS_CH extends LinearOpMode {
     leftCR.setPosition(0.5);
     rightCR.setPosition(0.5);
 
-    double lineSensor = distanceSensor.getLightDetectedRaw();
+    double lineSensorValue = lineSensor.getLightDetectedRaw();
+    double distanceSensorValue = distanceSensor.getLightDetectedRaw();
 
     // wait for the start button to be pressed
     waitForStart();
 
-    while( lineSensor < 30)
+    while( lineSensorValue < 30)
     {
+      lineSensorValue = lineSensor.getLightDetectedRaw();
       rwa.setPower(50);
       rwb.setPower(50);
       lwa.setPower(50);
       lwb.setPower(50);
+      sleep(20);
     }
 
     rwa.setPower(0);
@@ -116,8 +121,57 @@ public class BlueDDS_CH extends LinearOpMode {
     lwa.setPower(0);
     lwb.setPower(0);
 
+    sleep(100);
 
+    lineSensorValue = lineSensor.getLightDetectedRaw();
 
+    if(lineSensorValue > 30)
+    {
+      while(lineSensorValue > 30)
+      {
+        lineSensorValue = lineSensor.getLightDetectedRaw();
+        rwa.setPower(50);
+        rwb.setPower(50);
+        lwa.setPower(50);
+        lwb.setPower(50);
+        sleep(20);
+      }
+    }
+
+    rwa.setPower(0);
+    rwb.setPower(0);
+    lwa.setPower(0);
+    lwb.setPower(0);
+
+    sleep(100);
+
+    lwa.setPower(50);
+    lwb.setPower(50);
+    sleep(100);
+
+    while(distanceSensorValue < 17);
+    {
+      lineSensorValue = lineSensor.getLightDetectedRaw();
+      distanceSensorValue = distanceSensor.getLightDetectedRaw();
+
+      if(lineSensorValue > 30)
+      {
+        rwa.setPower(20);
+        rwb.setPower(20);
+        lwa.setPower(50);
+        lwb.setPower(50);
+        sleep(20);
+      }
+
+      if(lineSensorValue < 30)
+      {
+        rwa.setPower(50);
+        rwb.setPower(50);
+        lwa.setPower(20);
+        lwb.setPower(20);
+        sleep(20);
+      }
+    }
 
   }
 }
