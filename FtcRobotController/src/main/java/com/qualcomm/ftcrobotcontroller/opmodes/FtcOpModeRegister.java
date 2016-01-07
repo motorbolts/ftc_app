@@ -34,7 +34,10 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.ftcrobotcontroller.opmodes.IntelitekSolutions.ExampleDriveWithEncoders;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.AutoForward;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BLUEAutoDDS;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BlueDDS_CH;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BlueLineFollowTouchTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BlueTeleop;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DistanceTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DriveToTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.EncoderTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.LiftTest;
@@ -76,9 +79,11 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("BlueTeleop" , BlueTeleop.class);
 
-    manager.register("BLUEAutoDDS", BLUEAutoDDS.class);
+    manager.register("BlueDDS_CH", BlueDDS_CH.class);
 
-    manager.register("REDAutoDDS", REDAutoDDS.class);
+    manager.register("BlueLineFollowTouchTest", BlueLineFollowTouchTest.class);
+
+    manager.register("TouchTest", DistanceTest.class);
 
     //manager.register("EncoderTest", EncoderTest.class);
 
