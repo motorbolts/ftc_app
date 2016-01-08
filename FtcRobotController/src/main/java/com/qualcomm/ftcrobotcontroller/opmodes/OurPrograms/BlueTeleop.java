@@ -101,7 +101,7 @@ public class BlueTeleop extends OpMode {
 
 
         if (gamepad2.b){
-            collector.setPower(1);
+            collector.setPower(1);//yo
         }
         else {
             collector.setPower(0);
