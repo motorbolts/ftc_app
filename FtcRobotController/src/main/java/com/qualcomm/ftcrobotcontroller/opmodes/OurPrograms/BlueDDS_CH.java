@@ -97,8 +97,8 @@ public class BlueDDS_CH extends LinearOpMode {
     rightComb.setPosition(1);
     trigL.setPosition(0.7);
     trigR.setPosition(0.35);
-    leftCR.setPosition(0.5);
-    rightCR.setPosition(0.5);
+//    leftCR.setPosition(0.5);
+//    rightCR.setPosition(0.5);
 
     double lineSensorValue = lineSensor.getLightDetectedRaw();
     double distanceSensorValue = distanceSensor.getLightDetectedRaw();
