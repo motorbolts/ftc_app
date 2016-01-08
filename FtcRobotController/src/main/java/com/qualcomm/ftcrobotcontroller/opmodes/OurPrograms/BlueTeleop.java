@@ -28,8 +28,8 @@ public class BlueTeleop extends OpMode {
     Servo dds; // P4 channel 3
     DcMotor lwa; // P5 port 1
     DcMotor lwb; // P5 port 2
-    Servo leftPivot;
-    Servo rightPivot;
+   // Servo leftPivot;
+   // Servo rightPivot;
 
 
     @Override
@@ -41,35 +41,35 @@ public class BlueTeleop extends OpMode {
         rwb = hardwareMap.dcMotor.get("rightwheelB");
         rwa.setDirection(DcMotor.Direction.REVERSE);
         rwb.setDirection(DcMotor.Direction.REVERSE);
-        liftL = hardwareMap.dcMotor.get("liftL");
-        liftR = hardwareMap.dcMotor.get("liftR");
-        liftR.setDirection(DcMotor.Direction.REVERSE);
-        liftL.setDirection(DcMotor.Direction.REVERSE);
+//        liftL = hardwareMap.dcMotor.get("liftL");
+  //      liftR = hardwareMap.dcMotor.get("liftR");
+    //    liftR.setDirection(DcMotor.Direction.REVERSE);
+      //  liftL.setDirection(DcMotor.Direction.REVERSE);
         collector = hardwareMap.dcMotor.get("collector");
-        rightCR = hardwareMap.servo.get("rightCR");
-        leftCR = hardwareMap.servo.get("leftCR");
+      //  rightCR = hardwareMap.servo.get("rightCR");
+      //  leftCR = hardwareMap.servo.get("leftCR");
         leftComb = hardwareMap.servo.get("leftComb");
         rightComb = hardwareMap.servo.get("rightComb");
         trigL = hardwareMap.servo.get("trigL");
         trigR = hardwareMap.servo.get("trigR");
         dds = hardwareMap.servo.get("dds");
-        leftPivot = hardwareMap.servo.get("leftPivot");
-        rightPivot = hardwareMap.servo.get("rightPivot");
+      //  leftPivot = hardwareMap.servo.get("leftPivot");
+      //  rightPivot = hardwareMap.servo.get("rightPivot");
 
 
-        leftPivot.setPosition(1);
-        rightPivot.setPosition(0);
+      //  leftPivot.setPosition(1);
+       // rightPivot.setPosition(0);
         leftComb.setPosition(0);
         rightComb.setPosition(1);
         trigL.setPosition(0.7);
         trigR.setPosition(0.35);
-        leftCR.setPosition(0.5);
-        rightCR.setPosition(0.5);
+     //   leftCR.setPosition(0.5);
+   //     rightCR.setPosition(0.5);
         dds.setPosition(1);
     }
 
-    double lPivot = 0;
-    double rPivot = 1;
+ //   double lPivot = 0;
+  //  double rPivot = 1;
 
 
     @Override
@@ -91,41 +91,46 @@ public class BlueTeleop extends OpMode {
         lwb.setPower(left);
 
 // lift control
-        float lift = gamepad2.left_stick_y;
+      //  float lift = gamepad2.left_stick_y;
 
         // clip the right/left values so that the values never exceed +/- 1
-        lift = Range.clip(lift, -1, 1);
+//        lift = Range.clip(lift, -1, 1);
 
-        liftL.setPower(lift);
-        liftR.setPower(lift);
+  //      liftL.setPower(lift);
+//        liftR.setPower(lift);
 
 
         if (gamepad2.b){
             collector.setPower(1);//yo
         }
+        else if (gamepad2.a)
+        {
+            collector.setPower(-1);
+        }
+
         else {
             collector.setPower(0);
         }
 
         //collector vertical control
-
+/*
         float collLift = gamepad2.right_stick_y;
         float collLiftPower = ((collLift + 1)/2);
 
         leftCR.setPosition(collLiftPower);
         rightCR.setPosition(Math.abs(collLiftPower - 1));
-
+*/
 
 // Zipline release control
-/*		if(gamepad1.left_bumper) {
+		if(gamepad2.left_bumper) {
 		trigL.setPosition(0.05);
 		}
 		else{
 			trigL.setPosition(0.7);
 		}
-*/
 
-        if(gamepad1.right_bumper || gamepad1.left_bumper) {
+
+        if(gamepad2.right_bumper) {
             trigR.setPosition(1);
         }
         else{
@@ -136,7 +141,7 @@ public class BlueTeleop extends OpMode {
 
 // Comb control
 
-	/*	if(gamepad2.left_trigger>0.5)
+		if(gamepad2.left_trigger>0.5)
 		{
 			rightComb.setPosition(0);
 		}
@@ -144,21 +149,17 @@ public class BlueTeleop extends OpMode {
 		{
 			rightComb.setPosition(1);
 		}
-	*/
+
 
         if(gamepad2.right_trigger > 0.5)
         {
-            leftComb.setPosition(1);
+            rightComb.setPosition(0);
         }
         else
         {
-            leftComb.setPosition(0);
+            rightComb.setPosition(1);
         }
 
-        if(gamepad2.left_trigger > 0.5)
-        {
-            leftComb.setPosition(1);
-        }
 
         if(gamepad1.y)
         {
@@ -192,10 +193,10 @@ public class BlueTeleop extends OpMode {
             rwb.setPower(-0.50);
         }
 
-        rPivot = Range.clip(rPivot, 0.01, 0.99);
-        lPivot = Range.clip(lPivot, 0.01, 0.99);
+       // rPivot = Range.clip(rPivot, 0.01, 0.99);
+       // lPivot = Range.clip(lPivot, 0.01, 0.99);
 
-        if(gamepad2.right_bumper)
+       /* if(gamepad2.right_bumper)
         {
             lPivot = (lPivot + 0.01);
             leftPivot.setPosition(lPivot);
@@ -210,6 +211,8 @@ public class BlueTeleop extends OpMode {
             rPivot = (rPivot + 0.01);
             rightPivot.setPosition(rPivot);
         }
+
+*/
 
         if(gamepad2.x)
         {

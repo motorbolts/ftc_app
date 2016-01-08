@@ -33,39 +33,35 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 //yo
 
 public class BlueDDS_CH extends LinearOpMode {
+    DcMotor rwa;
+    DcMotor rwb;
+    DcMotor liftL;
+    DcMotor liftR;
+    Servo leftComb;
+    Servo rightComb;
+    Servo trigL;
+    Servo trigR;
+    DcMotor collector;
+    // Servo leftCR;
+    // Servo rightCR;
+    Servo dds;
+    DcMotor lwa;
+    DcMotor lwb;
+    //  Servo leftPivot;
+    //  Servo rightPivot;
+    OpticalDistanceSensor lineSensor;
+    TouchSensor touch;
 
-  DcMotor rwa;
-  DcMotor rwb;
-  DcMotor liftL;
-  DcMotor liftR;
-  Servo leftComb;
-  Servo rightComb;
-  Servo trigL;
-  Servo trigR;
-  DcMotor collector;
-  Servo leftCR;
-  Servo rightCR;
-  Servo dds;
-  DcMotor lwa;
-  DcMotor lwb;
-  Servo leftPivot;
-  Servo rightPivot;
-  OpticalDistanceSensor lineSensor;
-  TouchSensor touch;
-
-  @Override
-  public void runOpMode() throws InterruptedException {
-
+    @Override
+    public void runOpMode() throws InterruptedException {
 
     lwa = hardwareMap.dcMotor.get("leftwheelA");
     lwb = hardwareMap.dcMotor.get("leftwheelB");
@@ -73,46 +69,46 @@ public class BlueDDS_CH extends LinearOpMode {
     rwb = hardwareMap.dcMotor.get("rightwheelB");
     rwa.setDirection(DcMotor.Direction.REVERSE);
     rwb.setDirection(DcMotor.Direction.REVERSE);
-    liftL = hardwareMap.dcMotor.get("liftL");
-    liftR = hardwareMap.dcMotor.get("liftR");
-    liftR.setDirection(DcMotor.Direction.REVERSE);
-    liftL.setDirection(DcMotor.Direction.REVERSE);
+    //liftL = hardwareMap.dcMotor.get("liftL");
+    //liftR = hardwareMap.dcMotor.get("liftR");
+    //liftR.setDirection(DcMotor.Direction.REVERSE);
+    //liftL.setDirection(DcMotor.Direction.REVERSE);
     collector = hardwareMap.dcMotor.get("collector");
-    rightCR = hardwareMap.servo.get("rightCR");
-    leftCR = hardwareMap.servo.get("leftCR");
+    //rightCR = hardwareMap.servo.get("rightCR");
+    //leftCR = hardwareMap.servo.get("leftCR");
     leftComb = hardwareMap.servo.get("leftComb");
     rightComb = hardwareMap.servo.get("rightComb");
     trigL = hardwareMap.servo.get("trigL");
     trigR = hardwareMap.servo.get("trigR");
     dds = hardwareMap.servo.get("dds");
-    leftPivot = hardwareMap.servo.get("leftPivot");
-    rightPivot = hardwareMap.servo.get("rightPivot");
+    //leftPivot = hardwareMap.servo.get("leftPivot");
+    //rightPivot = hardwareMap.servo.get("rightPivot");
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
     touch = hardwareMap.touchSensor.get("touch");
 
 
-    leftPivot.setPosition(1);
-    rightPivot.setPosition(0);
+    //  leftPivot.setPosition(1);
+    // rightPivot.setPosition(0);
     leftComb.setPosition(0);
     rightComb.setPosition(1);
     trigL.setPosition(0.7);
     trigR.setPosition(0.35);
-    leftCR.setPosition(0.5);
-    rightCR.setPosition(0.5);
+    //   leftCR.setPosition(0.5);
+    //     rightCR.setPosition(0.5);
     dds.setPosition(1);
 
-    double lineSensorValue = lineSensor.getLightDetectedRaw();
+     double lineSensorValue;
     
     // wait for the start button to be pressed
     waitForStart();
+    //collector.setPower(1);
 
     while(rwa.getCurrentPosition() < 9000)
-
     {
-      rwa.setPower(0.5);
-      rwb.setPower(0.5);
-      lwa.setPower(0.5);
-      lwb.setPower(0.5);
+        rwa.setPower(0.5);
+        rwb.setPower(0.5);
+        lwa.setPower(0.5);
+        lwb.setPower(0.5);
     }
 
     rwa.setPower(0);
@@ -123,22 +119,21 @@ public class BlueDDS_CH extends LinearOpMode {
     sleep(100);
 
 
-while(rwa.getCurrentPosition() > 8500)
-{
-
-  lwa.setPower(0);
-  lwb.setPower(0);
-  rwa.setPower(-0.50);
-  rwb.setPower(-0.50);
-}
+    while(rwa.getCurrentPosition() > 8300)
+    {
+        lwa.setPower(0);
+        lwb.setPower(0);
+        rwa.setPower(-0.50);
+        rwb.setPower(-0.50);
+      //  collector.setPower(1);
+    }
 
 
 
 
     while (!touch.isPressed()) {
 
-      lineSensorValue = lineSensor.getLightDetectedRaw();
-
+        lineSensorValue = lineSensor.getLightDetectedRaw();
 
       if (lineSensorValue < 15) {
 
@@ -159,6 +154,7 @@ while(rwa.getCurrentPosition() > 8500)
     rwa.setPower(0.0);
     rwb.setPower(0.0);
 
+
     sleep(100);
 
     lwa.setPower(-0.35);
@@ -176,5 +172,8 @@ while(rwa.getCurrentPosition() > 8500)
     sleep(100);
 
     dds.setPosition(0);
+
+   // collector.setPower(0.0);
+    sleep(100);
   }
 }
