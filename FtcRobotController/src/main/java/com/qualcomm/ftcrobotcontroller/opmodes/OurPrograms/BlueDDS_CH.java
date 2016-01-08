@@ -33,9 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -61,10 +59,12 @@ public class BlueDDS_CH extends LinearOpMode {
   Servo leftPivot;
   Servo rightPivot;
   OpticalDistanceSensor lineSensor;
-  TouchSensor touch;
+  OpticalDistanceSensor distanceSensor;
 
   @Override
   public void runOpMode() throws InterruptedException {
+
+
 
 
     lwa = hardwareMap.dcMotor.get("leftwheelA");
@@ -88,31 +88,32 @@ public class BlueDDS_CH extends LinearOpMode {
     leftPivot = hardwareMap.servo.get("leftPivot");
     rightPivot = hardwareMap.servo.get("rightPivot");
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
-    touch = hardwareMap.touchSensor.get("touch");
+    distanceSensor = hardwareMap.opticalDistanceSensor.get("dist2");
 
 
-    leftPivot.setPosition(1);
-    rightPivot.setPosition(0);
+    leftPivot.setPosition(0.5);
+    rightPivot.setPosition(0.5);
     leftComb.setPosition(0);
     rightComb.setPosition(1);
     trigL.setPosition(0.7);
     trigR.setPosition(0.35);
     leftCR.setPosition(0.5);
     rightCR.setPosition(0.5);
-    dds.setPosition(1);
 
     double lineSensorValue = lineSensor.getLightDetectedRaw();
-    
+    double distanceSensorValue = distanceSensor.getLightDetectedRaw();
+
     // wait for the start button to be pressed
     waitForStart();
 
-    while(rwa.getCurrentPosition() < 9000)
-
+    while( lineSensorValue < 30)
     {
-      rwa.setPower(0.5);
-      rwb.setPower(0.5);
-      lwa.setPower(0.5);
-      lwb.setPower(0.5);
+      lineSensorValue = lineSensor.getLightDetectedRaw();
+      rwa.setPower(50);
+      rwb.setPower(50);
+      lwa.setPower(50);
+      lwb.setPower(50);
+      sleep(20);
     }
 
     rwa.setPower(0);
@@ -122,59 +123,55 @@ public class BlueDDS_CH extends LinearOpMode {
 
     sleep(100);
 
+    lineSensorValue = lineSensor.getLightDetectedRaw();
 
-while(rwa.getCurrentPosition() > 8500)
-{
-
-  lwa.setPower(0);
-  lwb.setPower(0);
-  rwa.setPower(-0.50);
-  rwb.setPower(-0.50);
-}
-
-
-
-
-    while (!touch.isPressed()) {
-
-      lineSensorValue = lineSensor.getLightDetectedRaw();
-
-
-      if (lineSensorValue < 15) {
-
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-      } else {
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(.50);
-        rwb.setPower(.50);
+    if(lineSensorValue > 30)
+    {
+      while(lineSensorValue > 30)
+      {
+        lineSensorValue = lineSensor.getLightDetectedRaw();
+        rwa.setPower(50);
+        rwb.setPower(50);
+        lwa.setPower(50);
+        lwb.setPower(50);
+        sleep(20);
       }
     }
 
-    lwa.setPower(0.0);
-    lwb.setPower(0.0);
-    rwa.setPower(0.0);
-    rwb.setPower(0.0);
+    rwa.setPower(0);
+    rwb.setPower(0);
+    lwa.setPower(0);
+    lwb.setPower(0);
 
     sleep(100);
 
-    lwa.setPower(-0.35);
-    lwb.setPower(-0.35);
-    rwa.setPower(-0.35);
-    rwb.setPower(-0.35);
-
-    sleep(200);
-
-    lwa.setPower(0.0);
-    lwb.setPower(0.0);
-    rwa.setPower(0.0);
-    rwb.setPower(0.0);
-
+    lwa.setPower(50);
+    lwb.setPower(50);
     sleep(100);
 
-    dds.setPosition(0);
+    while(distanceSensorValue < 17)
+    {
+      lineSensorValue = lineSensor.getLightDetectedRaw();
+      distanceSensorValue = distanceSensor.getLightDetectedRaw();
+
+      if(lineSensorValue > 30)
+      {
+        rwa.setPower(20);
+        rwb.setPower(20);
+        lwa.setPower(50);
+        lwb.setPower(50);
+        sleep(20);
+      }
+
+      if(lineSensorValue < 30)
+      {
+        rwa.setPower(50);
+        rwb.setPower(50);
+        lwa.setPower(20);
+        lwb.setPower(20);
+        sleep(20);
+      }
+    }
+
   }
 }

@@ -86,7 +86,7 @@ public class BlueLineFollowTouchTest extends LinearOpMode {
             lineSensorValue = lineSensor.getLightDetectedRaw();
 //hi
 
-            if (lineSensorValue < 15) {
+            if (lineSensorValue > 15) {
 
                 lwa.setPower(0.5);
                 lwb.setPower(0.5);

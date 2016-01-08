@@ -44,7 +44,6 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.LiftTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBChassisOnly;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBTeleopComp;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.REDAutoDDS;
-import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedDDS_CH;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedTeleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -85,9 +84,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("BlueLineFollowTouchTest", BlueLineFollowTouchTest.class);
 
     manager.register("TouchTest", DistanceTest.class);
-
-    manager.register("RedDDS_CH", RedDDS_CH.class);
-
 
     //manager.register("EncoderTest", EncoderTest.class);
 

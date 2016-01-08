@@ -57,16 +57,15 @@ public class RedTeleop extends OpMode {
         leftPivot = hardwareMap.servo.get("leftPivot");
         rightPivot = hardwareMap.servo.get("rightPivot");
 
-        
-        leftPivot.setPosition(1);
-        rightPivot.setPosition(0);
+
+        leftPivot.setPosition(0);
+        rightPivot.setPosition(1);
         leftComb.setPosition(0);
         rightComb.setPosition(1);
         trigL.setPosition(0.7);
         trigR.setPosition(0.35);
         leftCR.setPosition(0.5);
         rightCR.setPosition(0.5);
-        dds.setPosition(1);
     }
 
     double lPivot = 0;
@@ -215,10 +214,6 @@ public class RedTeleop extends OpMode {
             rightPivot.setPosition(rPivot);
         }
 
-        if(gamepad2.x)
-        {
-            dds.setPosition(0);
-        }
 
 
 		/*
