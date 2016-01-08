@@ -86,7 +86,7 @@ public class BlueDDS_CH extends LinearOpMode {
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
     touch = hardwareMap.touchSensor.get("touch");
 
-
+//because
     //  leftPivot.setPosition(1);
     // rightPivot.setPosition(0);
     leftComb.setPosition(0);
