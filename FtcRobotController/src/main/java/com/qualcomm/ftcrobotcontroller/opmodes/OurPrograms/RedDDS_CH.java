@@ -37,141 +37,142 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 //yo
 
 public class RedDDS_CH extends LinearOpMode {
     DcMotor rwa; // P0 port 1
     DcMotor rwb; // P0 port 2
- //   DcMotor liftL; // P1 port 1
- //   DcMotor liftR; // P1 port 2
+    //   DcMotor liftL; // P1 port 1
+    //   DcMotor liftR; // P1 port 2
     Servo leftComb; // P2 channel 1
     Servo rightComb; // P2 channel 2
     Servo trigL; // P2 channel 3
     Servo trigR; // P2 channel 4
     DcMotor collector; // P3 port 1
-   // Servo leftCR; // Not on robot- P4 channel 1
-   // Servo rightCR; //Not on robot- P4 channel 2
+    // Servo leftCR; // Not on robot- P4 channel 1
+    // Servo rightCR; //Not on robot- P4 channel 2
     Servo dds; // P4 channel 3
     DcMotor lwa; // P5 port 1
     DcMotor lwb; // P5 port 2
     // Servo leftPivot;
     // Servo rightPivot;
+    ElapsedTime timer;
 
-  OpticalDistanceSensor lineSensor;
-  TouchSensor touch;
+    OpticalDistanceSensor lineSensor;
+    TouchSensor touch;
 
-  @Override
-  public void runOpMode() throws InterruptedException {
+    @Override
+    public void runOpMode() throws InterruptedException {
 
 
-    lwa = hardwareMap.dcMotor.get("leftwheelA");
-    lwb = hardwareMap.dcMotor.get("leftwheelB");
-    rwa = hardwareMap.dcMotor.get("rightwheelA");
-    rwb = hardwareMap.dcMotor.get("rightwheelB");
-    rwa.setDirection(DcMotor.Direction.REVERSE);
-    rwb.setDirection(DcMotor.Direction.REVERSE);
+        lwa = hardwareMap.dcMotor.get("leftwheelA");
+        lwb = hardwareMap.dcMotor.get("leftwheelB");
+        rwa = hardwareMap.dcMotor.get("rightwheelA");
+        rwb = hardwareMap.dcMotor.get("rightwheelB");
+        rwa.setDirection(DcMotor.Direction.REVERSE);
+        rwb.setDirection(DcMotor.Direction.REVERSE);
 //        liftL = hardwareMap.dcMotor.get("liftL");
-     //     liftR = hardwareMap.dcMotor.get("liftR");
-      //  liftR.setDirection(DcMotor.Direction.REVERSE);
-    //  liftL.setDirection(DcMotor.Direction.REVERSE);
-    collector = hardwareMap.dcMotor.get("collector");
-    //  rightCR = hardwareMap.servo.get("rightCR");
-    //  leftCR = hardwareMap.servo.get("leftCR");
-    leftComb = hardwareMap.servo.get("leftComb");
-    rightComb = hardwareMap.servo.get("rightComb");
-    trigL = hardwareMap.servo.get("trigL");
-    trigR = hardwareMap.servo.get("trigR");
-    dds = hardwareMap.servo.get("dds");
-    //  leftPivot = hardwareMap.servo.get("leftPivot");
-    //  rightPivot = hardwareMap.servo.get("rightPivot");
-      lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
-      touch = hardwareMap.touchSensor.get("touch");
+        //     liftR = hardwareMap.dcMotor.get("liftR");
+        //  liftR.setDirection(DcMotor.Direction.REVERSE);
+        //  liftL.setDirection(DcMotor.Direction.REVERSE);
+        collector = hardwareMap.dcMotor.get("collector");
+        //  rightCR = hardwareMap.servo.get("rightCR");
+        //  leftCR = hardwareMap.servo.get("leftCR");
+        leftComb = hardwareMap.servo.get("leftComb");
+        rightComb = hardwareMap.servo.get("rightComb");
+        trigL = hardwareMap.servo.get("trigL");
+        trigR = hardwareMap.servo.get("trigR");
+        dds = hardwareMap.servo.get("dds");
+        //  leftPivot = hardwareMap.servo.get("leftPivot");
+        //  rightPivot = hardwareMap.servo.get("rightPivot");
+        lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
+        touch = hardwareMap.touchSensor.get("touch");
 
-    //  leftPivot.setPosition(1);
-    // rightPivot.setPosition(0);
-    leftComb.setPosition(0);
-    rightComb.setPosition(1);
-    trigL.setPosition(0.7);
-    trigR.setPosition(0.35);
-    //   leftCR.setPosition(0.5);
-    //     rightCR.setPosition(0.5);
-    dds.setPosition(1);
-    double lineSensorValue;
-    
-    // wait for the start button to be pressed
-    waitForStart();
-
-    while(lwa.getCurrentPosition() < 9250)
-
-    {
-      rwa.setPower(0.5);
-      rwb.setPower(0.5);
-      lwa.setPower(0.5);
-      lwb.setPower(0.5);
-    //collector.setPower(1);
-    }
-
-    rwa.setPower(0);
-    rwb.setPower(0);
-    lwa.setPower(0);
-    lwb.setPower(0);
-
-    sleep(100);
+        //  leftPivot.setPosition(1);
+        // rightPivot.setPosition(0);
+        leftComb.setPosition(0);
+        rightComb.setPosition(1);
+        trigL.setPosition(0.7);
+        trigR.setPosition(0.35);
+        //   leftCR.setPosition(0.5);
+        //     rightCR.setPosition(0.5);
+        dds.setPosition(1);
+        double lineSensorValue;
 
 
-while(lwa.getCurrentPosition() > 8750)
-{
+        // wait for the start button to be pressed
+        waitForStart();
 
-  lwa.setPower(-0.5);
-  lwb.setPower(-0.5);
-  rwa.setPower(0.5);
-  rwb.setPower(0.5);
-}
+        while (lwa.getCurrentPosition() < 9250)
+
+        {
+            rwa.setPower(0.5);
+            rwb.setPower(0.5);
+            lwa.setPower(0.5);
+            lwb.setPower(0.5);
+            //collector.setPower(1);
+        }
+
+        rwa.setPower(0);
+        rwb.setPower(0);
+        lwa.setPower(0);
+        lwb.setPower(0);
+
+        sleep(100);
 
 
+        while (lwa.getCurrentPosition() > 8750) {
 
-    while (!touch.isPressed()) {
+            lwa.setPower(-0.5);
+            lwb.setPower(-0.5);
+            rwa.setPower(0.5);
+            rwb.setPower(0.5);
+        }
 
-      lineSensorValue = lineSensor.getLightDetectedRaw();
 
-      if (lineSensorValue < 15) {
+        while (!touch.isPressed() && timer.time() < 20) {
 
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-      } else {
+            lineSensorValue = lineSensor.getLightDetectedRaw();
+
+            if (lineSensorValue < 15) {
+
+                lwa.setPower(0.5);
+                lwb.setPower(0.5);
+                rwa.setPower(0.0);
+                rwb.setPower(0.0);
+            } else {
+                lwa.setPower(0.0);
+                lwb.setPower(0.0);
+                rwa.setPower(.50);
+                rwb.setPower(.50);
+            }
+        }
+
         lwa.setPower(0.0);
         lwb.setPower(0.0);
-        rwa.setPower(.50);
-        rwb.setPower(.50);
-      }
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+
+        sleep(100);
+
+        lwa.setPower(-0.35);
+        lwb.setPower(-0.35);
+        rwa.setPower(-0.35);
+        rwb.setPower(-0.35);
+
+        sleep(200);
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+
+        sleep(100);
+
+        dds.setPosition(0);
+
+        collector.setPower(0.0);
     }
-
-    lwa.setPower(0.0);
-    lwb.setPower(0.0);
-    rwa.setPower(0.0);
-    rwb.setPower(0.0);
-
-    sleep(100);
-
-    lwa.setPower(-0.35);
-    lwb.setPower(-0.35);
-    rwa.setPower(-0.35);
-    rwb.setPower(-0.35);
-
-    sleep(200);
-
-    lwa.setPower(0.0);
-    lwb.setPower(0.0);
-    rwa.setPower(0.0);
-    rwb.setPower(0.0);
-
-    sleep(100);
-
-    dds.setPosition(0);
-
-    collector.setPower(0.0);
-  }
 }

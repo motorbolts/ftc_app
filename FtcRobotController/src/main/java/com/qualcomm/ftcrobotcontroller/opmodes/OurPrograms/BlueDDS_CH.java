@@ -115,7 +115,7 @@ public class BlueDDS_CH extends LinearOpMode {
     rwa.setPower(0);
     rwb.setPower(0);
     lwa.setPower(0);
-    lwb.setPower(0);
+        lwb.setPower(0);
 
     sleep(100);
 
@@ -153,24 +153,24 @@ public class BlueDDS_CH extends LinearOpMode {
     lwa.setPower(0.0);
     lwb.setPower(0.0);
     rwa.setPower(0.0);
-    rwb.setPower(0.0);
+        rwb.setPower(0.0);
 
 
-    sleep(100);
+        sleep(100);
 
     lwa.setPower(-0.35);
     lwb.setPower(-0.35);
     rwa.setPower(-0.35);
-    rwb.setPower(-0.35);
+        rwb.setPower(-0.35);
 
-    sleep(200);
+        sleep(200);
 
     lwa.setPower(0.0);
     lwb.setPower(0.0);
     rwa.setPower(0.0);
-    rwb.setPower(0.0);
+        rwb.setPower(0.0);
 
-    sleep(100);
+        sleep(100);
 
     dds.setPosition(0);
 
