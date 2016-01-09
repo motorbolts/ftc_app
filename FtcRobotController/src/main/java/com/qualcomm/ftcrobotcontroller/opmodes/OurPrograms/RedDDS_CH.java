@@ -173,6 +173,8 @@ public class RedDDS_CH extends LinearOpMode {
 
         dds.setPosition(0);
 
-        collector.setPower(0.0);
+        if(timer.time() < 20) {
+            collector.setPower(0.0);
+        }
     }
 }
