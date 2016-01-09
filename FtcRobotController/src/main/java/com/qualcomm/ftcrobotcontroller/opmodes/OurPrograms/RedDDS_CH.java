@@ -43,15 +43,15 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 public class RedDDS_CH extends LinearOpMode {
     DcMotor rwa; // P0 port 1
     DcMotor rwb; // P0 port 2
-    DcMotor liftL; // P1 port 1
-    DcMotor liftR; // P1 port 2
+ //   DcMotor liftL; // P1 port 1
+ //   DcMotor liftR; // P1 port 2
     Servo leftComb; // P2 channel 1
     Servo rightComb; // P2 channel 2
     Servo trigL; // P2 channel 3
     Servo trigR; // P2 channel 4
     DcMotor collector; // P3 port 1
-    Servo leftCR; // Not on robot- P4 channel 1
-    Servo rightCR; //Not on robot- P4 channel 2
+   // Servo leftCR; // Not on robot- P4 channel 1
+   // Servo rightCR; //Not on robot- P4 channel 2
     Servo dds; // P4 channel 3
     DcMotor lwa; // P5 port 1
     DcMotor lwb; // P5 port 2
@@ -72,8 +72,8 @@ public class RedDDS_CH extends LinearOpMode {
     rwa.setDirection(DcMotor.Direction.REVERSE);
     rwb.setDirection(DcMotor.Direction.REVERSE);
 //        liftL = hardwareMap.dcMotor.get("liftL");
-          liftR = hardwareMap.dcMotor.get("liftR");
-        liftR.setDirection(DcMotor.Direction.REVERSE);
+     //     liftR = hardwareMap.dcMotor.get("liftR");
+      //  liftR.setDirection(DcMotor.Direction.REVERSE);
     //  liftL.setDirection(DcMotor.Direction.REVERSE);
     collector = hardwareMap.dcMotor.get("collector");
     //  rightCR = hardwareMap.servo.get("rightCR");
@@ -85,7 +85,8 @@ public class RedDDS_CH extends LinearOpMode {
     dds = hardwareMap.servo.get("dds");
     //  leftPivot = hardwareMap.servo.get("leftPivot");
     //  rightPivot = hardwareMap.servo.get("rightPivot");
-
+      lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
+      touch = hardwareMap.touchSensor.get("touch");
 
     //  leftPivot.setPosition(1);
     // rightPivot.setPosition(0);
@@ -101,14 +102,14 @@ public class RedDDS_CH extends LinearOpMode {
     // wait for the start button to be pressed
     waitForStart();
 
-    while(lwa.getCurrentPosition() < 9000)
+    while(lwa.getCurrentPosition() < 9250)
 
     {
       rwa.setPower(0.5);
       rwb.setPower(0.5);
       lwa.setPower(0.5);
       lwb.setPower(0.5);
-    collector.setPower(1);
+    //collector.setPower(1);
     }
 
     rwa.setPower(0);
@@ -119,7 +120,7 @@ public class RedDDS_CH extends LinearOpMode {
     sleep(100);
 
 
-while(lwa.getCurrentPosition() > 8000)
+while(lwa.getCurrentPosition() > 8750)
 {
 
   lwa.setPower(-0.5);

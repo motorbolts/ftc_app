@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 //yo
 
 public class BlueDDS_CH extends LinearOpMode {
@@ -103,7 +104,7 @@ public class BlueDDS_CH extends LinearOpMode {
     waitForStart();
     //collector.setPower(1);
 
-    while(rwa.getCurrentPosition() < 9000)
+    while(rwa.getCurrentPosition() < 8500)
     {
         rwa.setPower(0.5);
         rwb.setPower(0.5);
@@ -119,7 +120,7 @@ public class BlueDDS_CH extends LinearOpMode {
     sleep(100);
 
 
-    while(rwa.getCurrentPosition() > 8300)
+    while(rwa.getCurrentPosition() > 7750)
     {
         lwa.setPower(0);
         lwb.setPower(0);
