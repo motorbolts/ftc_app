@@ -150,6 +150,14 @@ public class BlueTeleop extends OpMode {
 			rightComb.setPosition(1);
 		}
 
+        if (gamepad2.y)
+        {
+            leftComb.setPosition(1);
+        }
+        else
+        {
+            leftComb.setPosition(0);
+        }
 
         if(gamepad2.right_trigger > 0.5)
         {

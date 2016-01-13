@@ -125,22 +125,21 @@ public class RedTeleop extends OpMode {
 // Zipline release control
 
 
-        if(gamepad1.left_bumper || gamepad1.right_bumper) {
+        if(gamepad2.left_bumper) {
             trigL.setPosition(0.05);
         }
         else{
             trigL.setPosition(0.7);
         }
-/*
 
-		if(gamepad1.right_bumper) {
+		if(gamepad2.right_bumper) {
 			trigR.setPosition(1);
 		}
 		else{
 			trigR.setPosition(0.35);
 		}
 
-*/
+
 
 // Comb control
 
@@ -154,6 +153,17 @@ public class RedTeleop extends OpMode {
         {
             leftComb.setPosition(0);
         }
+
+        if(gamepad2.y)
+        {
+            rightComb.setPosition(0);
+        }
+
+        else
+        {
+            rightComb.setPosition(1);
+        }
+
 
         if(gamepad2.right_trigger > 0.5)
         {

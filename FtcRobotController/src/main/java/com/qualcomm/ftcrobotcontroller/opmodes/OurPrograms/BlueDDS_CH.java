@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 //yo
@@ -60,6 +61,7 @@ public class BlueDDS_CH extends LinearOpMode {
     //  Servo rightPivot;
     OpticalDistanceSensor lineSensor;
     TouchSensor touch;
+    ElapsedTime timer;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -102,7 +104,10 @@ public class BlueDDS_CH extends LinearOpMode {
     
     // wait for the start button to be pressed
     waitForStart();
-    //collector.setPower(1);
+
+        timer = new ElapsedTime();
+
+    collector.setPower(1);
 
     while(rwa.getCurrentPosition() < 8500)
     {
@@ -132,7 +137,7 @@ public class BlueDDS_CH extends LinearOpMode {
 
 
 
-    while (!touch.isPressed()) {
+    while (!touch.isPressed() && timer.time() < 20) {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
@@ -157,24 +162,27 @@ public class BlueDDS_CH extends LinearOpMode {
 
 
         sleep(100);
+        if(timer.time() < 20) {
+            lwa.setPower(-0.35);
+            lwb.setPower(-0.35);
+            rwa.setPower(-0.35);
+            rwb.setPower(-0.35);
 
-    lwa.setPower(-0.35);
-    lwb.setPower(-0.35);
-    rwa.setPower(-0.35);
-        rwb.setPower(-0.35);
-
-        sleep(200);
-
+            sleep(200);
+        }
     lwa.setPower(0.0);
     lwb.setPower(0.0);
     rwa.setPower(0.0);
         rwb.setPower(0.0);
 
         sleep(100);
+        collector.setPower(0.0);
 
-    dds.setPosition(0);
+        sleep(100);
 
-   // collector.setPower(0.0);
+
+            dds.setPosition(0);
+
     sleep(100);
   }
 }

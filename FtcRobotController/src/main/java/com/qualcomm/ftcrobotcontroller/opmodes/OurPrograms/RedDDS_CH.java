@@ -105,6 +105,9 @@ public class RedDDS_CH extends LinearOpMode {
         // wait for the start button to be pressed
         waitForStart();
 
+        timer = new ElapsedTime();
+        collector.setPower(1);
+
         while (lwa.getCurrentPosition() < 9250)
 
         {
@@ -132,6 +135,7 @@ public class RedDDS_CH extends LinearOpMode {
         }
 
 
+
         while (!touch.isPressed() && timer.time() < 20) {
 
             lineSensorValue = lineSensor.getLightDetectedRaw();
@@ -156,25 +160,24 @@ public class RedDDS_CH extends LinearOpMode {
         rwb.setPower(0.0);
 
         sleep(100);
-
-        lwa.setPower(-0.35);
-        lwb.setPower(-0.35);
-        rwa.setPower(-0.35);
-        rwb.setPower(-0.35);
-
-        sleep(200);
-
-        lwa.setPower(0.0);
+        if(timer.time() < 20) {
+            lwa.setPower(-0.35);
+            lwb.setPower(-0.35);
+            rwa.setPower(-0.35);
+            rwb.setPower(-0.35);
+            sleep(200);
+        }
+    lwa.setPower(0.0);
         lwb.setPower(0.0);
         rwa.setPower(0.0);
         rwb.setPower(0.0);
 
         sleep(100);
 
-        dds.setPosition(0);
+    collector.setPower(0.0);
 
-        if(timer.time() < 20) {
-            collector.setPower(0.0);
-        }
+
+    dds.setPosition(0);
+
     }
 }
