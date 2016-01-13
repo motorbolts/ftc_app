@@ -74,6 +74,8 @@ public class FtcOpModeRegister implements OpModeRegister {
 
   //  manager.register("MBTeleopComp", MBTeleopComp.class);
 
+    //IMPORTANT!!!!! Git token1 is 7a1e86da45ce29e5e1243971bb65ba987782dcfc
+
     manager.register("MBChassisOnly", MBChassisOnly.class);
 
     manager.register("RedTeleop", RedTeleop.class);
