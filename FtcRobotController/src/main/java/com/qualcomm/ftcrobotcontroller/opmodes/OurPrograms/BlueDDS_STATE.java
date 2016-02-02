@@ -55,6 +55,8 @@ public class BlueDDS_STATE extends LinearOpMode {
     // Servo leftCR;
     // Servo rightCR;
     Servo dds;
+    Servo holdL;
+    Servo holdR;
     DcMotor lwa;
     DcMotor lwb;
     //  Servo leftPivot;
@@ -84,10 +86,14 @@ public class BlueDDS_STATE extends LinearOpMode {
     trigL = hardwareMap.servo.get("trigL");
     trigR = hardwareMap.servo.get("trigR");
     dds = hardwareMap.servo.get("dds");
-    //leftPivot = hardwareMap.servo.get("leftPivot");
+        holdL = hardwareMap.servo.get("holdL");
+        holdR = hardwareMap.servo.get("holdR");
+
+        //leftPivot = hardwareMap.servo.get("leftPivot");
     //rightPivot = hardwareMap.servo.get("rightPivot");
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
     touch = hardwareMap.touchSensor.get("touch");
+
 
 //because
     //  leftPivot.setPosition(1);
@@ -99,6 +105,8 @@ public class BlueDDS_STATE extends LinearOpMode {
     //   leftCR.setPosition(0.5);
     //     rightCR.setPosition(0.5);
     dds.setPosition(1);
+        holdL.setPosition(0.75);
+        holdR.setPosition(0.05);
 
      double lineSensorValue;
     
@@ -109,7 +117,7 @@ public class BlueDDS_STATE extends LinearOpMode {
 
     collector.setPower(1);
 
-    while(rwa.getCurrentPosition() < 8500)
+    while(rwa.getCurrentPosition() < 8250)
     {
         rwa.setPower(0.5);
         rwb.setPower(0.5);
@@ -125,7 +133,7 @@ public class BlueDDS_STATE extends LinearOpMode {
     sleep(100);
 
 
-    while(rwa.getCurrentPosition() > 8000)
+    while(rwa.getCurrentPosition() > 7500)
     {
         lwa.setPower(0);
         lwb.setPower(0);
@@ -141,7 +149,7 @@ public class BlueDDS_STATE extends LinearOpMode {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
-      if (lineSensorValue < 15) {
+      if (lineSensorValue < 5) {
 
         lwa.setPower(0.5);
         lwb.setPower(0.5);

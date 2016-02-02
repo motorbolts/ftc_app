@@ -88,7 +88,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 
 //    manager.register("BlueLineFollowTouchTest", BlueLineFollowTouchTest.class);
 
-  //  manager.register("TouchTest", DistanceTest.class);
+    manager.register("DistanceTest", DistanceTest.class);
 
   //  manager.register("RedDDS_CH", RedDDS_CH.class);
 
