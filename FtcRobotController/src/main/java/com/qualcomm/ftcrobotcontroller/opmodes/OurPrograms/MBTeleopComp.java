@@ -52,7 +52,8 @@ public class  MBTeleopComp extends OpMode {
 	Servo rightComb; // P2 channel 2
 	Servo trigL; // P2 channel 3
 	Servo trigR; // P2 channel 4
-	DcMotor collector; // P3 port 1
+	DcMotor collectorR; // P3 port 1
+	DcMotor collectorL; // P3 port 2?
 	Servo leftCR; // Not on robot- P4 channel 1
 	Servo rightCR; //Not on robot- P4 channel 2
 	Servo dds; // P4 channel 3
@@ -75,7 +76,9 @@ public class  MBTeleopComp extends OpMode {
 		liftR = hardwareMap.dcMotor.get("liftR");
 		liftR.setDirection(DcMotor.Direction.REVERSE);
 		liftL.setDirection(DcMotor.Direction.REVERSE);
-		collector = hardwareMap.dcMotor.get("collector");
+		collectorR = hardwareMap.dcMotor.get("collectorR");
+		collectorL = hardwareMap.dcMotor.get("collectorL");
+		collectorL.setDirection(DcMotor.Direction.REVERSE);
 		rightCR = hardwareMap.servo.get("rightCR");
 		leftCR = hardwareMap.servo.get("leftCR");
 		leftComb = hardwareMap.servo.get("leftComb");
@@ -130,10 +133,12 @@ public class  MBTeleopComp extends OpMode {
 
 
 		if (gamepad2.b){
-			collector.setPower(1);
+			collectorR.setPower(1);
+			collectorL.setPower(-1);
 		}
 		else {
-		collector.setPower(0);
+			collectorR.setPower(0);
+			collectorL.setPower(0);
 		}
 
 		//collector vertical control
