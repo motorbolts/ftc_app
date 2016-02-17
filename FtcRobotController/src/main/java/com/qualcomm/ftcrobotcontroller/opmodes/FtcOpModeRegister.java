@@ -33,6 +33,9 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.IntelitekSolutions.ExampleDriveWithEncoders;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.AutoForward;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_STATE;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_STATE;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedRAMP;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BLUEAutoDDS;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BlueDDS_CH;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BlueDDS_STATE;
@@ -47,6 +50,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBChassisOnly;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBTeleopComp;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.REDAutoDDS;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedDDS_CH;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedDDS_STATE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedTeleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -78,21 +82,27 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     //IMPORTANT!!!!! Git token1 is 7a1e86da45ce29e5e1243971bb65ba987782dcfc
 
-    manager.register("MBChassisOnly", MBChassisOnly.class);
+    //manager.register("MBChassisOnly", MBChassisOnly.class);
 
     manager.register("RedTeleop", RedTeleop.class);
 
     manager.register("BlueTeleop" , BlueTeleop.class);
 
-    manager.register("BlueDDS_STATE", BlueDDS_STATE.class);
+ //]   manager.register("BlueDDS_STATE", BlueDDS_STATE.class);
 
 //    manager.register("BlueLineFollowTouchTest", BlueLineFollowTouchTest.class);
 
     manager.register("DistanceTest", DistanceTest.class);
 
-  //  manager.register("RedDDS_CH", RedDDS_CH.class);
+//    manager.register("RedDDS_STATE", RedDDS_STATE.class);
 
- //   manager.register("ColorTest", ColorTest.class);
+    manager.register("ColorTest", ColorTest.class);
+
+    manager.register("BACKBlueDDS_STATE", BACKBlueDDS_STATE.class);
+
+    manager.register("BACKRedDDS_STATE", BACKRedDDS_STATE.class);
+
+    manager.register("BACK+redRAMP", BACKRedRAMP.class);
 
     //manager.register("EncoderTest", EncoderTest.class);
 

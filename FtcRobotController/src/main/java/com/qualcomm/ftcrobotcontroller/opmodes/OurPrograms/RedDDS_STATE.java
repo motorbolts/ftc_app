@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,7 +43,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //yo
 
-public class BlueDDS_STATE extends LinearOpMode {
+public class RedDDS_STATE extends LinearOpMode {
     DcMotor rwa;
     DcMotor rwb;
     DcMotor liftL;
@@ -64,6 +65,7 @@ public class BlueDDS_STATE extends LinearOpMode {
     OpticalDistanceSensor lineSensor;
     TouchSensor touch;
     ElapsedTime timer;
+    ColorSensor colorSensor;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -93,19 +95,24 @@ public class BlueDDS_STATE extends LinearOpMode {
     //rightPivot = hardwareMap.servo.get("rightPivot");
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
     touch = hardwareMap.touchSensor.get("touch");
+        colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
+//because
+    //  leftPivot.setPosition(1);
+    // rightPivot.setPosition(0);
+    leftComb.setPosition(0);
+    rightComb.setPosition(1);
+ //   trigL.setPosition(0.7);
+ //   trigR.setPosition(0.35);
+    //   leftCR.setPosition(0.5);
 
-        //  leftPivot.setPosition(1);
-        // rightPivot.setPosition(0);
-        leftComb.setPosition(0);
-        rightComb.setPosition(1);
         trigL.setPosition(0.8);
         trigR.setPosition(0.05);
-        //   leftCR.setPosition(0.5);
-        //     rightCR.setPosition(0.5);
-        dds.setPosition(1);
+    //     rightCR.setPosition(0.5);
+    dds.setPosition(1);
         holdL.setPosition(0.75);
         holdR.setPosition(0.05);
+
      double lineSensorValue;
     
     // wait for the start button to be pressed
@@ -115,55 +122,57 @@ public class BlueDDS_STATE extends LinearOpMode {
 
     collector.setPower(-1);
 
-    while(rwa.getCurrentPosition() < 8750)
+    while(lwa.getCurrentPosition() < 8750)
     {
-        rwa.setPower(0.5);
-        rwb.setPower(0.5);
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
+        rwa.setPower(0.3);
+        rwb.setPower(0.3);
+        lwa.setPower(0.4);
+        lwb.setPower(0.4);
     }
+
+
+
 
     rwa.setPower(0);
     rwb.setPower(0);
     lwa.setPower(0);
         lwb.setPower(0);
-
-    sleep(100);
-
-    while(rwa.getCurrentPosition() > 8250)
-    {
-        rwa.setPower(-0.5);
-        rwb.setPower(-0.5);
-        lwa.setPower(-0.5);
-        lwb.setPower(-0.5);
-    }
+        sleep(100);
 
 
-    while(rwa.getCurrentPosition() > 7500)
-    {
+        while(lwa.getCurrentPosition() > 8100)
+        {
+            rwa.setPower(0.3);
+            rwb.setPower(0.3);
+            lwa.setPower(-0.3);
+            lwb.setPower(-0.3);
+        }
+
+        rwa.setPower(0.3);
+        rwb.setPower(0.3);
+        lwa.setPower(0.3);
+        lwb.setPower(0.3);
+        sleep(250);
+
+        rwa.setPower(0);
+        rwb.setPower(0);
         lwa.setPower(0);
         lwb.setPower(0);
-        rwa.setPower(-0.50);
-        rwb.setPower(-0.50);
-      //  collector.setPower(1);
-    }
-
-
-
+        sleep(100);
 
     while (!touch.isPressed() && timer.time() < 20) {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
-      if (lineSensorValue < 5) {
+      if (!(colorSensor.blue() > 4)) {
 
         lwa.setPower(0.5);
         lwb.setPower(0.5);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
+        rwa.setPower(0);
+        rwb.setPower(0);
       } else {
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
+        lwa.setPower(0);
+        lwb.setPower(0);
         rwa.setPower(.50);
         rwb.setPower(.50);
       }

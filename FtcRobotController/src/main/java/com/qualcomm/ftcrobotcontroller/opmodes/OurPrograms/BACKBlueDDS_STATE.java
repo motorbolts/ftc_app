@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //yo
 
-public class BlueDDS_STATE extends LinearOpMode {
+public class BACKBlueDDS_STATE extends LinearOpMode {
     DcMotor rwa;
     DcMotor rwb;
     DcMotor liftL;
@@ -59,6 +59,7 @@ public class BlueDDS_STATE extends LinearOpMode {
     Servo holdR;
     DcMotor lwa;
     DcMotor lwb;
+    Servo holdC;
     //  Servo leftPivot;
     //  Servo rightPivot;
     OpticalDistanceSensor lineSensor;
@@ -88,7 +89,7 @@ public class BlueDDS_STATE extends LinearOpMode {
     dds = hardwareMap.servo.get("dds");
         holdL = hardwareMap.servo.get("holdL");
         holdR = hardwareMap.servo.get("holdR");
-
+        holdC = hardwareMap.servo.get("holdC");
         //leftPivot = hardwareMap.servo.get("leftPivot");
     //rightPivot = hardwareMap.servo.get("rightPivot");
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
@@ -106,6 +107,7 @@ public class BlueDDS_STATE extends LinearOpMode {
         dds.setPosition(1);
         holdL.setPosition(0.75);
         holdR.setPosition(0.05);
+        holdC.setPosition(1);
      double lineSensorValue;
     
     // wait for the start button to be pressed
@@ -115,22 +117,7 @@ public class BlueDDS_STATE extends LinearOpMode {
 
     collector.setPower(-1);
 
-    while(rwa.getCurrentPosition() < 8750)
-    {
-        rwa.setPower(0.5);
-        rwb.setPower(0.5);
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
-    }
-
-    rwa.setPower(0);
-    rwb.setPower(0);
-    lwa.setPower(0);
-        lwb.setPower(0);
-
-    sleep(100);
-
-    while(rwa.getCurrentPosition() > 8250)
+    while(rwa.getCurrentPosition() > -9000 && timer.time() < 25)
     {
         rwa.setPower(-0.5);
         rwb.setPower(-0.5);
@@ -138,15 +125,24 @@ public class BlueDDS_STATE extends LinearOpMode {
         lwb.setPower(-0.5);
     }
 
+    rwa.setPower(0);
+    rwb.setPower(0);
+    lwa.setPower(0);
+    lwb.setPower(0);
 
-    while(rwa.getCurrentPosition() > 7500)
+    sleep(100);
+
+
+
+
+    while(rwa.getCurrentPosition() < -7500)
     {
-        lwa.setPower(0);
-        lwb.setPower(0);
-        rwa.setPower(-0.50);
-        rwb.setPower(-0.50);
-      //  collector.setPower(1);
+        rwa.setPower(0.5);
+        rwb.setPower(0.5);
+        lwa.setPower(-0.5);
+        lwb.setPower(-0.5);
     }
+
 
 
 
@@ -155,7 +151,7 @@ public class BlueDDS_STATE extends LinearOpMode {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
-      if (lineSensorValue < 5) {
+      if (lineSensorValue < 10) {
 
         lwa.setPower(0.5);
         lwb.setPower(0.5);
@@ -173,9 +169,12 @@ public class BlueDDS_STATE extends LinearOpMode {
     lwb.setPower(0.0);
     rwa.setPower(0.0);
         rwb.setPower(0.0);
-
-
         sleep(100);
+
+
+        collector.setPower(0.0);
+        sleep(100);
+
         if(timer.time() < 20) {
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
@@ -183,20 +182,25 @@ public class BlueDDS_STATE extends LinearOpMode {
             rwb.setPower(-0.35);
 
             sleep(200);
-        }
-    lwa.setPower(0.0);
-    lwb.setPower(0.0);
-    rwa.setPower(0.0);
-        rwb.setPower(0.0);
-
-        sleep(100);
-        collector.setPower(0.0);
-
-        sleep(100);
 
 
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+
+            sleep(100);
             dds.setPosition(0);
 
-    sleep(100);
+            sleep(100);
+        }
+
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+
+        sleep(500);
   }
 }

@@ -23,8 +23,8 @@ public class RedTeleop extends OpMode {
     Servo rightComb; // P2 channel 2
     Servo holdR;
     Servo holdL;
- //   Servo trigL; // P2 channel 3
-  //  Servo trigR; // P2 channel 4
+ Servo trigL; // P2 channel 3
+    Servo trigR; // P2 channel 4
   DcMotor collector; // P3 port 1
     DcMotor collector2;
   //  Servo leftCR; // Not on robot- P4 channel 1
@@ -34,7 +34,7 @@ public class RedTeleop extends OpMode {
     DcMotor lwb; // P5 port 2
 //    Servo leftPivot;
 //    Servo rightPivot;
-
+Servo holdC;
 
     @Override
     public void init() {
@@ -56,25 +56,30 @@ public class RedTeleop extends OpMode {
         //  leftCR = hardwareMap.servo.get("leftCR");
         leftComb = hardwareMap.servo.get("leftComb");
         rightComb = hardwareMap.servo.get("rightComb");
-        //trigL = hardwareMap.servo.get("trigL");
-        //trigR = hardwareMap.servo.get("trigR");
+        trigL = hardwareMap.servo.get("trigL");
+        trigR = hardwareMap.servo.get("trigR");
         dds = hardwareMap.servo.get("dds");
         //  leftPivot = hardwareMap.servo.get("leftPivot");
         //  rightPivot = hardwareMap.servo.get("rightPivot");
         holdL = hardwareMap.servo.get("holdL");
         holdR = hardwareMap.servo.get("holdR");
+        holdC = hardwareMap.servo.get("holdC");
 
 
 
+//because
         //  leftPivot.setPosition(1);
         // rightPivot.setPosition(0);
-       // leftComb.setPosition(0);
-       // rightComb.setPosition(1);
-       // trigL.setPosition(0.7);
-       // trigR.setPosition(0.35);
+        leftComb.setPosition(0);
+        rightComb.setPosition(1);
+           trigL.setPosition(0.8);
+           trigR.setPosition(0.05);
         //   leftCR.setPosition(0.5);
         //     rightCR.setPosition(0.5);
-        //dds.setPosition(1);
+        dds.setPosition(1);
+        holdL.setPosition(0.75);
+        holdR.setPosition(0.05);
+        holdC.setPosition(1);
     }
 
     //double lPivot = 0;
@@ -142,22 +147,21 @@ public class RedTeleop extends OpMode {
 
 // Zipline release control
 
-/*
-        if(gamepad2.left_bumper) {
-            trigL.setPosition(0.05);
+
+        if(gamepad1.left_bumper) {
+            trigL.setPosition(0);
         }
         else{
-            trigL.setPosition(0.7);
+            trigL.setPosition(0.8);
         }
 
-		if(gamepad2.right_bumper) {
-			trigR.setPosition(1);
-		}
-		else{
-			trigR.setPosition(0.35);
-		}
+        if(gamepad1.right_bumper) {
+            trigR.setPosition(0.8);
+        }
+        else{
+            trigR.setPosition(0.05);
+        }
 
-*/
 
 // Comb control
 
@@ -217,10 +221,12 @@ public class RedTeleop extends OpMode {
             rwb.setPower(-0.50);
         }
 
-        if(gamepad2.left_bumper)  //release
+
+        if(gamepad2.left_bumper)  //release churros
         {
             holdL.setPosition(0.75);
             holdR.setPosition(0.05);
+            holdC.setPosition(1);
         }
         if(gamepad2.right_bumper)  //hold churro
         {
@@ -230,9 +236,13 @@ public class RedTeleop extends OpMode {
 
         if(gamepad2.x) //midway button
         {
-            holdL.setPosition(0.6);
-            holdR.setPosition(0.15);
+         //   holdL.setPosition(0.47);
+          //  holdR.setPosition(0.15);
+            holdC.setPosition(0.25);
         }
+
+
+
 
 
 

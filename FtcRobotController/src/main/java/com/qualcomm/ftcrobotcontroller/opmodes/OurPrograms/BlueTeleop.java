@@ -1,10 +1,12 @@
-
 package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
-//
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+
+
+//
 
 /**
  * TeleOp Mode
@@ -16,24 +18,29 @@ public class BlueTeleop extends OpMode {
 
     DcMotor rwa; // P0 port 1
     DcMotor rwb; // P0 port 2
-    DcMotor liftL; // P1 port 1
-    DcMotor liftR; // P1 port 2
+ DcMotor liftL; // P1 port 1
+ DcMotor liftR; // P1 port 2
     Servo leftComb; // P2 channel 1
     Servo rightComb; // P2 channel 2
-    Servo trigL; // P2 channel 3
+    Servo holdR;
+    Servo holdL;
+ Servo trigL; // P2 channel 3
     Servo trigR; // P2 channel 4
-    DcMotor collector; // P3 port 1
-    Servo leftCR; // Not on robot- P4 channel 1
-    Servo rightCR; //Not on robot- P4 channel 2
+  DcMotor collector; // P3 port 1
+    DcMotor collector2;
+  //  Servo leftCR; // Not on robot- P4 channel 1
+//    Servo rightCR; //Not on robot- P4 channel 2
     Servo dds; // P4 channel 3
     DcMotor lwa; // P5 port 1
     DcMotor lwb; // P5 port 2
-   // Servo leftPivot;
-   // Servo rightPivot;
+//    Servo leftPivot;
+//    Servo rightPivot;
+    Servo holdC;
 
 
     @Override
     public void init() {
+
 
         lwa = hardwareMap.dcMotor.get("leftwheelA");
         lwb = hardwareMap.dcMotor.get("leftwheelB");
@@ -41,40 +48,47 @@ public class BlueTeleop extends OpMode {
         rwb = hardwareMap.dcMotor.get("rightwheelB");
         rwa.setDirection(DcMotor.Direction.REVERSE);
         rwb.setDirection(DcMotor.Direction.REVERSE);
-//        liftL = hardwareMap.dcMotor.get("liftL");
-  //      liftR = hardwareMap.dcMotor.get("liftR");
-    //    liftR.setDirection(DcMotor.Direction.REVERSE);
-      //  liftL.setDirection(DcMotor.Direction.REVERSE);
+        liftL = hardwareMap.dcMotor.get("liftL");
+        liftR = hardwareMap.dcMotor.get("liftR");
+        //    liftR.setDirection(DcMotor.Direction.REVERSE);
+          liftR.setDirection(DcMotor.Direction.REVERSE);
         collector = hardwareMap.dcMotor.get("collector");
-      //  rightCR = hardwareMap.servo.get("rightCR");
-      //  leftCR = hardwareMap.servo.get("leftCR");
+        collector2 = hardwareMap.dcMotor.get("collector2");
+        //  rightCR = hardwareMap.servo.get("rightCR");
+        //  leftCR = hardwareMap.servo.get("leftCR");
         leftComb = hardwareMap.servo.get("leftComb");
         rightComb = hardwareMap.servo.get("rightComb");
         trigL = hardwareMap.servo.get("trigL");
         trigR = hardwareMap.servo.get("trigR");
         dds = hardwareMap.servo.get("dds");
-      //  leftPivot = hardwareMap.servo.get("leftPivot");
-      //  rightPivot = hardwareMap.servo.get("rightPivot");
+        holdL = hardwareMap.servo.get("holdL");
+        holdR = hardwareMap.servo.get("holdR");
+        holdC = hardwareMap.servo.get("holdC");
 
 
-      //  leftPivot.setPosition(1);
-       // rightPivot.setPosition(0);
+
+
+//because
+        //  leftPivot.setPosition(1);
+        // rightPivot.setPosition(0);
         leftComb.setPosition(0);
         rightComb.setPosition(1);
-        trigL.setPosition(0.7);
-        trigR.setPosition(0.35);
-     //   leftCR.setPosition(0.5);
-   //     rightCR.setPosition(0.5);
+           trigL.setPosition(0.8);
+           trigR.setPosition(0.05);
+        //   leftCR.setPosition(0.5);
+        //     rightCR.setPosition(0.5);
         dds.setPosition(1);
+        holdL.setPosition(0.75);
+        holdR.setPosition(0.05);
+        holdC.setPosition(1);
     }
 
- //   double lPivot = 0;
-  //  double rPivot = 1;
+    //double lPivot = 0;
+    //double rPivot = 1;
 
 
     @Override
     public void loop() {
-
 
 
 // wheel control
@@ -91,27 +105,38 @@ public class BlueTeleop extends OpMode {
         lwb.setPower(left);
 
 // lift control
-      //  float lift = gamepad2.left_stick_y;
+        float lift = gamepad2.right_stick_y;
 
         // clip the right/left values so that the values never exceed +/- 1
-//        lift = Range.clip(lift, -1, 1);
+        lift = Range.clip(lift, -1, 1);
 
-  //      liftL.setPower(lift);
-//        liftR.setPower(lift);
+
+        if (lift >= 0) {
+            liftL.setPower(lift/5);
+            liftR.setPower(lift/5);
+        }
+        if (lift < 0)
+        {
+            liftL.setPower(lift);
+        liftR.setPower(lift);
+    }
+
 
 
         if (gamepad2.b){
-            collector.setPower(1);//yo
+            collector.setPower(1);
+            collector2.setPower(-1);
         }
+
         else if (gamepad2.a)
         {
             collector.setPower(-1);
-        }
-
-        else {
+            collector2.setPower(1);
+    }
+       else {
             collector.setPower(0);
+            collector2.setPower(0);
         }
-
         //collector vertical control
 /*
         float collLift = gamepad2.right_stick_y;
@@ -122,51 +147,47 @@ public class BlueTeleop extends OpMode {
 */
 
 // Zipline release control
-		if(gamepad2.left_bumper) {
-		trigL.setPosition(0.05);
-		}
-		else{
-			trigL.setPosition(0.7);
-		}
 
-
-        if(gamepad2.right_bumper) {
-            trigR.setPosition(1);
+        if(gamepad1.left_bumper) {
+            trigL.setPosition(0);
         }
         else{
-            trigR.setPosition(0.35);
+            trigL.setPosition(0.8);
+        }
+
+        if(gamepad1.right_bumper) {
+            trigR.setPosition(0.8);
+        }
+        else{
+            trigR.setPosition(0.05);
         }
 
 
 
 // Comb control
 
-		if(gamepad2.left_trigger>0.5)
-		{
-			rightComb.setPosition(0);
-		}
-		else
-		{
-			rightComb.setPosition(1);
-		}
 
-        if (gamepad2.y)
-        {
-            leftComb.setPosition(1);
-        }
-        else
-        {
-            leftComb.setPosition(0);
-        }
-
-        if(gamepad2.right_trigger > 0.5)
+        if(gamepad2.y)
         {
             rightComb.setPosition(0);
         }
+
         else
         {
             rightComb.setPosition(1);
         }
+
+
+
+		if(gamepad2.right_trigger > 0.5)
+        {
+			leftComb.setPosition(1);
+		}
+		else
+		{
+			leftComb.setPosition(0);
+		}
+
 
 
         if(gamepad1.y)
@@ -201,31 +222,33 @@ public class BlueTeleop extends OpMode {
             rwb.setPower(-0.50);
         }
 
-       // rPivot = Range.clip(rPivot, 0.01, 0.99);
-       // lPivot = Range.clip(lPivot, 0.01, 0.99);
 
-       /* if(gamepad2.right_bumper)
+        if(gamepad2.left_bumper)  //release churros
         {
-            lPivot = (lPivot + 0.01);
-            leftPivot.setPosition(lPivot);
-            rPivot = (rPivot - 0.01);
-            rightPivot.setPosition(rPivot);
+            holdL.setPosition(0.75);
+            holdR.setPosition(0.05);
+            holdC.setPosition(1);
+        }
+        if(gamepad2.right_bumper)  //hold churro
+        {
+            holdL.setPosition(0.1);
+            holdR.setPosition(0.70);
         }
 
-        if(gamepad2.left_bumper)
+        if(gamepad2.x) //midway button
         {
-            lPivot = (lPivot - 0.01);
-            leftPivot.setPosition(lPivot);
-            rPivot = (rPivot + 0.01);
-            rightPivot.setPosition(rPivot);
+          //  holdL.setPosition(0.47);
+          //  holdR.setPosition(0.15);
+            holdC.setPosition(0.25);
         }
 
-*/
+
 
         if(gamepad2.x)
         {
             dds.setPosition(0);
         }
+
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
