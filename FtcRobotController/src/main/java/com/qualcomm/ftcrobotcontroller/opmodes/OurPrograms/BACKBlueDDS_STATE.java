@@ -47,8 +47,8 @@ public class BACKBlueDDS_STATE extends LinearOpMode {
     DcMotor rwb;
     DcMotor liftL;
     DcMotor liftR;
-    Servo leftComb;
-    Servo rightComb;
+    Servo swivel;
+    Servo dump;
     Servo trigL;
     Servo trigR;
     DcMotor collector;
@@ -82,8 +82,8 @@ public class BACKBlueDDS_STATE extends LinearOpMode {
     collector = hardwareMap.dcMotor.get("collector");
     //rightCR = hardwareMap.servo.get("rightCR");
     //leftCR = hardwareMap.servo.get("leftCR");
-    leftComb = hardwareMap.servo.get("leftComb");
-    rightComb = hardwareMap.servo.get("rightComb");
+    swivel = hardwareMap.servo.get("swivel");
+    dump = hardwareMap.servo.get("dump");
     trigL = hardwareMap.servo.get("trigL");
     trigR = hardwareMap.servo.get("trigR");
     dds = hardwareMap.servo.get("dds");
@@ -98,9 +98,8 @@ public class BACKBlueDDS_STATE extends LinearOpMode {
 
         //  leftPivot.setPosition(1);
         // rightPivot.setPosition(0);
-        leftComb.setPosition(0);
-        rightComb.setPosition(1);
-        trigL.setPosition(0.8);
+        dump.setPosition(0);
+               trigL.setPosition(0.8);
         trigR.setPosition(0.05);
         //   leftCR.setPosition(0.5);
         //     rightCR.setPosition(0.5);

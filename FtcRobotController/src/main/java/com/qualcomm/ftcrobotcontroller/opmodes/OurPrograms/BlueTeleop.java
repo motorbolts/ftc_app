@@ -5,97 +5,94 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-
-//
-
 /**
  * TeleOp Mode
- * <p>
  * Enables control of the robot via the gamepad
  */
 
 public class BlueTeleop extends OpMode {
 
-    DcMotor rwa; // P0 port 1
-    DcMotor rwb; // P0 port 2
- DcMotor liftL; // P1 port 1
- DcMotor liftR; // P1 port 2
-    Servo leftComb; // P2 channel 1
-    Servo rightComb; // P2 channel 2
-    Servo holdR;
-    Servo holdL;
- Servo trigL; // P2 channel 3
-    Servo trigR; // P2 channel 4
-  DcMotor collector; // P3 port 1
-    DcMotor collector2;
-  //  Servo leftCR; // Not on robot- P4 channel 1
-//    Servo rightCR; //Not on robot- P4 channel 2
-    Servo dds; // P4 channel 3
-    DcMotor lwa; // P5 port 1
-    DcMotor lwb; // P5 port 2
-//    Servo leftPivot;
-//    Servo rightPivot;
-    Servo holdC;
+    DcMotor rwa; //rightwheels
+    DcMotor rwb;
 
+    DcMotor lwa; //leftwheels
+    DcMotor lwb;
+
+    DcMotor liftL;
+    DcMotor liftR;
+
+    Servo dump; //servo to score with dumper
+    Servo swivel; //servo that 'spreads' with dumper
+
+    Servo holdR; // churro holders
+    Servo holdL;
+
+    Servo trigL; //zip-line triggers
+    Servo trigR;
+
+    Servo holdC; //servo to guard lift
+
+    DcMotor collector; //bottom collector motor
+    DcMotor collector2; //top collector motor
+
+    Servo dds;
 
     @Override
     public void init() {
 
-
-        lwa = hardwareMap.dcMotor.get("leftwheelA");
+        lwa = hardwareMap.dcMotor.get("leftwheelA"); //leftwheels
         lwb = hardwareMap.dcMotor.get("leftwheelB");
-        rwa = hardwareMap.dcMotor.get("rightwheelA");
+
+        rwa = hardwareMap.dcMotor.get("rightwheelA"); //rightwheels
         rwb = hardwareMap.dcMotor.get("rightwheelB");
         rwa.setDirection(DcMotor.Direction.REVERSE);
         rwb.setDirection(DcMotor.Direction.REVERSE);
+
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
-        //    liftR.setDirection(DcMotor.Direction.REVERSE);
-          liftR.setDirection(DcMotor.Direction.REVERSE);
+        liftR.setDirection(DcMotor.Direction.REVERSE);
+
         collector = hardwareMap.dcMotor.get("collector");
         collector2 = hardwareMap.dcMotor.get("collector2");
-        //  rightCR = hardwareMap.servo.get("rightCR");
-        //  leftCR = hardwareMap.servo.get("leftCR");
-        leftComb = hardwareMap.servo.get("leftComb");
-        rightComb = hardwareMap.servo.get("rightComb");
-        trigL = hardwareMap.servo.get("trigL");
+
+        dump = hardwareMap.servo.get("dump"); //dumper control
+        swivel = hardwareMap.servo.get("swivel");
+
+        trigL = hardwareMap.servo.get("trigL"); //triggers
         trigR = hardwareMap.servo.get("trigR");
+
         dds = hardwareMap.servo.get("dds");
-        holdL = hardwareMap.servo.get("holdL");
+
+        holdL = hardwareMap.servo.get("holdL"); //churro holder
         holdR = hardwareMap.servo.get("holdR");
-        holdC = hardwareMap.servo.get("holdC");
 
+        holdC = hardwareMap.servo.get("holdC"); //lift holder
 
+        //***INIT***//
 
+            dump.setPosition(0);
+            swivel.setPosition(1);
 
-//because
-        //  leftPivot.setPosition(1);
-        // rightPivot.setPosition(0);
-        leftComb.setPosition(0);
-        rightComb.setPosition(1);
-           trigL.setPosition(0.8);
-           trigR.setPosition(0.05);
-        //   leftCR.setPosition(0.5);
-        //     rightCR.setPosition(0.5);
-        dds.setPosition(1);
-        holdL.setPosition(0.75);
-        holdR.setPosition(0.05);
-        holdC.setPosition(1);
+            trigL.setPosition(0.8);
+            trigR.setPosition(0.05);
+
+            dds.setPosition(1);
+
+            holdL.setPosition(0.75);
+            holdR.setPosition(0.05);
+
+            holdC.setPosition(1);
     }
 
-    //double lPivot = 0;
-    //double rPivot = 1;
-
+    double swivelVal = 1;
 
     @Override
     public void loop() {
-
 
 // wheel control
         float left = -gamepad1.left_stick_y;
         float right = -gamepad1.right_stick_y;
 
-        // clip the right/left values so that the values never exceed +/- 1
         right = Range.clip(right, -1, 1);
         left = Range.clip(left, -1, 1);
 
@@ -107,151 +104,134 @@ public class BlueTeleop extends OpMode {
 // lift control
         float lift = gamepad2.right_stick_y;
 
-        // clip the right/left values so that the values never exceed +/- 1
         lift = Range.clip(lift, -1, 1);
 
-
         if (lift >= 0) {
-            liftL.setPower(lift/5);
-            liftR.setPower(lift/5);
+            liftL.setPower(lift / 5);
+            liftR.setPower(lift / 5);
         }
-        if (lift < 0)
-        {
+        if (lift < 0) {
             liftL.setPower(lift);
-        liftR.setPower(lift);
-    }
+            liftR.setPower(lift);
+        }
 
-
-
-        if (gamepad2.b){
+//collector control
+        if (gamepad2.b) {
             collector.setPower(1);
             collector2.setPower(-1);
-        }
-
-        else if (gamepad2.a)
-        {
+        } else if (gamepad2.a) {
             collector.setPower(-1);
             collector2.setPower(1);
-    }
-       else {
+        } else {
             collector.setPower(0);
             collector2.setPower(0);
         }
-        //collector vertical control
-/*
-        float collLift = gamepad2.right_stick_y;
-        float collLiftPower = ((collLift + 1)/2);
-
-        leftCR.setPosition(collLiftPower);
-        rightCR.setPosition(Math.abs(collLiftPower - 1));
-*/
 
 // Zipline release control
-
-        if(gamepad1.left_bumper) {
+        if (gamepad1.left_bumper) {
             trigL.setPosition(0);
-        }
-        else{
+        } else {
             trigL.setPosition(0.8);
         }
 
-        if(gamepad1.right_bumper) {
+        if (gamepad1.right_bumper) {
             trigR.setPosition(0.8);
-        }
-        else{
+        } else {
             trigR.setPosition(0.05);
         }
 
-
-
-// Comb control
-
-
-        if(gamepad2.y)
-        {
-            rightComb.setPosition(0);
+// Dumper scoring
+        if (gamepad2.right_trigger > 0.5) {
+            dump.setPosition(1);
+        } else {
+            dump.setPosition(0);
         }
 
-        else
-        {
-            rightComb.setPosition(1);
+//Dumper presets
+        if (gamepad2.left_stick_button) {
+            swivel.setPosition(1);
+            swivelVal = 0.99;
+        }
+        //straight up
+        if (gamepad2.right_stick_button) {
+            swivel.setPosition(0.5);
+            swivelVal = 0.5;
         }
 
+//Dumper adjustment
+        swivelVal = Range.clip(swivelVal, 0, 1);
+        swivelVal = Range.clip(swivelVal, 0, 1);
 
+        if (gamepad2.left_stick_y > 0.25 && (swivelVal < 1)) {
+            swivelVal = Range.clip(swivelVal, 0, 1);
+            swivelVal = Range.clip(swivelVal, 0.01, 1);
+            swivelVal = swivelVal + 0.01;
+            swivel.setPosition(swivelVal);
+        }
 
-		if(gamepad2.right_trigger > 0.5)
-        {
-			leftComb.setPosition(1);
-		}
-		else
-		{
-			leftComb.setPosition(0);
-		}
+        if (gamepad2.left_stick_y < -0.25 && (0 < swivelVal)) {
+            swivelVal = Range.clip(swivelVal, 0, 1);
+            swivelVal = Range.clip(swivelVal, 0, 1);
+            swivelVal = swivelVal - 0.01;
+            swivel.setPosition(swivelVal);
+        }
 
-
-
-        if(gamepad1.y)
-        {
+//Scooch button control
+        if (gamepad1.y) {
             lwa.setPower(0.20);
             lwb.setPower(0.20);
             rwa.setPower(0.20);
             rwb.setPower(0.20);
         }
 
-        if(gamepad1.a)
-        {
+        if (gamepad1.a) {
             lwa.setPower(-0.20);
             lwb.setPower(-0.20);
             rwa.setPower(-0.20);
             rwb.setPower(-0.20);
         }
 
-        if(gamepad1.b)
-        {
+        if (gamepad1.b) {
             lwa.setPower(-0.50);
             lwb.setPower(-0.50);
             rwa.setPower(0.50);
             rwb.setPower(0.50);
         }
 
-        if(gamepad1.x)
-        {
+        if (gamepad1.x) {
             lwa.setPower(0.50);
             lwb.setPower(0.50);
             rwa.setPower(-0.50);
             rwb.setPower(-0.50);
         }
 
-
-        if(gamepad2.left_bumper)  //release churros
+//churro holders control
+        if (gamepad2.left_bumper)  //release churros
         {
             holdL.setPosition(0.75);
             holdR.setPosition(0.05);
             holdC.setPosition(1);
         }
-        if(gamepad2.right_bumper)  //hold churro
+        if (gamepad2.right_bumper)  //hold churro
         {
             holdL.setPosition(0.1);
             holdR.setPosition(0.70);
         }
 
-        if(gamepad2.x) //midway button
+//lift holder control
+        if (gamepad2.x) //midway button
         {
-          //  holdL.setPosition(0.47);
-          //  holdR.setPosition(0.15);
             holdC.setPosition(0.25);
         }
 
-
-
-        if(gamepad2.x)
-        {
+//score climbers
+        if (gamepad2.x) {
             dds.setPosition(0);
         }
 
 
 		/*
-		 * Send telemetry data back to driver station. Note that if we are using
+         * Send telemetry data back to driver station. Note that if we are using
 		 * a legacy NXT-compatible motor controller, then the getPower() method
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
@@ -264,7 +244,7 @@ public class BlueTeleop extends OpMode {
     }
 
 	/*
-	 * Code to run when the op mode is first disabled goes here
+     * Code to run when the op mode is first disabled goes here
 	 * 
 	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#stop()
 	 */
