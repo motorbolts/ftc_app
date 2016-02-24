@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 public class DistanceTest extends OpMode {
@@ -18,20 +19,22 @@ public class DistanceTest extends OpMode {
     Servo trigL;
     Servo trigR;
     DcMotor collector;
-    Servo leftCR;
-    Servo rightCR;
+    // Servo leftCR;
+    // Servo rightCR;
     Servo dds;
+    Servo holdL;
+    Servo holdR;
     DcMotor lwa;
     DcMotor lwb;
-    Servo leftPivot;
-    Servo rightPivot;
+    //  Servo leftPivot;
+    //  Servo rightPivot;
     OpticalDistanceSensor lineSensor;
     TouchSensor touch;
+    ElapsedTime timer;
 
     @Override
     public void init() {
 
-        touch = hardwareMap.touchSensor.get("touch");
         lwa = hardwareMap.dcMotor.get("leftwheelA");
         lwb = hardwareMap.dcMotor.get("leftwheelB");
         rwa = hardwareMap.dcMotor.get("rightwheelA");
@@ -40,27 +43,28 @@ public class DistanceTest extends OpMode {
         rwb.setDirection(DcMotor.Direction.REVERSE);
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
-        liftR.setDirection(DcMotor.Direction.REVERSE);
-        liftL.setDirection(DcMotor.Direction.REVERSE);
+        //liftR.setDirection(DcMotor.Direction.REVERSE);
+        //liftL.setDirection(DcMotor.Direction.REVERSE);
         collector = hardwareMap.dcMotor.get("collector");
-        rightCR = hardwareMap.servo.get("rightCR");
-        leftCR = hardwareMap.servo.get("leftCR");
+        //rightCR = hardwareMap.servo.get("rightCR");
+        //leftCR = hardwareMap.servo.get("leftCR");
         leftComb = hardwareMap.servo.get("leftComb");
         rightComb = hardwareMap.servo.get("rightComb");
         trigL = hardwareMap.servo.get("trigL");
         trigR = hardwareMap.servo.get("trigR");
         dds = hardwareMap.servo.get("dds");
-        leftPivot = hardwareMap.servo.get("leftPivot");
-        rightPivot = hardwareMap.servo.get("rightPivot");
+        holdL = hardwareMap.servo.get("holdL");
+        holdR = hardwareMap.servo.get("holdR");
         lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
-        touch = hardwareMap.touchSensor.get("touch");
+
+
     }
     @Override
     public void loop()
     {
-        double lineSensor = touch.getValue();
+        double lineSensorValue = lineSensor.getLightDetectedRaw();
 
-        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", lineSensor));
+        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", lineSensorValue));
     }
 
 }
