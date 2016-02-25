@@ -45,6 +45,8 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.ColorTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DistanceTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DriveToTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.EncoderTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.HeadingTracking;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.LiftTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBChassisOnly;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBTeleopComp;
@@ -87,6 +89,9 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("RedTeleop", RedTeleop.class);
 
     manager.register("BlueTeleop" , BlueTeleop.class);
+    manager.register("GyroTest" , GyroTest.class);
+
+    manager.register("HeadingTracking", HeadingTracking.class);
 
  //]   manager.register("BlueDDS_STATE", BlueDDS_STATE.class);
 
