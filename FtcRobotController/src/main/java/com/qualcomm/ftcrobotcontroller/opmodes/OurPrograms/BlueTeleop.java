@@ -50,7 +50,7 @@ public class BlueTeleop extends OpMode {
 
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
-        liftR.setDirection(DcMotor.Direction.REVERSE);
+        liftL.setDirection(DcMotor.Direction.REVERSE);
 
         collector = hardwareMap.dcMotor.get("collector");
         collector2 = hardwareMap.dcMotor.get("collector2");
@@ -107,8 +107,8 @@ public class BlueTeleop extends OpMode {
         lift = Range.clip(lift, -1, 1);
 
         if (lift >= 0) {
-            liftL.setPower(lift / 5);
-            liftR.setPower(lift / 5);
+            liftL.setPower(lift);
+            liftR.setPower(lift);
         }
         if (lift < 0) {
             liftL.setPower(lift);
@@ -166,14 +166,14 @@ public class BlueTeleop extends OpMode {
             swivelVal = Range.clip(swivelVal, 0, 1);
             swivelVal = Range.clip(swivelVal, 0.01, 1);
             swivelVal = swivelVal + 0.01;
-            swivel.setPosition(swivelVal);
+            swivel.setPosition(Math.abs((swivelVal)));
         }
 
         if (gamepad2.left_stick_y < -0.25 && (0 < swivelVal)) {
             swivelVal = Range.clip(swivelVal, 0, 1);
             swivelVal = Range.clip(swivelVal, 0, 1);
             swivelVal = swivelVal - 0.01;
-            swivel.setPosition(swivelVal);
+            swivel.setPosition(Math.abs(swivelVal));
         }
 
 //Scooch button control

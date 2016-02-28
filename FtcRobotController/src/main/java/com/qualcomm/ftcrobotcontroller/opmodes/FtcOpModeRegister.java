@@ -55,6 +55,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DistanceTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DriveToTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.EncoderTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroTestPControlCW;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.HeadingTracking;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.LiftTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.MBChassisOnly;
@@ -87,13 +88,9 @@ public class FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-    //manager.register("NullOp", NullOp.class);
-
-  //  manager.register("MBTeleopComp", MBTeleopComp.class);
 
     //IMPORTANT!!!!! Git token1 is 7a1e86da45ce29e5e1243971bb65ba987782dcfc
 
-    //manager.register("MBChassisOnly", MBChassisOnly.class);
 
     manager.register("RedTeleop", RedTeleop.class);
 
@@ -102,15 +99,10 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("HeadingTracking", HeadingTracking.class);
 
- //]   manager.register("BlueDDS_STATE", BlueDDS_STATE.class);
-
-//    manager.register("BlueLineFollowTouchTest", BlueLineFollowTouchTest.class);
 
     manager.register("DistanceTest", DistanceTest.class);
 
-//    manager.register("RedDDS_STATE", RedDDS_STATE.class);
-
-    manager.register("ColorTest", ColorTest.class);
+    //manager.register("ColorTest", ColorTest.class);
 
     manager.register("Blue-LOW", BACKBlueDDS_NSR_LOWGOAL.class);
 
@@ -118,36 +110,24 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("Blue-SETPICK", BACKBlueDDS_NSR_SETPICK.class);
 
-      manager.register("Blue-DELAY", BACKBlueDDS_NSR_DELAY.class);
+    manager.register("Blue-DELAY", BACKBlueDDS_NSR_DELAY.class);
 
-      manager.register("Red-LOW", BACKRedDDS_NSR_LOWGOAL.class);
+    manager.register("Red-LOW", BACKRedDDS_NSR_LOWGOAL.class);
 
-      manager.register("Red-DEFENSE", BACKRedDDS_NSR_DEFENSE.class);
+    manager.register("Red-DEFENSE", BACKRedDDS_NSR_DEFENSE.class);
 
-      manager.register("Red-SETPICK", BACKRedDDS_NSR_SETPICK.class);
+    manager.register("Red-SETPICK", BACKRedDDS_NSR_SETPICK.class);
 
-      manager.register("Red-DELAY", BACKRedDDS_NSR_DELAY.class);
+    manager.register("Red-DELAY", BACKRedDDS_NSR_DELAY.class);
 
-  //  manager.register("BACKRedDDS_STATE", BACKRedDDS_STATE.class);
+    manager.register("GyroCWProportional", GyroTestPControlCW.class);
 
-  //  manager.register("BACK+redRAMP", BACKRedRAMP.class);
 
     //manager.register("EncoderTest", EncoderTest.class);
 
     //manager.register("DriveToTest", DriveToTest.class);
 
-  //  manager.register("AutoForward", AutoForward.class);
-
-//    manager.register("LiftTest", LiftTest.class);
-
    //manager.register("ExampleDriveWithEncoders", ExampleDriveWithEncoders.class);
-
-    //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
-    //manager.register("K9TeleOp", K9TeleOp.class);
-   // manager.register("K9Line", K9Line.class);
-   // manager.register ("PushBotAuto", PushBotAuto.class);
-    //manager.register ("PushBotManual", PushBotManual.class);
-
 
 
     /*

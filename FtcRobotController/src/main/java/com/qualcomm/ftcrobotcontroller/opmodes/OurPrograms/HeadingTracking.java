@@ -38,10 +38,10 @@ public class HeadingTracking extends LinearOpMode {
 
     Servo dds;
 
-    GyroSensor Gyro;
+    ModernRoboticsI2cGyro Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
 
     double heading = 0;
-    //    double integratedHeading = Gyro.getIntegratedZValue();
+    double zHeading = Gyro.getIntegratedZValue();
     double headingError;
     double targetHeading;
     double drivesteering;
@@ -80,7 +80,6 @@ public class HeadingTracking extends LinearOpMode {
         holdR = hardwareMap.servo.get("holdR");
 
         holdC = hardwareMap.servo.get("holdC"); //lift holder
-        Gyro = hardwareMap.gyroSensor.get("Gyro");
         //***INIT***//
 
         dump.setPosition(0);
@@ -104,6 +103,8 @@ public class HeadingTracking extends LinearOpMode {
         {
             heading = Gyro.getHeading();
             telemetry.addData("Heading", heading);
+            zHeading = Gyro.getIntegratedZValue();
+            telemetry.addData("zHeading", zHeading);
         }
 
     }

@@ -51,7 +51,7 @@ public class RedTeleop extends OpMode {
 
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
-        liftR.setDirection(DcMotor.Direction.REVERSE);
+        liftL.setDirection(DcMotor.Direction.REVERSE);
 
         collector = hardwareMap.dcMotor.get("collector");
         collector2 = hardwareMap.dcMotor.get("collector2");
@@ -108,8 +108,8 @@ public class RedTeleop extends OpMode {
         lift = Range.clip(lift, -1, 1);
 
         if (lift >= 0) {
-            liftL.setPower(lift / 5);
-            liftR.setPower(lift / 5);
+            liftL.setPower(lift);
+            liftR.setPower(lift);
         }
         if (lift < 0) {
             liftL.setPower(lift);

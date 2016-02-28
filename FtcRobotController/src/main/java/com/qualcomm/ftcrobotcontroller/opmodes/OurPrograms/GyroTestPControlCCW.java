@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 
 
-public class GyroTestPControlCW extends LinearOpMode {
+public class GyroTestPControlCCW extends LinearOpMode {
 
     DcMotor rwa; //rightwheels
     DcMotor rwb;
@@ -36,10 +36,10 @@ public class GyroTestPControlCW extends LinearOpMode {
 
     Servo dds;
 
-    GyroSensor Gyro;
+    ModernRoboticsI2cGyro Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
 
     double heading = 0;
-    //    double integratedHeading = Gyro.getIntegratedZValue();
+    double zHeading = Gyro.getIntegratedZValue();
     double headingError;
     double targetHeading;
     double drivesteering;
@@ -80,7 +80,6 @@ public class GyroTestPControlCW extends LinearOpMode {
         holdR = hardwareMap.servo.get("holdR");
 
         holdC = hardwareMap.servo.get("holdC"); //lift holder
-        Gyro = hardwareMap.gyroSensor.get("Gyro");
         //***INIT***//
 
         dump.setPosition(0);
@@ -106,7 +105,9 @@ public class GyroTestPControlCW extends LinearOpMode {
         while(heading < 90 || heading > 90)
         {
             heading = Gyro.getHeading();
+            zHeading = Gyro.getIntegratedZValue();
             telemetry.addData("heading",heading);
+            telemetry.addData("zHeading",zHeading);
 
             while(heading < 90) {
                 heading = Gyro.getHeading();
