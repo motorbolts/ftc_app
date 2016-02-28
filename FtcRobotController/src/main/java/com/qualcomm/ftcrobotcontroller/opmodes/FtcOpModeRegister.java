@@ -33,7 +33,16 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.IntelitekSolutions.ExampleDriveWithEncoders;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.AutoForward;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_DEFENSE;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_DELAY;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_LOWGOAL;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_SETPICK;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_STATE;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_DEFENSE;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_DELAY;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_LOWGOAL;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_SETPICK;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_STATE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedRAMP;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BLUEAutoDDS;
@@ -103,11 +112,25 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("ColorTest", ColorTest.class);
 
-    manager.register("BACKBlueDDS_STATE", BACKBlueDDS_STATE.class);
+    manager.register("Blue-LOW", BACKBlueDDS_NSR_LOWGOAL.class);
 
-    manager.register("BACKRedDDS_STATE", BACKRedDDS_STATE.class);
+    manager.register("Blue-DEFENSE", BACKBlueDDS_NSR_DEFENSE.class);
 
-    manager.register("BACK+redRAMP", BACKRedRAMP.class);
+    manager.register("Blue-SETPICK", BACKBlueDDS_NSR_SETPICK.class);
+
+      manager.register("Blue-DELAY", BACKBlueDDS_NSR_DELAY.class);
+
+      manager.register("Red-LOW", BACKRedDDS_NSR_LOWGOAL.class);
+
+      manager.register("Red-DEFENSE", BACKRedDDS_NSR_DEFENSE.class);
+
+      manager.register("Red-SETPICK", BACKRedDDS_NSR_SETPICK.class);
+
+      manager.register("Red-DELAY", BACKRedDDS_NSR_DELAY.class);
+
+  //  manager.register("BACKRedDDS_STATE", BACKRedDDS_STATE.class);
+
+  //  manager.register("BACK+redRAMP", BACKRedRAMP.class);
 
     //manager.register("EncoderTest", EncoderTest.class);
 
