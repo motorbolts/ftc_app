@@ -71,38 +71,38 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-    lwa = hardwareMap.dcMotor.get("leftwheelA");
-    lwb = hardwareMap.dcMotor.get("leftwheelB");
-    rwa = hardwareMap.dcMotor.get("rightwheelA");
-    rwb = hardwareMap.dcMotor.get("rightwheelB");
-    rwa.setDirection(DcMotor.Direction.REVERSE);
-    rwb.setDirection(DcMotor.Direction.REVERSE);
-    liftL = hardwareMap.dcMotor.get("liftL");
-    liftR = hardwareMap.dcMotor.get("liftR");
-    //liftR.setDirection(DcMotor.Direction.REVERSE);
-    //liftL.setDirection(DcMotor.Direction.REVERSE);
-    collector = hardwareMap.dcMotor.get("collector");
-    //rightCR = hardwareMap.servo.get("rightCR");
-    //leftCR = hardwareMap.servo.get("leftCR");
-    swivel = hardwareMap.servo.get("swivel");
-    dump = hardwareMap.servo.get("dump");
-    trigL = hardwareMap.servo.get("trigL");
-    trigR = hardwareMap.servo.get("trigR");
-    dds = hardwareMap.servo.get("dds");
+        lwa = hardwareMap.dcMotor.get("leftwheelA");
+        lwb = hardwareMap.dcMotor.get("leftwheelB");
+        rwa = hardwareMap.dcMotor.get("rightwheelA");
+        rwb = hardwareMap.dcMotor.get("rightwheelB");
+        rwa.setDirection(DcMotor.Direction.REVERSE);
+        rwb.setDirection(DcMotor.Direction.REVERSE);
+        liftL = hardwareMap.dcMotor.get("liftL");
+        liftR = hardwareMap.dcMotor.get("liftR");
+        //liftR.setDirection(DcMotor.Direction.REVERSE);
+        //liftL.setDirection(DcMotor.Direction.REVERSE);
+        collector = hardwareMap.dcMotor.get("collector");
+        //rightCR = hardwareMap.servo.get("rightCR");
+        //leftCR = hardwareMap.servo.get("leftCR");
+        swivel = hardwareMap.servo.get("swivel");
+        dump = hardwareMap.servo.get("dump");
+        trigL = hardwareMap.servo.get("trigL");
+        trigR = hardwareMap.servo.get("trigR");
+        dds = hardwareMap.servo.get("dds");
         holdL = hardwareMap.servo.get("holdL");
         holdR = hardwareMap.servo.get("holdR");
         holdC = hardwareMap.servo.get("holdC");
         //leftPivot = hardwareMap.servo.get("leftPivot");
-    //rightPivot = hardwareMap.servo.get("rightPivot");
-    lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
-    touch = hardwareMap.touchSensor.get("touch");
-    Gyro  = hardwareMap.gyroSensor.get("Gyro");
+        //rightPivot = hardwareMap.servo.get("rightPivot");
+        lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
+        touch = hardwareMap.touchSensor.get("touch");
+        Gyro = hardwareMap.gyroSensor.get("Gyro");
 
 
         //  leftPivot.setPosition(1);
         // rightPivot.setPosition(0);
         dump.setPosition(0);
-               trigL.setPosition(0.8);
+        trigL.setPosition(0.8);
         trigR.setPosition(0.05);
         //   leftCR.setPosition(0.5);
         //     rightCR.setPosition(0.5);
@@ -110,7 +110,7 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
         holdL.setPosition(0.75);
         holdR.setPosition(0.05);
         holdC.setPosition(1);
-     double lineSensorValue;
+        double lineSensorValue;
 
         double heading = 0;
 //    double integratedHeading = Gyro.getIntegratedZValue();
@@ -127,35 +127,34 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
 
 
         // wait for the start button to be pressed
-    waitForStart();
+        waitForStart();
 
         timer = new ElapsedTime();
 
-    collector.setPower(0);
+        collector.setPower(0);
 
-    while(rwa.getCurrentPosition() > -7800 && timer.time() < 15)
-    {
-        rwa.setPower(-0.75);
-        rwb.setPower(-0.75);
-        lwa.setPower(-0.75);
-        lwb.setPower(-0.75);
-    }
+        while (rwa.getCurrentPosition() > -7800 && timer.time() < 15) {
+            rwa.setPower(-0.75);
+            rwb.setPower(-0.75);
+            lwa.setPower(-0.75);
+            lwb.setPower(-0.75);
+        }
 
-    rwa.setPower(0);
-    rwb.setPower(0);
-    lwa.setPower(0);
-    lwb.setPower(0);
+        rwa.setPower(0);
+        rwb.setPower(0);
+        lwa.setPower(0);
+        lwb.setPower(0);
 
-    sleep(100);
+        sleep(100);
 
 
         heading = Gyro.getHeading();
-        telemetry.addData("heading",heading);
+        telemetry.addData("heading", heading);
 
         heading = 359;
         sleep(100);
 
-        while(heading > 225) {
+        while (heading > 225) {
             heading = Gyro.getHeading();
             //          integratedHeading = Gyro.getIntegratedZValue();
 
@@ -190,8 +189,7 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
             rwb.setPower(rightPower);
         }
 
-        while(heading < 225)
-        {
+        while (heading < 225) {
             heading = Gyro.getHeading();
             //          integratedHeading = Gyro.getIntegratedZValue();
 
@@ -226,42 +224,41 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
         }
 
 
-    lwa.setPower(1);
-    lwb.setPower(1);
-    rwa.setPower(1);
-    rwb.setPower(1);
-    sleep(400);
+        lwa.setPower(1);
+        lwb.setPower(1);
+        rwa.setPower(1);
+        rwb.setPower(1);
+        sleep(400);
 
-    lwa.setPower(0);
-    lwb.setPower(0);
-    rwa.setPower(0);
-    rwb.setPower(0);
-    telemetry.addData("Event", "Done");
-    sleep(100);
-
+        lwa.setPower(0);
+        lwb.setPower(0);
+        rwa.setPower(0);
+        rwb.setPower(0);
+        telemetry.addData("Event", "Done");
+        sleep(100);
 
 
         while (!touch.isPressed() && timer.time() < 20) {
 
-        lineSensorValue = lineSensor.getLightDetectedRaw();
+            lineSensorValue = lineSensor.getLightDetectedRaw();
 
-      if (lineSensorValue < 10) {
+            if (lineSensorValue < 10) {
 
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-      } else {
+                lwa.setPower(0.5);
+                lwb.setPower(0.5);
+                rwa.setPower(0.0);
+                rwb.setPower(0.0);
+            } else {
+                lwa.setPower(0.0);
+                lwb.setPower(0.0);
+                rwa.setPower(0.5);
+                rwb.setPower(0.5);
+            }
+        }
+
         lwa.setPower(0.0);
         lwb.setPower(0.0);
-        rwa.setPower(0.5);
-        rwb.setPower(0.5);
-      }
-    }
-
-    lwa.setPower(0.0);
-    lwb.setPower(0.0);
-    rwa.setPower(0.0);
+        rwa.setPower(0.0);
         rwb.setPower(0.0);
         sleep(100);
 
@@ -269,7 +266,7 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
         collector.setPower(0.0);
         sleep(100);
 
-        if(timer.time() < 20) {
+        if (timer.time() < 20) {
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
             rwa.setPower(-0.35);
@@ -296,5 +293,5 @@ public class BACKBlueDDS_NSR extends LinearOpMode {
         rwb.setPower(0.0);
 
         sleep(500);
-  }
+    }
 }

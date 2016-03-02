@@ -36,7 +36,7 @@ public class GyroTestPControlCCW extends LinearOpMode {
 
     Servo dds;
 
-    ModernRoboticsI2cGyro Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
+    ModernRoboticsI2cGyro Gyro;
 
     double heading = 0;
     double zHeading = Gyro.getIntegratedZValue();
@@ -80,6 +80,8 @@ public class GyroTestPControlCCW extends LinearOpMode {
         holdR = hardwareMap.servo.get("holdR");
 
         holdC = hardwareMap.servo.get("holdC"); //lift holder
+
+        Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
         //***INIT***//
 
         dump.setPosition(0);

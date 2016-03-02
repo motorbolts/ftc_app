@@ -84,7 +84,7 @@ public class HeadingTracking extends LinearOpMode {
         Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
 
         hardwareMap.logDevices();
-        
+
         //***INIT***//
 
         dump.setPosition(0);
