@@ -104,37 +104,37 @@ public class GyroTestPControlCCW extends LinearOpMode {
 
         waitForStart();
 
-        while(heading < 90 || heading > 90)
+        while(heading < -90 || heading > -90)
         {
             heading = Gyro.getHeading();
             zHeading = Gyro.getIntegratedZValue();
             telemetry.addData("heading",heading);
             telemetry.addData("zHeading",zHeading);
 
-            while(heading < 90) {
-                heading = Gyro.getHeading();
+            while(zHeading > -90) {
+                zHeading = Gyro.getHeading();
 
-                telemetry.addData("heading", heading);
+                telemetry.addData("zHeading", zHeading);
 
-                targetHeading = 90;
+                targetHeading = -90;
 
-                headingError = targetHeading - heading;
+                headingError = targetHeading - zHeading;
 
-                drivesteering = driveGain * headingError;
+                drivesteering = Math.abs( driveGain * headingError );
 
                 if (drivesteering > 1) {
                     drivesteering = 1;
                     telemetry.addData("Caught illegal value", "reset drivesteering to 1");
                 }
 
-                leftPower = midPower + drivesteering;
-                rightPower = midPower - drivesteering;
+                leftPower = midPower - drivesteering;
+                rightPower = midPower + drivesteering;
 
-                if (leftPower < minPowerPositive) {
-                    leftPower = minPowerPositive;
+                if (leftPower < minPowerNegative) {
+                    leftPower = minPowerNegative;
                 }
-                if (rightPower > minPowerNegative) {
-                    rightPower = minPowerNegative;
+                if (rightPower > minPowerPositive) {
+                    rightPower = minPowerPositive;
                 }
 
                 telemetry.addData("leftPower", leftPower);
@@ -146,33 +146,33 @@ public class GyroTestPControlCCW extends LinearOpMode {
                 rwb.setPower(rightPower);
             }
 
-            while(heading > 90)
+            while(heading < -90)
             {
                 heading = Gyro.getHeading();
-                //          integratedHeading = Gyro.getIntegratedZValue();
+                zHeading = Gyro.getIntegratedZValue();
 
-                telemetry.addData("heading", heading);
+                telemetry.addData("zHeading", zHeading);
                 //        telemetry.addData("Integrated", integratedHeading);
 
-                targetHeading = 90;
+                targetHeading = -90;
 
                 headingError = targetHeading - heading;
 
-                drivesteering = driveGain * headingError;
+                drivesteering = Math.abs( driveGain * headingError );
 
                 if (drivesteering > 1) {
                     drivesteering = 1;
                     telemetry.addData("Caught illegal value", "reset drivesteering to 1");
                 }
 
-                rightPower = midPower + drivesteering;
-                leftPower = midPower - drivesteering;
+                rightPower = midPower - drivesteering;
+                leftPower = midPower + drivesteering;
 
-                if (rightPower < minPowerPositive) {
-                    rightPower = minPowerPositive;
+                if (rightPower < minPowerNegative) {
+                    rightPower = minPowerNegative;
                 }
-                if (leftPower > minPowerNegative) {
-                    leftPower = minPowerNegative;
+                if (leftPower > minPowerPositive) {
+                    leftPower = minPowerPositive;
                 }
 
                 lwa.setPower(leftPower);

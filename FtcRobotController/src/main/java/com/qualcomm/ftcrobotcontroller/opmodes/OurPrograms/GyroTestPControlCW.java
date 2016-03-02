@@ -36,7 +36,7 @@ public class GyroTestPControlCW extends LinearOpMode {
 
     Servo dds;
 
-    GyroSensor Gyro;
+    ModernRoboticsI2cGyro Gyro;
 
     double heading = 0;
     //    double integratedHeading = Gyro.getIntegratedZValue();
@@ -80,7 +80,7 @@ public class GyroTestPControlCW extends LinearOpMode {
         holdR = hardwareMap.servo.get("holdR");
 
         holdC = hardwareMap.servo.get("holdC"); //lift holder
-        Gyro = hardwareMap.gyroSensor.get("Gyro");
+        Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
         //***INIT***//
 
         dump.setPosition(0);
@@ -155,7 +155,7 @@ public class GyroTestPControlCW extends LinearOpMode {
 
                 headingError = targetHeading - heading;
 
-                drivesteering = driveGain * headingError;
+                drivesteering = Math.abs( driveGain * headingError );
 
                 if (drivesteering > 1) {
                     drivesteering = 1;
@@ -171,6 +171,9 @@ public class GyroTestPControlCW extends LinearOpMode {
                 if (leftPower > minPowerNegative) {
                     leftPower = minPowerNegative;
                 }
+
+                telemetry.addData("leftPower", leftPower);
+                telemetry.addData("rightPower", rightPower);
 
                 lwa.setPower(leftPower);
                 lwb.setPower(leftPower);
