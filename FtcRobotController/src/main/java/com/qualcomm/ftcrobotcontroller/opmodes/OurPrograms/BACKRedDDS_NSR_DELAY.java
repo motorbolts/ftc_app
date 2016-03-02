@@ -91,166 +91,161 @@ public class BACKRedDDS_NSR_DELAY extends LinearOpMode {
     trigL = hardwareMap.servo.get("trigL");
     trigR = hardwareMap.servo.get("trigR");
     dds = hardwareMap.servo.get("dds");
-        holdL = hardwareMap.servo.get("holdL");
-        holdR = hardwareMap.servo.get("holdR");
-        holdC = hardwareMap.servo.get("holdC");
+    holdL = hardwareMap.servo.get("holdL");
+    holdR = hardwareMap.servo.get("holdR");
+    holdC = hardwareMap.servo.get("holdC");
         //leftPivot = hardwareMap.servo.get("leftPivot");
     //rightPivot = hardwareMap.servo.get("rightPivot");
     lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
     touch = hardwareMap.touchSensor.get("touch");
     Gyro  = hardwareMap.gyroSensor.get("Gyro");
-        colorSensor = hardwareMap.colorSensor.get("colorSensor");
+    colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
 
-        //  leftPivot.setPosition(1);
-        // rightPivot.setPosition(0);
-        dump.setPosition(0);
-               trigL.setPosition(0.8);
-        trigR.setPosition(0.05);
-        //   leftCR.setPosition(0.5);
-        //     rightCR.setPosition(0.5);
-        dds.setPosition(1);
-        holdL.setPosition(0.75);
-        holdR.setPosition(0.05);
-        holdC.setPosition(1);
-        double lineSensorValue;
+    //  leftPivot.setPosition(1);
+    // rightPivot.setPosition(0);
+    dump.setPosition(0);
+           trigL.setPosition(0.8);
+    trigR.setPosition(0.05);
+    //   leftCR.setPosition(0.5);
+    //     rightCR.setPosition(0.5);
+    dds.setPosition(1);
+    holdL.setPosition(0.75);
+    holdR.setPosition(0.05);
+    holdC.setPosition(1);
+    double lineSensorValue;
 
-        double heading = 0;
+    double heading = 0;
 //    double integratedHeading = Gyro.getIntegratedZValue();
-        double headingError;
-        double targetHeading;
-        double drivesteering;
-        double driveGain = 0.003;
-        double leftPower;
-        double rightPower;
-        double midPower = 0;
-        double minPower = 0.2;
+    double headingError;
+    double targetHeading;
+    double drivesteering;
+    double driveGain = 0.003;
+    double leftPower;
+    double rightPower;
+    double midPower = 0;
+    double minPower = 0.2;
 
-        Gyro.calibrate();
-
-
-        // wait for the start button to be pressed
-        waitForStart();
-
-        timer = new ElapsedTime();
-
-        sleep(15000);
-
-        collector.setPower(0);
-
-        while(rwa.getCurrentPosition() > -5500 && timer.time() < 28)
-        {
-            rwa.setPower(-0.75);
-            rwb.setPower(-0.75);
-            lwa.setPower(-0.75);
-            lwb.setPower(-0.75);
-        }
-        rwa.setPower(0);
-        rwb.setPower(0);
-        lwa.setPower(0);
-        lwb.setPower(0);
-        heading = 0;
-        sleep(100);
+    Gyro.calibrate();
 
 
+    // wait for the start button to be pressed
+    waitForStart();
 
-            while(heading < 90) {
-                heading = Gyro.getHeading();
-                telemetry.addData("heading",heading);
+    timer = new ElapsedTime();
 
+    sleep(15000);
 
-                rwa.setPower(-0.5);
-                rwb.setPower(-0.5);
-                lwa.setPower(0.5);
-                lwb.setPower(0.5);
+    collector.setPower(0);
 
-            }
-
-        lwa.setPower(0);
-        lwb.setPower(0);
-        rwa.setPower(0);
-        rwb.setPower(0);
-        telemetry.addData("Event", "Done");
-        sleep(100);
-
-        lwa.setPower(0);
-        lwb.setPower(0);
-        rwa.setPower(0);
-        rwb.setPower(0);
+    while(rwa.getCurrentPosition() > -5500 && timer.time() < 28)
+    {
+        rwa.setPower(-0.75);
+        rwb.setPower(-0.75);
+        lwa.setPower(-0.75);
+        lwb.setPower(-0.75);
+    }
+    rwa.setPower(0);
+    rwb.setPower(0);
+    lwa.setPower(0);
+    lwb.setPower(0);
+    heading = 0;
+    sleep(100);
 
 
-        while(rwa.getCurrentPosition() < -1000 && timer.time() < 29)
-        {
-            rwa.setPower(0.75);
-            rwb.setPower(0.75);
-            lwa.setPower(0.75);
-            lwb.setPower(0.75);
+
+        while(heading < 90) {
+            heading = Gyro.getHeading();
+            telemetry.addData("heading",heading);
+
+
+            rwa.setPower(-0.5);
+            rwb.setPower(-0.5);
+            lwa.setPower(0.5);
+            lwb.setPower(0.5);
+
         }
 
-        lwa.setPower(0);
-        lwb.setPower(0);
-        rwa.setPower(0);
-        rwb.setPower(0);
-        sleep(100);
+    lwa.setPower(0);
+    lwb.setPower(0);
+    rwa.setPower(0);
+    rwb.setPower(0);
+    telemetry.addData("Event", "Done");
+    sleep(100);
+
+    lwa.setPower(0);
+    lwb.setPower(0);
+    rwa.setPower(0);
+    rwb.setPower(0);
+
+
+    while(rwa.getCurrentPosition() < -1000 && timer.time() < 29)
+    {
+        rwa.setPower(0.75);
+        rwb.setPower(0.75);
+        lwa.setPower(0.75);
+        lwb.setPower(0.75);
+    }
+
+    lwa.setPower(0);
+    lwb.setPower(0);
+    rwa.setPower(0);
+    rwb.setPower(0);
+    sleep(100);
 
 
 
-        while (!touch.isPressed() && timer.time() < 29) {
+    while (!touch.isPressed() && timer.time() < 29) {
 
-            lineSensorValue = lineSensor.getLightDetectedRaw();
+        lineSensorValue = lineSensor.getLightDetectedRaw();
 
-            if ((colorSensor.blue()<4)) {
+        if ((colorSensor.blue()<4)) {
 
-                lwa.setPower(0.5);
-                lwb.setPower(0.5);
-                rwa.setPower(0);
-                rwb.setPower(0);
-            } else {
-                lwa.setPower(0);
-                lwb.setPower(0);
-                rwa.setPower(.50);
-                rwb.setPower(.50);
-            }
+            lwa.setPower(0.5);
+            lwb.setPower(0.5);
+            rwa.setPower(0);
+            rwb.setPower(0);
+        } else {
+            lwa.setPower(0);
+            lwb.setPower(0);
+            rwa.setPower(.50);
+            rwb.setPower(.50);
         }
+    }
+
+
+    lwa.setPower(0.0);
+    lwb.setPower(0.0);
+    rwa.setPower(0.0);
+    rwb.setPower(0.0);
+    sleep(100);
+
+
+    collector.setPower(0.0);
+    sleep(100);
+
+    if(timer.time() < 29) {
+        lwa.setPower(-0.35);
+        lwb.setPower(-0.35);
+        rwa.setPower(-0.35);
+        rwb.setPower(-0.35);
+
+        sleep(225);
 
 
         lwa.setPower(0.0);
         lwb.setPower(0.0);
         rwa.setPower(0.0);
         rwb.setPower(0.0);
+
         sleep(100);
+        dds.setPosition(0);
 
-
-        collector.setPower(0.0);
-        sleep(100);
-
-        if(timer.time() < 29) {
-            lwa.setPower(-0.35);
-            lwb.setPower(-0.35);
-            rwa.setPower(-0.35);
-            rwb.setPower(-0.35);
-
-            sleep(225);
-
-
-            lwa.setPower(0.0);
-            lwb.setPower(0.0);
-            rwa.setPower(0.0);
-            rwb.setPower(0.0);
-
-            sleep(100);
-            dds.setPosition(0);
-
-            sleep(900);
-        }
-
-
+        sleep(900);
     }
 
 
-
-
-
+}
 
 }
 
