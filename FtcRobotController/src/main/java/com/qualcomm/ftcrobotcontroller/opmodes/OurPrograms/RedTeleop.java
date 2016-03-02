@@ -164,14 +164,14 @@ public class RedTeleop extends OpMode {
         swivelVal = Range.clip(swivelVal, 0, 1);
         swivelVal = Range.clip(swivelVal, 0, 1);
 
-        if (gamepad2.left_stick_y > 0.25 && (swivelVal < 1)) {
+        if (gamepad2.left_stick_y > 0.25 && (swivelVal < 0.99)) {
             swivelVal = Range.clip(swivelVal, 0, 1);
             swivelVal = Range.clip(swivelVal, 0.01, 1);
             swivelVal = swivelVal + 0.01;
             swivel.setPosition(swivelVal);
         }
 
-        if (gamepad2.left_stick_y < -0.25 && (0 < swivelVal)) {
+        if (gamepad2.left_stick_y < -0.25 && (0.01 < swivelVal)) {
             swivelVal = Range.clip(swivelVal, 0, 1);
             swivelVal = Range.clip(swivelVal, 0, 1);
             swivelVal = swivelVal - 0.01;
