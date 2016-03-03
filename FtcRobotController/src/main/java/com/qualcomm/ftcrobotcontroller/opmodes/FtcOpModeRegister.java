@@ -98,7 +98,17 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("BlueTeleop" , BlueTeleop.class);
 
+    manager.register("GyroTest" , GyroTest.class);
+
     manager.register("HeadingTracking", HeadingTracking.class);
+
+    manager.register("DistanceTest", DistanceTest.class);
+
+    manager.register("GyroCWProportional", GyroTestPControlCW.class);
+
+    manager.register("GyroCCWProportional", GyroTestPControlCCW.class);
+
+    //manager.register("ColorTest", ColorTest.class);
 
     manager.register("Blue-LOW", BACKBlueDDS_NSR_LOWGOAL.class);
 
@@ -115,7 +125,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Red-SETPICK", BACKRedDDS_NSR_SETPICK.class);
 
     manager.register("Red-DELAY", BACKRedDDS_NSR_DELAY.class);
-
+    
     manager.register("GyroCWProportional", GyroTestPControlCW.class);
 
     manager.register("GyroCCWProportional", GyroTestPControlCCW.class);

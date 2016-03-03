@@ -19,9 +19,6 @@ public class BLUEAutoDDS extends LinearOpMode{
     Servo trigL; // P2 channel 3
     Servo trigR; // P2 channel 4
     DcMotor scoopArm; // P3 port 1
-    //DcMotor winch; - Winch not currently on robot will be //P3 port 2
-    //Servo leftCR; // Not on robot- P4 channel 1
-    //Servo rightCR; //Not on robot- P4 channel 2
     Servo wrist;
     Servo ddspivot; // P4 channel 3
     Servo ddsclaw; // P4 channel 4

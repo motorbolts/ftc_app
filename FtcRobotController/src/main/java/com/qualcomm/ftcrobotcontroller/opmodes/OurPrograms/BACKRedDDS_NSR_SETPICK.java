@@ -34,96 +34,113 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
-
-
-//yo
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 
 public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
-    DcMotor rwa;
+
+    DcMotor rwa; //rightwheels
     DcMotor rwb;
+
+    DcMotor lwa; //leftwheels
+    DcMotor lwb;
+
     DcMotor liftL;
     DcMotor liftR;
-    Servo swivel;
-    Servo dump;
-    Servo trigL;
-    Servo trigR;
-    DcMotor collector;
-    // Servo leftCR;
-    // Servo rightCR;
-    Servo dds;
+
+    Servo dump; //servo to score with dumper
+    Servo swivel; //servo that 'spreads' with dumper
+
+    Servo holdR; // churro holders
     Servo holdL;
-    Servo holdR;
-    DcMotor lwa;
-    DcMotor lwb;
-    Servo holdC;
-    //  Servo leftPivot;
-    //  Servo rightPivot;
-    OpticalDistanceSensor lineSensor;
-    TouchSensor touch;
-    GyroSensor Gyro;
+
+    Servo trigL; //zip-line triggers
+    Servo trigR;
+
+    Servo holdC; //servo to guard lift
+
+    DcMotor collector; //bottom collector motor
+    DcMotor collector2; //top collector motor
+
+    Servo dds;
+
+    ModernRoboticsI2cGyro Gyro;
+
     ElapsedTime timer;
+
     ColorSensor colorSensor;
+
+    OpticalDistanceSensor lineSensor;
+
+    TouchSensor touch;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        lwa = hardwareMap.dcMotor.get("leftwheelA");
+        lwa = hardwareMap.dcMotor.get("leftwheelA"); //leftwheels
         lwb = hardwareMap.dcMotor.get("leftwheelB");
-        rwa = hardwareMap.dcMotor.get("rightwheelA");
+
+        rwa = hardwareMap.dcMotor.get("rightwheelA"); //rightwheels
         rwb = hardwareMap.dcMotor.get("rightwheelB");
         rwa.setDirection(DcMotor.Direction.REVERSE);
         rwb.setDirection(DcMotor.Direction.REVERSE);
+
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
-        //liftR.setDirection(DcMotor.Direction.REVERSE);
-        //liftL.setDirection(DcMotor.Direction.REVERSE);
+        liftR.setDirection(DcMotor.Direction.REVERSE);
+
         collector = hardwareMap.dcMotor.get("collector");
-        //rightCR = hardwareMap.servo.get("rightCR");
-        //leftCR = hardwareMap.servo.get("leftCR");
+        collector2 = hardwareMap.dcMotor.get("collector2");
+
+        dump = hardwareMap.servo.get("dump"); //dumper control
         swivel = hardwareMap.servo.get("swivel");
-        dump = hardwareMap.servo.get("dump");
-        trigL = hardwareMap.servo.get("trigL");
+
+        trigL = hardwareMap.servo.get("trigL"); //triggers
         trigR = hardwareMap.servo.get("trigR");
+
         dds = hardwareMap.servo.get("dds");
-        holdL = hardwareMap.servo.get("holdL");
+
+        holdL = hardwareMap.servo.get("holdL"); //churro holder
         holdR = hardwareMap.servo.get("holdR");
-        holdC = hardwareMap.servo.get("holdC");
-        //leftPivot = hardwareMap.servo.get("leftPivot");
-        //rightPivot = hardwareMap.servo.get("rightPivot");
+
+        holdC = hardwareMap.servo.get("holdC"); //lift holder
+        Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
+
         lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
+
         touch = hardwareMap.touchSensor.get("touch");
-        Gyro  = hardwareMap.gyroSensor.get("Gyro");
+
         colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
-        //  leftPivot.setPosition(1);
-        // rightPivot.setPosition(0);
+        //***INIT***//
+
         dump.setPosition(0);
+        swivel.setPosition(1);
+
         trigL.setPosition(0.8);
         trigR.setPosition(0.05);
-        //   leftCR.setPosition(0.5);
-        //     rightCR.setPosition(0.5);
+
         dds.setPosition(1);
+
         holdL.setPosition(0.75);
         holdR.setPosition(0.05);
-        holdC.setPosition(1);
-        double lineSensorValue;
 
-        double heading = 0;
-//    double integratedHeading = Gyro.getIntegratedZValue();
-        double headingError;
+        holdC.setPosition(1);
+
+        double heading;
         double targetHeading;
+        double headingError;
         double drivesteering;
-        double driveGain = 0.004;
+        double driveGain = 0.005;
         double leftPower;
         double rightPower;
         double midPower = 0;
-        double minPower = 0.2;
+        double minPowerPositive = 0.2;
+        double minPowerNegative = -0.2;
 
         Gyro.calibrate();
 
@@ -135,12 +152,13 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
         collector.setPower(0);
 
-        while(lwa.getCurrentPosition() > -7700 && timer.time() < 15)
+        while(lwa.getCurrentPosition() > -10500 && timer.time() < 15)
         {
             rwa.setPower(-0.75);
             rwb.setPower(-0.75);
             lwa.setPower(-0.75);
             lwb.setPower(-0.75);
+            telemetry.addData("Encoder Value", lwa.getCurrentPosition());
         }
 
         rwa.setPower(0);
@@ -151,101 +169,97 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
         sleep(100);
 
 
-        heading = Gyro.getHeading();
-        telemetry.addData("heading",heading);
+        heading = Gyro.getIntegratedZValue();
 
-        heading = 0;
         sleep(100);
 
-        while(heading < 135) {
-            heading = Gyro.getHeading();
-            //          integratedHeading = Gyro.getIntegratedZValue();
-
-            telemetry.addData("heading", heading);
-            //        telemetry.addData("Integrated", integratedHeading);
-
-            targetHeading = 135;
-
-            headingError = targetHeading - heading;
-
-            drivesteering = driveGain * headingError;
-
-            if (drivesteering > 1) {
-                drivesteering = 1;
-                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
-            }
-
-
-            leftPower = midPower - drivesteering;
-            rightPower = midPower - drivesteering;
-
-            if (leftPower < minPower) {
-                leftPower = minPower;
-            }
-            if (rightPower > minPower) {
-                rightPower = minPower;
-            }
-
-            lwa.setPower(leftPower);
-            lwb.setPower(leftPower);
-            rwa.setPower(rightPower);
-            rwb.setPower(rightPower);
-        }
-
-        while(heading > 135)
+        while(heading < -135 || heading > -135)
         {
-            heading = Gyro.getHeading();
-            //          integratedHeading = Gyro.getIntegratedZValue();
+            waitOneFullHardwareCycle();
+            heading = Gyro.getIntegratedZValue();
+            telemetry.addData("zheading", heading);
 
-            telemetry.addData("heading", heading);
-            //        telemetry.addData("Integrated", integratedHeading);
+            while(heading > -135) {
 
-            targetHeading = 135;
+                waitOneFullHardwareCycle();
 
-            headingError = targetHeading - heading;
+                heading = Gyro.getIntegratedZValue();
 
-            drivesteering = driveGain * headingError;
+                targetHeading = -135;
 
-            if (drivesteering > 1) {
-                drivesteering = 1;
-                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                headingError = targetHeading - heading;
+
+                drivesteering = Math.abs(driveGain * headingError);
+
+                if (drivesteering > 1) {
+                    drivesteering = 1;
+                    telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                }
+
+                leftPower = midPower + drivesteering;
+                rightPower = midPower - drivesteering;
+
+                if (leftPower < minPowerPositive) {
+                    leftPower = minPowerPositive;
+                }
+                if (rightPower > minPowerNegative) {
+                    rightPower = minPowerNegative;
+                }
+
+                lwa.setPower(leftPower);
+                lwb.setPower(leftPower);
+                rwa.setPower(rightPower);
+                rwb.setPower(rightPower);
             }
 
-            rightPower = midPower + drivesteering;
-            leftPower = midPower - drivesteering;
+            while(heading < -135)
+            {
+                waitOneFullHardwareCycle();
 
-            if (rightPower > minPower) {
-                rightPower = minPower;
-            }
-            if (leftPower < minPower) {
-                leftPower = minPower;
-            }
+                heading = Gyro.getIntegratedZValue();
 
-            lwa.setPower(leftPower);
-            lwb.setPower(leftPower);
-            rwa.setPower(rightPower);
-            rwb.setPower(rightPower);
+                targetHeading = -135;
+
+                headingError = targetHeading - heading;
+
+                drivesteering = Math.abs( driveGain * headingError);
+
+                if(drivesteering > 1)
+                {
+                    drivesteering = 1;
+                }
+
+                rightPower = midPower + drivesteering;
+                leftPower = midPower - drivesteering;
+
+                if(rightPower < minPowerPositive)
+                {
+                    rightPower = minPowerPositive;
+                }
+
+                if(leftPower > minPowerNegative)
+                {
+                    leftPower = minPowerNegative;
+                }
+
+                lwa.setPower(leftPower);
+                lwb.setPower(leftPower);
+                rwa.setPower(rightPower);
+                rwb.setPower(rightPower);
+            }
         }
 
-
-        lwa.setPower(1);
-        lwb.setPower(1);
-        rwa.setPower(1);
-        rwb.setPower(1);
-        sleep(400);
+        waitOneFullHardwareCycle();
 
         lwa.setPower(0);
         lwb.setPower(0);
         rwa.setPower(0);
         rwb.setPower(0);
-        telemetry.addData("Event", "Done");
         sleep(100);
 
 
 
-        while (!touch.isPressed() && timer.time() < 25) {
-
-            lineSensorValue = lineSensor.getLightDetectedRaw();
+        while (!touch.isPressed() && timer.time() < 20) {
 
             if ((colorSensor.blue()<4)) {
 
@@ -279,7 +293,6 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
             sleep(225);
 
-
             lwa.setPower(0.0);
             lwb.setPower(0.0);
             rwa.setPower(0.0);
@@ -290,52 +303,6 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
             sleep(900);
         }
-
-        lwa.setPower(-1);
-        lwb.setPower(-1);
-        rwa.setPower(-1);
-        rwb.setPower(-1);
-
-        sleep(500);
-
-
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-
-        while(heading < 240)
-        {
-            heading = Gyro.getHeading();
-            telemetry.addData("heading", heading);
-
-            rwa.setPower(-0.5);
-            rwb.setPower(-0.5);
-            lwa.setPower(0.5);
-            lwb.setPower(0.5);
-        }
-
-
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-        sleep(500);
-        dds.setPosition(1);
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
-        rwa.setPower(0.5);
-        rwb.setPower(0.5);
-        sleep(1500);
-        dds.setPosition(1);
-
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-
-        sleep(500);
-
 
     }
 }

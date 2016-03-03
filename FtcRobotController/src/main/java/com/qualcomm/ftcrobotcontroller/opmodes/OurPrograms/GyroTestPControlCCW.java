@@ -38,10 +38,9 @@ public class GyroTestPControlCCW extends LinearOpMode {
 
     ModernRoboticsI2cGyro Gyro;
 
-    double heading = 0;
-    double zHeading = Gyro.getIntegratedZValue();
-    double headingError;
+    double zHeading;
     double targetHeading;
+    double headingError;
     double drivesteering;
     double driveGain = 0.005;
     double leftPower;
@@ -80,7 +79,6 @@ public class GyroTestPControlCCW extends LinearOpMode {
         holdR = hardwareMap.servo.get("holdR");
 
         holdC = hardwareMap.servo.get("holdC"); //lift holder
-
         Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
         //***INIT***//
 
@@ -99,24 +97,26 @@ public class GyroTestPControlCCW extends LinearOpMode {
 
         Gyro.calibrate();
 
-        telemetry.addData("Heading", Gyro.getHeading());
         telemetry.addData("Event", "Waiting for Start");
 
         waitForStart();
 
-        while(heading < -90 || heading > -90)
+        while(zHeading < 90 || zHeading > 90)
         {
-            heading = Gyro.getHeading();
+            waitOneFullHardwareCycle();
             zHeading = Gyro.getIntegratedZValue();
-            telemetry.addData("heading",heading);
-            telemetry.addData("zHeading",zHeading);
+            telemetry.addData("zHeading", zHeading);
 
-            while(zHeading > -90) {
-                zHeading = Gyro.getHeading();
+            while(zHeading < 90) {
+
+                waitOneFullHardwareCycle();
+                zHeading = Gyro.getIntegratedZValue();
 
                 telemetry.addData("zHeading", zHeading);
 
-                targetHeading = -90;
+                telemetry.addData("Event", "Approaching Target");
+
+                targetHeading = 90;
 
                 headingError = targetHeading - zHeading;
 
@@ -130,11 +130,11 @@ public class GyroTestPControlCCW extends LinearOpMode {
                 leftPower = midPower - drivesteering;
                 rightPower = midPower + drivesteering;
 
-                if (leftPower < minPowerNegative) {
-                    leftPower = minPowerNegative;
-                }
-                if (rightPower > minPowerPositive) {
+                if (rightPower < minPowerPositive) {
                     rightPower = minPowerPositive;
+                }
+                if (leftPower > minPowerNegative) {
+                    leftPower = minPowerNegative;
                 }
 
                 telemetry.addData("leftPower", leftPower);
@@ -146,17 +146,19 @@ public class GyroTestPControlCCW extends LinearOpMode {
                 rwb.setPower(rightPower);
             }
 
-            while(heading < -90)
+
+            while(zHeading > 90)
             {
-                heading = Gyro.getHeading();
+                waitOneFullHardwareCycle();
                 zHeading = Gyro.getIntegratedZValue();
 
                 telemetry.addData("zHeading", zHeading);
-                //        telemetry.addData("Integrated", integratedHeading);
 
-                targetHeading = -90;
+                telemetry.addData("Event", "Overshot");
 
-                headingError = targetHeading - heading;
+                targetHeading = 90;
+
+                headingError = targetHeading - zHeading;
 
                 drivesteering = Math.abs( driveGain * headingError );
 
@@ -175,6 +177,9 @@ public class GyroTestPControlCCW extends LinearOpMode {
                     leftPower = minPowerPositive;
                 }
 
+                telemetry.addData("leftPower", leftPower);
+                telemetry.addData("rightPower", rightPower);
+
                 lwa.setPower(leftPower);
                 lwb.setPower(leftPower);
                 rwa.setPower(rightPower);
@@ -182,17 +187,24 @@ public class GyroTestPControlCCW extends LinearOpMode {
             }
         }
 
-        lwa.setPower(0);
-        lwb.setPower(0);
-        rwa.setPower(0);
-        rwb.setPower(0);
-        telemetry.addData("Event", "Done");
-        sleep(100);
+        waitOneFullHardwareCycle();
 
         lwa.setPower(0);
         lwb.setPower(0);
         rwa.setPower(0);
         rwb.setPower(0);
+
+        lwa.setPower(0);
+        lwb.setPower(0);
+        rwa.setPower(0);
+        rwb.setPower(0);
+
+        telemetry.addData("Event", "Done");
+
+        sleep(10000);
+
+
+
 
     }
 

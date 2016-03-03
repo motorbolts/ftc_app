@@ -38,10 +38,9 @@ public class GyroTestPControlCW extends LinearOpMode {
 
     ModernRoboticsI2cGyro Gyro;
 
-    double heading = 0;
-    //    double integratedHeading = Gyro.getIntegratedZValue();
-    double headingError;
+    double zHeading;
     double targetHeading;
+    double headingError;
     double drivesteering;
     double driveGain = 0.005;
     double leftPower;
@@ -98,26 +97,30 @@ public class GyroTestPControlCW extends LinearOpMode {
 
         Gyro.calibrate();
 
-        telemetry.addData("Heading", Gyro.getHeading());
         telemetry.addData("Event", "Waiting for Start");
 
         waitForStart();
 
-        while(heading < 90 || heading > 90)
+        while(zHeading < -90 || zHeading > -90)
         {
-            heading = Gyro.getHeading();
-            telemetry.addData("heading",heading);
+            waitOneFullHardwareCycle();
+            zHeading = Gyro.getIntegratedZValue();
+            telemetry.addData("zHeading", zHeading);
 
-            while(heading < 90) {
-                heading = Gyro.getHeading();
+            while(zHeading > -90) {
 
-                telemetry.addData("heading", heading);
+                waitOneFullHardwareCycle();
+                zHeading = Gyro.getIntegratedZValue();
 
-                targetHeading = 90;
+                telemetry.addData("zHeading", zHeading);
 
-                headingError = targetHeading - heading;
+                telemetry.addData("Event", "Approaching Target");
 
-                drivesteering = driveGain * headingError;
+                targetHeading = -90;
+
+                headingError = targetHeading - zHeading;
+
+                drivesteering = Math.abs( driveGain * headingError );
 
                 if (drivesteering > 1) {
                     drivesteering = 1;
@@ -143,17 +146,19 @@ public class GyroTestPControlCW extends LinearOpMode {
                 rwb.setPower(rightPower);
             }
 
-            while(heading > 90)
+
+            while(zHeading < -90)
             {
-                heading = Gyro.getHeading();
-                //          integratedHeading = Gyro.getIntegratedZValue();
+                waitOneFullHardwareCycle();
+                zHeading = Gyro.getIntegratedZValue();
 
-                telemetry.addData("heading", heading);
-                //        telemetry.addData("Integrated", integratedHeading);
+                telemetry.addData("zHeading", zHeading);
 
-                targetHeading = 90;
+                telemetry.addData("Event", "Overshot");
 
-                headingError = targetHeading - heading;
+                targetHeading = -90;
+
+                headingError = targetHeading - zHeading;
 
                 drivesteering = Math.abs( driveGain * headingError );
 
@@ -182,17 +187,24 @@ public class GyroTestPControlCW extends LinearOpMode {
             }
         }
 
-        lwa.setPower(0);
-        lwb.setPower(0);
-        rwa.setPower(0);
-        rwb.setPower(0);
-        telemetry.addData("Event", "Done");
-        sleep(100);
+        waitOneFullHardwareCycle();
 
         lwa.setPower(0);
         lwb.setPower(0);
         rwa.setPower(0);
         rwb.setPower(0);
+
+        lwa.setPower(0);
+        lwb.setPower(0);
+        rwa.setPower(0);
+        rwb.setPower(0);
+
+        telemetry.addData("Event", "Done");
+
+        sleep(10000);
+
+
+
 
     }
 
