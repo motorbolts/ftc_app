@@ -41,7 +41,7 @@ public class HeadingTracking extends LinearOpMode {
     ModernRoboticsI2cGyro Gyro;
 
     double heading = 0;
-    double zHeading = Gyro.getIntegratedZValue();
+    double zHeading;
     double headingError;
     double targetHeading;
     double drivesteering;
