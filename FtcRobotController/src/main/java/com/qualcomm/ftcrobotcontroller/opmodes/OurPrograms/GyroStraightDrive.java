@@ -39,10 +39,10 @@ public class GyroStraightDrive extends LinearOpMode {
 
     double heading = 0;
     double drivesteering;
-    double driveGain = 0.005;
+    double driveGain = 0.025;
     double leftPower;
     double rightPower;
-    double midPower = -0.7;
+    double midPower = -0.75;
     double minPowerPositive = 0.2;
     double minPowerNegative = -0.2;
 
