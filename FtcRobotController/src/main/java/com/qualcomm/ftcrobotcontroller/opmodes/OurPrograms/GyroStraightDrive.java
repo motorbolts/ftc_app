@@ -5,9 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-/**
- * Created by waltboettge on 3/3/16.
- */
+
 public class GyroStraightDrive extends LinearOpMode {
 
     DcMotor rwa; //rightwheels
@@ -43,8 +41,6 @@ public class GyroStraightDrive extends LinearOpMode {
     double leftPower;
     double rightPower;
     double midPower = -0.75;
-    double minPowerPositive = 0.2;
-    double minPowerNegative = -0.2;
 
     @Override
     public void runOpMode() throws InterruptedException {

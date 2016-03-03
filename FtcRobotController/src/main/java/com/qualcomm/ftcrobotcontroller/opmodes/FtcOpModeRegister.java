@@ -54,7 +54,9 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.ColorTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DistanceTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.DriveToTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.EncoderTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroStraightDrive;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroTestPControlCCW;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.GyroTestPControlCW;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.HeadingTracking;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.LiftTest;
@@ -95,14 +97,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("RedTeleop", RedTeleop.class);
 
     manager.register("BlueTeleop" , BlueTeleop.class);
-    manager.register("GyroTest" , GyroTest.class);
 
     manager.register("HeadingTracking", HeadingTracking.class);
-
-
-    manager.register("DistanceTest", DistanceTest.class);
-
-    //manager.register("ColorTest", ColorTest.class);
 
     manager.register("Blue-LOW", BACKBlueDDS_NSR_LOWGOAL.class);
 
@@ -122,6 +118,9 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("GyroCWProportional", GyroTestPControlCW.class);
 
+    manager.register("GyroCCWProportional", GyroTestPControlCCW.class);
+
+    manager.register("GyroStraightDrive", GyroStraightDrive.class);
 
     //manager.register("EncoderTest", EncoderTest.class);
 
