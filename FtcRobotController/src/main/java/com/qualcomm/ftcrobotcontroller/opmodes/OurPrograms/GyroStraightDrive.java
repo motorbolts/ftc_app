@@ -3,7 +3,9 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 
 public class GyroStraightDrive extends LinearOpMode {
@@ -37,11 +39,10 @@ public class GyroStraightDrive extends LinearOpMode {
 
     double heading = 0;
     double drivesteering;
-    double driveGain = 0.025;
     double leftPower;
     double rightPower;
     double midPower = -0.75;
-
+    double driveGain = 0.0875;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -91,11 +92,13 @@ public class GyroStraightDrive extends LinearOpMode {
 
         Gyro.calibrate();
 
+        //rwa.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+
         telemetry.addData("Event", "Waiting for Start");
 
         waitForStart();
 
-        while(rwa.getCurrentPosition() < 5000)
+        while(rwa.getCurrentPosition() > -5000)
         {
             waitOneFullHardwareCycle();
 
@@ -110,6 +113,18 @@ public class GyroStraightDrive extends LinearOpMode {
             rightPower = midPower - drivesteering;
 
             leftPower = midPower + drivesteering;
+
+            if(leftPower > 1.0)
+            {
+                leftPower = 1.0;
+            }
+            if(rightPower < -1.0)
+            {
+                rightPower = -1.0;
+            }
+
+            rightPower = Range.clip(rightPower, -1, 1);
+            leftPower = Range.clip(leftPower, -1, 1);
 
             telemetry.addData("leftPower", leftPower);
             telemetry.addData("rightPower", rightPower);

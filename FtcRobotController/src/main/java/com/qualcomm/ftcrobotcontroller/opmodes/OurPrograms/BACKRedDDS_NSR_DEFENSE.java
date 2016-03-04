@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.util.Range;
 
 public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
@@ -135,12 +136,9 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     double targetHeading;
     double headingError;
     double drivesteering;
-    double driveGain = 0.005;
-    double leftPower;
-    double rightPower;
-    double midPower = 0;
-    double minPowerPositive = 0.2;
-    double minPowerNegative = -0.2;
+
+        double leftPower;
+        double rightPower;
 
     Gyro.calibrate();
 
@@ -152,14 +150,46 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
     collector.setPower(0);
 
-    while(lwa.getCurrentPosition() > -10500 && timer.time() < 15)
+    double midPower = -0.75;
+    double driveGain = 0.0875;
+
+    while(lwa.getCurrentPosition() > -9800 && timer.time() < 15)
     {
-        rwa.setPower(-0.75);
-        rwb.setPower(-0.75);
-        lwa.setPower(-0.75);
-        lwb.setPower(-0.75);
-        telemetry.addData("Encoder Value", lwa.getCurrentPosition());
+        waitOneFullHardwareCycle();
+
+        telemetry.addData("Encoder Value", rwa.getCurrentPosition());
+
+        heading = Gyro.getIntegratedZValue();
+
+        telemetry.addData("Heading", heading);
+
+        drivesteering = driveGain * heading;
+
+        rightPower = midPower - drivesteering;
+        leftPower = midPower + drivesteering;
+
+        if(leftPower > 1.0)
+        {
+            leftPower = 1.0;
+        }
+        if(rightPower < -1.0)
+        {
+            rightPower = -1.0;
+        }
+
+        rightPower = Range.clip(rightPower, -1, 1);
+        leftPower = Range.clip(leftPower, -1, 1);
+
+        telemetry.addData("leftPower", leftPower);
+        telemetry.addData("rightPower", rightPower);
+
+        lwa.setPower(leftPower);
+        lwb.setPower(leftPower);
+        rwa.setPower(rightPower);
+        rwb.setPower(rightPower);
     }
+
+    waitOneFullHardwareCycle();
 
     rwa.setPower(0);
     rwb.setPower(0);
@@ -168,12 +198,16 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
     sleep(100);
 
-
     heading = Gyro.getIntegratedZValue();
 
     sleep(100);
 
-    while(heading < -135 || heading > -135)
+    midPower = 0;
+    double minPowerPositive = 0.2;
+    double minPowerNegative = -0.2;
+    driveGain = 0.005;
+
+    while((heading < -135 || heading > -135) && timer.time() < 20)
     {
         waitOneFullHardwareCycle();
         heading = Gyro.getIntegratedZValue();
@@ -257,6 +291,12 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     rwb.setPower(0);
     sleep(100);
 
+    lwa.setPower(0.75);
+    lwb.setPower(0.75);
+    rwa.setPower(0.75);
+    rwb.setPower(0.75);
+    sleep(500);
+
 
 
     while (!touch.isPressed() && timer.time() < 20) {
@@ -274,6 +314,7 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
             rwb.setPower(.50);
         }
     }
+    waitOneFullHardwareCycle();
 
     lwa.setPower(0.0);
     lwb.setPower(0.0);
@@ -303,6 +344,5 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
         sleep(900);
     }
-
 }
 }

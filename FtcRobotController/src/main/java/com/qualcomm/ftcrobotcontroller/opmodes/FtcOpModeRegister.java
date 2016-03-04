@@ -98,15 +98,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("BlueTeleop" , BlueTeleop.class);
 
-    manager.register("GyroTest" , GyroTest.class);
-
     manager.register("HeadingTracking", HeadingTracking.class);
-
-    manager.register("DistanceTest", DistanceTest.class);
-
-    manager.register("GyroCWProportional", GyroTestPControlCW.class);
-
-    manager.register("GyroCCWProportional", GyroTestPControlCCW.class);
 
     //manager.register("ColorTest", ColorTest.class);
 
