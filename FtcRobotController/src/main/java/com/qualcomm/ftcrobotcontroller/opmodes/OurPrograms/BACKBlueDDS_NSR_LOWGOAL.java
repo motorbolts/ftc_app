@@ -121,8 +121,8 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         double leftPower;
         double rightPower;
         double midPower;
-        double minPowerPositive = 0.2;
-        double minPowerNegative = -0.2;
+        double minPowerPositive = 0.3;
+        double minPowerNegative = -0.3;
 
 
         Gyro.calibrate();
@@ -137,7 +137,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         midPower = -0.75;
         driveGain = 0.0875;
 
-        while(rwa.getCurrentPosition() > -7700 && timer.time() < 15)
+        while(rwa.getCurrentPosition() > -8400 && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
 
@@ -233,7 +233,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             }
 
 
-            while(heading> 135)
+            while(heading > 135)
             {
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -256,10 +256,10 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
                 rightPower = midPower - drivesteering;
                 leftPower = midPower + drivesteering;
 
-                if (rightPower < minPowerNegative) {
+                if (rightPower > minPowerNegative) {
                     rightPower = minPowerNegative;
                 }
-                if (leftPower > minPowerPositive) {
+                if (leftPower < minPowerPositive) {
                     leftPower = minPowerPositive;
                 }
 
@@ -280,12 +280,12 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         rwa.setPower(0);
         rwb.setPower(0);
         sleep(100);
-        
-        lwa.setPower(1);
-        lwb.setPower(1);
-        rwa.setPower(1);
-        rwb.setPower(1);
-        sleep(400);
+
+        lwa.setPower(0.8);
+        lwb.setPower(0.8);
+        rwa.setPower(0.8);
+        rwb.setPower(0.8);
+        sleep(800);
 
         lwa.setPower(0);
         lwb.setPower(0);

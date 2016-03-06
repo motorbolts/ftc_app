@@ -133,7 +133,7 @@ public class BACKBlueDDS_NSR_SETPICK extends LinearOpMode {
 
     collector.setPower(0);
 
-    while(rwa.getCurrentPosition() > -7700 && timer.time() < 15)
+    while(rwa.getCurrentPosition() > -8400 && timer.time() < 15)
     {
         rwa.setPower(-0.75);
         rwb.setPower(-0.75);

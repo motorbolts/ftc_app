@@ -134,7 +134,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     midPower = -0.75;
     driveGain = 0.0875;
 
-    while(rwa.getCurrentPosition() > -7700 && timer.time() < 15)
+    while(rwa.getCurrentPosition() > -8400 && timer.time() < 15)
     {
         waitOneFullHardwareCycle();
 
