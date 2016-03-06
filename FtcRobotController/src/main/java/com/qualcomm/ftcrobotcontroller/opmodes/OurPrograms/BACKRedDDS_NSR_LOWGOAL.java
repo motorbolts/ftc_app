@@ -207,7 +207,7 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
         double minPowerNegative = -0.2;
         driveGain = 0.005;
 
-        while((heading < -135 || heading > -135) && timer.time() < 20)
+        while((heading < -134 || heading > -134) && timer.time() < 20)
         {
             waitOneFullHardwareCycle();
             heading = Gyro.getIntegratedZValue();
@@ -326,6 +326,8 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
         collector.setPower(0.0);
         sleep(100);
 
+        midPower = 0;
+
         if(timer.time() < 20) {
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
@@ -344,6 +346,81 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
 
             sleep(900);
         }
+
+        lwa.setPower(-0.75);
+        lwb.setPower(-0.75);
+        rwa.setPower(-0.75);
+        rwb.setPower(-0.75);
+
+        sleep(225);
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+
+        sleep(100);
+
+        midPower = 0;
+        driveGain = 0.006;
+
+        while(heading < -45)
+        {
+            waitOneFullHardwareCycle();
+
+            heading = Gyro.getIntegratedZValue();
+
+            telemetry.addData("heading", heading);
+
+            targetHeading = -45;
+
+            headingError = targetHeading - heading;
+
+            drivesteering = Math.abs(driveGain * headingError);
+
+            if (drivesteering > 1) {
+                drivesteering = 1;
+                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+            }
+
+            leftPower = midPower - drivesteering;
+            rightPower = midPower + drivesteering;
+
+            if (leftPower > minPowerNegative) {
+                leftPower = minPowerNegative;
+            }
+            if (rightPower < minPowerPositive) {
+                rightPower = minPowerPositive;
+            }
+
+            lwa.setPower(leftPower);
+            lwb.setPower(leftPower);
+            rwa.setPower(rightPower);
+            rwb.setPower(rightPower);
+        }
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+
+        dds.setPosition(0);
+        
+        sleep(100);
+
+        lwa.setPower(0.4);
+        lwb.setPower(0.4);
+        rwa.setPower(0.4);
+        rwb.setPower(0.4);
+
+        sleep(1000);
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+
+        sleep(100);
 
     }
 }

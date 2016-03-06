@@ -153,7 +153,7 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     double midPower = -0.75;
     double driveGain = 0.0875;
 
-    while(lwa.getCurrentPosition() > -9800 && timer.time() < 15)
+    while(lwa.getCurrentPosition() > -9600 && timer.time() < 15)
     {
         waitOneFullHardwareCycle();
 
@@ -207,7 +207,7 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     double minPowerNegative = -0.2;
     driveGain = 0.005;
 
-    while((heading < -135 || heading > -135) && timer.time() < 20)
+    while((heading < -134 || heading > -134) && timer.time() < 20)
     {
         waitOneFullHardwareCycle();
         heading = Gyro.getIntegratedZValue();
@@ -275,6 +275,9 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
             {
                 leftPower = minPowerNegative;
             }
+
+            rightPower = Range.clip(rightPower, -1, 1);
+            leftPower = Range.clip(leftPower, -1, 1);
 
             lwa.setPower(leftPower);
             lwb.setPower(leftPower);
@@ -344,5 +347,64 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
         sleep(900);
     }
+
+    lwa.setPower(0.0);
+    lwb.setPower(0.0);
+    rwa.setPower(0.0);
+    rwb.setPower(0.0);
+    sleep(100);
+
+    waitOneFullHardwareCycle();
+
+    midPower = -.5;
+
+    while(heading < -85)
+    {
+        waitOneFullHardwareCycle();
+        heading = Gyro.getIntegratedZValue();
+        telemetry.addData("zheading", heading);
+
+        waitOneFullHardwareCycle();
+
+        heading = Gyro.getIntegratedZValue();
+
+        targetHeading = -85;
+
+        headingError = targetHeading - heading;
+
+        drivesteering = Math.abs(driveGain * headingError);
+
+        if (drivesteering > 1) {
+            drivesteering = 1;
+            telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+        }
+
+        leftPower = midPower - drivesteering;
+
+        if (leftPower > minPowerNegative) {
+            leftPower = minPowerNegative;
+        }
+
+        lwa.setPower(leftPower);
+        lwb.setPower(leftPower);
+    }
+
+    lwa.setPower(0.0);
+    lwb.setPower(0.0);
+    rwa.setPower(0.0);
+    rwb.setPower(0.0);
+    sleep(100);
+
+    lwa.setPower(-.80);
+    lwb.setPower(-.80);
+    rwa.setPower(-.80);
+    rwb.setPower(-.80);
+    sleep(3500);
+
+    lwa.setPower(0.0);
+    lwb.setPower(0.0);
+    rwa.setPower(0.0);
+    rwb.setPower(0.0);
+    sleep(100);
 }
 }
