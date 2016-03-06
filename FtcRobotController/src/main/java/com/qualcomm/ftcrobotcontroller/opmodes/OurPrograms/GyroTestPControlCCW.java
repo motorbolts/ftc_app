@@ -38,7 +38,7 @@ public class GyroTestPControlCCW extends LinearOpMode {
 
     ModernRoboticsI2cGyro Gyro;
 
-    double zHeading;
+    double heading;
     double targetHeading;
     double headingError;
     double drivesteering;
@@ -101,24 +101,24 @@ public class GyroTestPControlCCW extends LinearOpMode {
 
         waitForStart();
 
-        while(zHeading < 90 || zHeading > 90)
+        while(heading< 90 || heading> 90)
         {
             waitOneFullHardwareCycle();
-            zHeading = Gyro.getIntegratedZValue();
-            telemetry.addData("zHeading", zHeading);
+            heading= Gyro.getIntegratedZValue();
+            telemetry.addData("zHeading", heading);
 
-            while(zHeading < 90) {
+            while(heading< 90) {
 
                 waitOneFullHardwareCycle();
-                zHeading = Gyro.getIntegratedZValue();
+                heading= Gyro.getIntegratedZValue();
 
-                telemetry.addData("zHeading", zHeading);
+                telemetry.addData("zHeading", heading);
 
                 telemetry.addData("Event", "Approaching Target");
 
                 targetHeading = 90;
 
-                headingError = targetHeading - zHeading;
+                headingError = targetHeading - heading;
 
                 drivesteering = Math.abs( driveGain * headingError );
 
@@ -147,18 +147,18 @@ public class GyroTestPControlCCW extends LinearOpMode {
             }
 
 
-            while(zHeading > 90)
+            while(heading> 90)
             {
                 waitOneFullHardwareCycle();
-                zHeading = Gyro.getIntegratedZValue();
+                heading= Gyro.getIntegratedZValue();
 
-                telemetry.addData("zHeading", zHeading);
+                telemetry.addData("zHeading", heading);
 
                 telemetry.addData("Event", "Overshot");
 
                 targetHeading = 90;
 
-                headingError = targetHeading - zHeading;
+                headingError = targetHeading - heading;
 
                 drivesteering = Math.abs( driveGain * headingError );
 
@@ -202,9 +202,6 @@ public class GyroTestPControlCCW extends LinearOpMode {
         telemetry.addData("Event", "Done");
 
         sleep(10000);
-
-
-
 
     }
 

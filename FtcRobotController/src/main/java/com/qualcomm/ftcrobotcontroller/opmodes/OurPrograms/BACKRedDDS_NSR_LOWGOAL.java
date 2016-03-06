@@ -405,7 +405,7 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
         rwb.setPower(0.0);
 
         dds.setPosition(0);
-        
+
         sleep(100);
 
         lwa.setPower(0.4);

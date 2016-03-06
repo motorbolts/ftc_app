@@ -34,11 +34,12 @@ package com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 
 //yo
@@ -65,7 +66,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
     //  Servo rightPivot;
     OpticalDistanceSensor lineSensor;
     TouchSensor touch;
-    GyroSensor Gyro;
+    ModernRoboticsI2cGyro Gyro;
     ElapsedTime timer;
 
     @Override
@@ -96,7 +97,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         //rightPivot = hardwareMap.servo.get("rightPivot");
         lineSensor = hardwareMap.opticalDistanceSensor.get("dist1");
         touch = hardwareMap.touchSensor.get("touch");
-        Gyro = hardwareMap.gyroSensor.get("Gyro");
+        Gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
 
 
         //  leftPivot.setPosition(1);
@@ -112,16 +113,17 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         holdC.setPosition(1);
         double lineSensorValue;
 
-        double heading = 0;
-//    double integratedHeading = Gyro.getIntegratedZValue();
+        double heading;
         double headingError;
         double targetHeading;
         double drivesteering;
-        double driveGain = 0.005;
+        double driveGain;
         double leftPower;
         double rightPower;
-        double midPower = 0;
-        double minPower = 0.2;
+        double midPower;
+        double minPowerPositive = 0.2;
+        double minPowerNegative = -0.2;
+
 
         Gyro.calibrate();
 
@@ -132,12 +134,44 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         timer = new ElapsedTime();
 
         collector.setPower(0);
+        midPower = -0.75;
+        driveGain = 0.0875;
 
-        while (rwa.getCurrentPosition() > -7700 && timer.time() < 15) {
-            rwa.setPower(-0.75);
-            rwb.setPower(-0.75);
-            lwa.setPower(-0.75);
-            lwb.setPower(-0.75);
+        while(rwa.getCurrentPosition() > -7700 && timer.time() < 15)
+        {
+            waitOneFullHardwareCycle();
+
+            telemetry.addData("Encoder Value", rwa.getCurrentPosition());
+
+            heading = Gyro.getIntegratedZValue();
+
+            telemetry.addData("Heading", heading);
+
+            drivesteering = driveGain * heading;
+
+            rightPower = midPower - drivesteering;
+            leftPower = midPower + drivesteering;
+
+            if(leftPower > 1.0)
+            {
+                leftPower = 1.0;
+            }
+            if(rightPower < -1.0)
+            {
+                rightPower = -1.0;
+            }
+
+            rightPower = Range.clip(rightPower, -1, 1);
+            leftPower = Range.clip(leftPower, -1, 1);
+
+            telemetry.addData("leftPower", leftPower);
+            telemetry.addData("rightPower", rightPower);
+
+            lwa.setPower(leftPower);
+            lwb.setPower(leftPower);
+            rwa.setPower(rightPower);
+            rwb.setPower(rightPower);
+
         }
 
         rwa.setPower(0);
@@ -147,83 +181,106 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
 
         sleep(100);
 
+        midPower = 0.0;
+        driveGain = 0.005;
 
-        heading = Gyro.getHeading();
+        heading = Gyro.getIntegratedZValue();
         telemetry.addData("heading", heading);
 
-        heading = 359;
+        while(heading < 135 || heading > 135)
+        {
+            waitOneFullHardwareCycle();
+            heading= Gyro.getIntegratedZValue();
+            telemetry.addData("zHeading", heading);
+
+            while(heading< 135) {
+
+                waitOneFullHardwareCycle();
+                heading= Gyro.getIntegratedZValue();
+
+                telemetry.addData("zHeading", heading);
+
+                telemetry.addData("Event", "Approaching Target");
+
+                targetHeading = 135;
+
+                headingError = targetHeading - heading;
+
+                drivesteering = Math.abs( driveGain * headingError );
+
+                if (drivesteering > 1) {
+                    drivesteering = 1;
+                    telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                }
+
+                leftPower = midPower - drivesteering;
+                rightPower = midPower + drivesteering;
+
+                if (rightPower < minPowerPositive) {
+                    rightPower = minPowerPositive;
+                }
+                if (leftPower > minPowerNegative) {
+                    leftPower = minPowerNegative;
+                }
+
+                telemetry.addData("leftPower", leftPower);
+                telemetry.addData("rightPower", rightPower);
+
+                lwa.setPower(leftPower);
+                lwb.setPower(leftPower);
+                rwa.setPower(rightPower);
+                rwb.setPower(rightPower);
+            }
+
+
+            while(heading> 135)
+            {
+                waitOneFullHardwareCycle();
+                heading= Gyro.getIntegratedZValue();
+
+                telemetry.addData("zHeading", heading);
+
+                telemetry.addData("Event", "Overshot");
+
+                targetHeading = 135;
+
+                headingError = targetHeading - heading;
+
+                drivesteering = Math.abs( driveGain * headingError );
+
+                if (drivesteering > 1) {
+                    drivesteering = 1;
+                    telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                }
+
+                rightPower = midPower - drivesteering;
+                leftPower = midPower + drivesteering;
+
+                if (rightPower < minPowerNegative) {
+                    rightPower = minPowerNegative;
+                }
+                if (leftPower > minPowerPositive) {
+                    leftPower = minPowerPositive;
+                }
+
+                telemetry.addData("leftPower", leftPower);
+                telemetry.addData("rightPower", rightPower);
+
+                lwa.setPower(leftPower);
+                lwb.setPower(leftPower);
+                rwa.setPower(rightPower);
+                rwb.setPower(rightPower);
+            }
+        }
+
+        waitOneFullHardwareCycle();
+
+        lwa.setPower(0);
+        lwb.setPower(0);
+        rwa.setPower(0);
+        rwb.setPower(0);
         sleep(100);
-
-        while (heading > 225) {
-            heading = Gyro.getHeading();
-            //          integratedHeading = Gyro.getIntegratedZValue();
-
-            telemetry.addData("heading", heading);
-            //        telemetry.addData("Integrated", integratedHeading);
-
-            targetHeading = 225;
-
-            headingError = targetHeading - heading;
-
-            drivesteering = driveGain * headingError;
-
-            if (drivesteering > 1) {
-                drivesteering = 1;
-                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
-            }
-
-
-            leftPower = midPower + drivesteering;
-            rightPower = midPower + drivesteering;
-
-            if (leftPower > minPower) {
-                leftPower = minPower;
-            }
-            if (rightPower < minPower) {
-                rightPower = minPower;
-            }
-
-            lwa.setPower(leftPower);
-            lwb.setPower(leftPower);
-            rwa.setPower(rightPower);
-            rwb.setPower(rightPower);
-        }
-
-        while (heading < 225) {
-            heading = Gyro.getHeading();
-            //          integratedHeading = Gyro.getIntegratedZValue();
-
-            telemetry.addData("heading", heading);
-            //        telemetry.addData("Integrated", integratedHeading);
-
-            targetHeading = 225;
-
-            headingError = targetHeading - heading;
-
-            drivesteering = driveGain * headingError;
-
-            if (drivesteering > 1) {
-                drivesteering = 1;
-                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
-            }
-
-            rightPower = midPower - drivesteering;
-            leftPower = midPower + drivesteering;
-
-            if (rightPower > minPower) {
-                rightPower = minPower;
-            }
-            if (leftPower < minPower) {
-                leftPower = minPower;
-            }
-
-            lwa.setPower(leftPower);
-            lwb.setPower(leftPower);
-            rwa.setPower(rightPower);
-            rwb.setPower(rightPower);
-        }
-
-
+        
         lwa.setPower(1);
         lwb.setPower(1);
         rwa.setPower(1);
