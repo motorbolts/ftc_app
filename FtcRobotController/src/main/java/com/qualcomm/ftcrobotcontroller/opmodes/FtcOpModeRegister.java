@@ -66,6 +66,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.REDAutoDDS;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedDDS_CH;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedDDS_STATE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.RedTeleop;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.ResetEncoders;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -98,8 +99,6 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("BlueTeleop" , BlueTeleop.class);
 
-    manager.register("HeadingTracking", HeadingTracking.class);
-
     //manager.register("ColorTest", ColorTest.class);
 
     manager.register("Blue-LOW", BACKBlueDDS_NSR_LOWGOAL.class);
@@ -117,12 +116,12 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Red-SETPICK", BACKRedDDS_NSR_SETPICK.class);
 
     manager.register("Red-DELAY", BACKRedDDS_NSR_DELAY.class);
-    
-    manager.register("GyroCWProportional", GyroTestPControlCW.class);
 
-    manager.register("GyroCCWProportional", GyroTestPControlCCW.class);
+    manager.register("HeadingTracking", HeadingTracking.class);
 
-    manager.register("GyroStraightDrive", GyroStraightDrive.class);
+    manager.register("ResetEncoders", ResetEncoders.class);
+
+
 
     //manager.register("EncoderTest", EncoderTest.class);
 

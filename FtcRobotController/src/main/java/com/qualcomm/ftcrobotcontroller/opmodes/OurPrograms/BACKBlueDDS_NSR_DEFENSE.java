@@ -103,7 +103,8 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     Gyro  = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("Gyro");
 
     dump.setPosition(0);
-           trigL.setPosition(0.8);
+    swivel.setPosition(1);
+    trigL.setPosition(0.8);
     trigR.setPosition(0.05);
     dds.setPosition(1);
     holdL.setPosition(0.75);
@@ -119,8 +120,8 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     double leftPower;
     double rightPower;
     double midPower;
-    double minPowerPositive = 0.2;
-    double minPowerNegative = -0.2;
+    double minPowerPositive = 0.23;
+    double minPowerNegative = -0.23;
 
     Gyro.calibrate();
 
@@ -184,13 +185,13 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     heading = Gyro.getIntegratedZValue();
     telemetry.addData("heading", heading);
 
-        while(heading < 135 || heading > 135)
+        while(heading < 136 || heading > 136)
         {
             waitOneFullHardwareCycle();
             heading= Gyro.getIntegratedZValue();
             telemetry.addData("zHeading", heading);
 
-            while(heading< 135) {
+            while(heading< 136) {
 
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -230,7 +231,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
             }
 
 
-            while(heading> 135)
+            while(heading> 136)
             {
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -270,12 +271,18 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
             }
         }
 
-        waitOneFullHardwareCycle();
+    waitOneFullHardwareCycle();
 
-    lwa.setPower(1);
-    lwb.setPower(1);
-    rwa.setPower(1);
-    rwb.setPower(1);
+    lwa.setPower(0);
+    lwb.setPower(0);
+    rwa.setPower(0);
+    rwb.setPower(0);
+    sleep(100);
+
+    lwa.setPower(0.8);
+    lwb.setPower(0.8);
+    rwa.setPower(0.8);
+    rwb.setPower(0.8);
     sleep(400);
 
     lwa.setPower(0);
@@ -335,28 +342,23 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
         sleep(900);
     }
 
-    lwa.setPower(-1);
-    lwb.setPower(-1);
-    rwa.setPower(-1);
-    rwb.setPower(-1);
-
-    sleep(500);
 
 
     lwa.setPower(0.0);
     lwb.setPower(0.0);
     rwa.setPower(0.0);
     rwb.setPower(0.0);
+        sleep(100);
 
-    while(heading > 120)
+    while(heading > 90)
     {
-        heading = Gyro.getHeading();
+        heading = Gyro.getIntegratedZValue();
         telemetry.addData("heading", heading);
 
-        rwa.setPower(0.5);
-        rwb.setPower(0.5);
-        lwa.setPower(-0.5);
-        lwb.setPower(-0.5);
+        rwa.setPower(-0.5);
+        rwb.setPower(-0.5);
+        lwa.setPower(0.5);
+        lwb.setPower(0.5);
     }
 
 
@@ -366,12 +368,13 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     rwb.setPower(0.0);
     sleep(500);
     dds.setPosition(1);
-    lwa.setPower(0.5);
-    lwb.setPower(0.5);
-    rwa.setPower(0.5);
-    rwb.setPower(0.5);
-    sleep(3000);
-    dds.setPosition(1);
+
+
+    lwa.setPower(-0.8);
+    lwb.setPower(-0.8);
+    rwa.setPower(-0.8);
+    rwb.setPower(-0.8);
+    sleep(2500);
 
     lwa.setPower(0.0);
     lwb.setPower(0.0);

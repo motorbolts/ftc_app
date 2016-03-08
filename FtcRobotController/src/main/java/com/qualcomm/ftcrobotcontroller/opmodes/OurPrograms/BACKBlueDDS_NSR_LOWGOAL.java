@@ -103,6 +103,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         //  leftPivot.setPosition(1);
         // rightPivot.setPosition(0);
         dump.setPosition(0);
+        swivel.setPosition(1);
         trigL.setPosition(0.8);
         trigR.setPosition(0.05);
         //   leftCR.setPosition(0.5);
@@ -121,8 +122,8 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         double leftPower;
         double rightPower;
         double midPower;
-        double minPowerPositive = 0.3;
-        double minPowerNegative = -0.3;
+        double minPowerPositive = 0.2;
+        double minPowerNegative = -0.2;
 
 
         Gyro.calibrate();
@@ -187,13 +188,13 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         heading = Gyro.getIntegratedZValue();
         telemetry.addData("heading", heading);
 
-        while(heading < 135 || heading > 135)
+        while(heading < 136 || heading > 136)
         {
             waitOneFullHardwareCycle();
             heading= Gyro.getIntegratedZValue();
             telemetry.addData("zHeading", heading);
 
-            while(heading< 135) {
+            while(heading < 136) {
 
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -233,7 +234,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             }
 
 
-            while(heading > 135)
+            while(heading > 136)
             {
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -285,13 +286,12 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         lwb.setPower(0.8);
         rwa.setPower(0.8);
         rwb.setPower(0.8);
-        sleep(800);
+        sleep(450);
 
         lwa.setPower(0);
         lwb.setPower(0);
         rwa.setPower(0);
         rwb.setPower(0);
-        telemetry.addData("Event", "Done");
         sleep(100);
 
 
