@@ -200,7 +200,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
 
                 telemetry.addData("Event", "Approaching Target");
 
-                targetHeading = 135;
+                targetHeading = 136;
 
                 headingError = targetHeading - heading;
 
@@ -240,7 +240,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
 
                 telemetry.addData("Event", "Overshot");
 
-                targetHeading = 135;
+                targetHeading = 136;
 
                 headingError = targetHeading - heading;
 
