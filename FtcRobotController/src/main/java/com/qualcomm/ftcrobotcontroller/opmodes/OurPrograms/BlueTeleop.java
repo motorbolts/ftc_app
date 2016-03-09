@@ -225,7 +225,7 @@ public class BlueTeleop extends OpMode {
         }
 
 //score climbers
-        if (gamepad2.x) {
+        if (gamepad2.y) {
             dds.setPosition(0);
         }
 
