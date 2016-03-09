@@ -207,19 +207,19 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
         double minPowerNegative = -0.2;
         driveGain = 0.005;
 
-        while((heading < -135 || heading > -135) && timer.time() < 20)
+        while((heading < -134 || heading > -134) && timer.time() < 20)
         {
             waitOneFullHardwareCycle();
             heading = Gyro.getIntegratedZValue();
             telemetry.addData("zheading", heading);
 
-            while(heading > -135) {
+            while(heading > -134) {
 
                 waitOneFullHardwareCycle();
 
                 heading = Gyro.getIntegratedZValue();
 
-                targetHeading = -135;
+                targetHeading = -134;
 
                 headingError = targetHeading - heading;
 
@@ -246,13 +246,13 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
                 rwb.setPower(rightPower);
             }
 
-            while(heading < -135)
+            while(heading < -134)
             {
                 waitOneFullHardwareCycle();
 
                 heading = Gyro.getIntegratedZValue();
 
-                targetHeading = -135;
+                targetHeading = -134;
 
                 headingError = targetHeading - heading;
 

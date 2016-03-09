@@ -213,13 +213,13 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
         heading = Gyro.getIntegratedZValue();
         telemetry.addData("zheading", heading);
 
-        while(heading > -135) {
+        while(heading > -134) {
 
             waitOneFullHardwareCycle();
 
             heading = Gyro.getIntegratedZValue();
 
-            targetHeading = -135;
+            targetHeading = -134;
 
             headingError = targetHeading - heading;
 
@@ -246,13 +246,13 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
             rwb.setPower(rightPower);
         }
 
-        while(heading < -135)
+        while(heading < -134)
         {
             waitOneFullHardwareCycle();
 
             heading = Gyro.getIntegratedZValue();
 
-            targetHeading = -135;
+            targetHeading = -134;
 
             headingError = targetHeading - heading;
 
