@@ -254,10 +254,10 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
                 rightPower = midPower - drivesteering;
                 leftPower = midPower + drivesteering;
 
-                if (rightPower < minPowerNegative) {
+                if (rightPower > minPowerNegative) {
                     rightPower = minPowerNegative;
                 }
-                if (leftPower > minPowerPositive) {
+                if (leftPower < minPowerPositive) {
                     leftPower = minPowerPositive;
                 }
 
