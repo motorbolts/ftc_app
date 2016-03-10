@@ -121,6 +121,8 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("ResetEncoders", ResetEncoders.class);
 
+    manager.register("LineSensorTest", DistanceTest.class);
+
 
 
     //manager.register("EncoderTest", EncoderTest.class);

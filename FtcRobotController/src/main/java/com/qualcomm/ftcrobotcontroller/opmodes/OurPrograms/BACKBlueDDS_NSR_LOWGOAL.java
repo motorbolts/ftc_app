@@ -138,7 +138,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         midPower = -0.75;
         driveGain = 0.0875;
 
-        while(rwa.getCurrentPosition() > -8400 && timer.time() < 15)
+        while(rwa.getCurrentPosition() > -8400 && timer.time() < 10)
         {
             waitOneFullHardwareCycle();
 
@@ -188,13 +188,13 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         heading = Gyro.getIntegratedZValue();
         telemetry.addData("heading", heading);
 
-        while(heading < 136 || heading > 136)
+        while((heading < 136 || heading > 136) && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
             heading= Gyro.getIntegratedZValue();
             telemetry.addData("zHeading", heading);
 
-            while(heading < 136) {
+            while(heading < 136 && timer.time() < 15) {
 
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -234,7 +234,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             }
 
 
-            while(heading > 136)
+            while(heading > 136 && timer.time() < 15)
             {
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -295,9 +295,11 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         sleep(100);
 
 
-        while (!touch.isPressed() && timer.time() < 20) {
+        while (!touch.isPressed() && timer.time() < 15) {
 
             lineSensorValue = lineSensor.getLightDetectedRaw();
+
+            telemetry.addData("lineSensorValue", lineSensorValue);
 
             if (lineSensorValue < 10) {
 
@@ -323,7 +325,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         collector.setPower(0.0);
         sleep(100);
 
-        if (timer.time() < 20) {
+        if (timer.time() < 15) {
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
             rwa.setPower(-0.35);
