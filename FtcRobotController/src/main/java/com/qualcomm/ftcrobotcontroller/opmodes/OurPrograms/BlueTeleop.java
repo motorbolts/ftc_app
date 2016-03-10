@@ -140,6 +140,13 @@ public class BlueTeleop extends OpMode {
             trigR.setPosition(0.05);
         }
 
+        if (gamepad2.left_trigger > 0.5)
+        {
+            trigL.setPosition(0);
+        } else {
+            trigL.setPosition(0.8);
+        }
+
 // Dumper scoring
         if (gamepad2.right_trigger > 0.5) {
             dump.setPosition(1);

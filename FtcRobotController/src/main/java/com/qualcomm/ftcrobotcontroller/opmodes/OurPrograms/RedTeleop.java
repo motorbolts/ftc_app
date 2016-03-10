@@ -141,9 +141,15 @@ public class RedTeleop extends OpMode {
             trigR.setPosition(0.05);
         }
 
+        if(gamepad2.right_trigger > 0.5) {
+            trigR.setPosition(0.8);
+        } else {
+            trigR.setPosition(0);
+        }
+
 
 // Dumper scoring
-        if (gamepad2.right_trigger > 0.5) {
+        if (gamepad2.left_trigger > 0.5) {
             dump.setPosition(1);
         } else {
             dump.setPosition(0);
