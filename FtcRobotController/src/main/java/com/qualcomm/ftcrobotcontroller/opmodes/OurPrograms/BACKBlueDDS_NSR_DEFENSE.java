@@ -185,13 +185,13 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     heading = Gyro.getIntegratedZValue();
     telemetry.addData("heading", heading);
 
-        while(heading < 136 || heading > 136)
+        while((heading < 136 || heading > 136) && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
             heading= Gyro.getIntegratedZValue();
             telemetry.addData("zHeading", heading);
 
-            while(heading< 136) {
+            while(heading< 136 && timer.time() < 15) {
 
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -231,7 +231,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
             }
 
 
-            while(heading> 136)
+            while(heading> 136 && timer.time() < 15)
             {
                 waitOneFullHardwareCycle();
                 heading= Gyro.getIntegratedZValue();
@@ -294,7 +294,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
 
 
 
-    while (!touch.isPressed() && timer.time() < 20) {
+    while (!touch.isPressed() && timer.time() < 15) {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
@@ -322,7 +322,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     collector.setPower(0.0);
     sleep(100);
 
-    if(timer.time() < 20) {
+    if(timer.time() < 15) {
         lwa.setPower(-0.35);
         lwb.setPower(-0.35);
         rwa.setPower(-0.35);
