@@ -153,7 +153,7 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
         double midPower = -0.75;
         double driveGain = 0.0875;
 
-        while(lwa.getCurrentPosition() > -9800 && timer.time() < 15)
+        while(lwa.getCurrentPosition() > -9200 && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
 
@@ -301,7 +301,7 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
         while (!touch.isPressed() && timer.time() < 15) {
 
-            if ((colorSensor.blue()<4)) {
+            if ((colorSensor.blue() < 2)) {
 
                 lwa.setPower(0.5);
                 lwb.setPower(0.5);

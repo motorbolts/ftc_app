@@ -199,7 +199,7 @@ public class BACKRedDDS_NSR_DELAY extends LinearOpMode {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
-        if ((colorSensor.blue()<4)) {
+        if ((colorSensor.blue() < 2)) {
 
             lwa.setPower(0.5);
             lwb.setPower(0.5);

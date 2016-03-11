@@ -119,9 +119,12 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("HeadingTracking", HeadingTracking.class);
 
+    manager.register("LineSensorTest", DistanceTest.class);
+
+    manager.register("ColorTest", ColorTest.class);
+
     manager.register("ResetEncoders", ResetEncoders.class);
 
-    manager.register("LineSensorTest", DistanceTest.class);
 
 
 
