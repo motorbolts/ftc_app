@@ -140,6 +140,8 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
         double leftPower;
         double rightPower;
 
+        boolean climbersScored = false;
+
         Gyro.calibrate();
 
 
@@ -207,13 +209,13 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
         double minPowerNegative = -0.2;
         driveGain = 0.005;
 
-        while((heading < -134 || heading > -134) && timer.time() < 20)
+        while((heading < -134 || heading > -134) && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
             heading = Gyro.getIntegratedZValue();
             telemetry.addData("zheading", heading);
 
-            while(heading > -134) {
+            while(heading > -134 && timer.time() < 15) {
 
                 waitOneFullHardwareCycle();
 
@@ -246,7 +248,7 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
                 rwb.setPower(rightPower);
             }
 
-            while(heading < -134)
+            while(heading < -134 && timer.time() < 15)
             {
                 waitOneFullHardwareCycle();
 
@@ -299,7 +301,7 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
 
 
 
-        while (!touch.isPressed() && timer.time() < 20) {
+        while (!touch.isPressed() && timer.time() < 15) {
 
             if ((colorSensor.blue()<4)) {
 
@@ -328,13 +330,13 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
 
         midPower = 0;
 
-        if(timer.time() < 20) {
+        if(timer.time() < 15) {
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
             rwa.setPower(-0.35);
             rwb.setPower(-0.35);
 
-            sleep(225);
+            sleep(175);
 
             lwa.setPower(0.0);
             lwb.setPower(0.0);
@@ -343,6 +345,8 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
 
             sleep(100);
             dds.setPosition(0);
+
+            climbersScored = true;
 
             sleep(900);
         }
@@ -364,63 +368,112 @@ public class BACKRedDDS_NSR_LOWGOAL extends LinearOpMode {
         midPower = 0;
         driveGain = 0.006;
 
-        while(heading < -45)
-        {
-            waitOneFullHardwareCycle();
+        if(climbersScored == true) {
+            while (heading < -90) {
+                waitOneFullHardwareCycle();
 
-            heading = Gyro.getIntegratedZValue();
+                heading = Gyro.getIntegratedZValue();
 
-            telemetry.addData("heading", heading);
+                telemetry.addData("heading", heading);
 
-            targetHeading = -45;
+                targetHeading = -90;
 
-            headingError = targetHeading - heading;
+                headingError = targetHeading - heading;
 
-            drivesteering = Math.abs(driveGain * headingError);
+                drivesteering = Math.abs(driveGain * headingError);
 
-            if (drivesteering > 1) {
-                drivesteering = 1;
-                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                if (drivesteering > 1) {
+                    drivesteering = 1;
+                    telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                }
+
+                leftPower = midPower - drivesteering;
+                rightPower = midPower + drivesteering;
+
+                if (leftPower > minPowerNegative) {
+                    leftPower = minPowerNegative;
+                }
+                if (rightPower < minPowerPositive) {
+                    rightPower = minPowerPositive;
+                }
+
+                lwa.setPower(leftPower);
+                lwb.setPower(leftPower);
+                rwa.setPower(rightPower);
+                rwb.setPower(rightPower);
             }
 
-            leftPower = midPower - drivesteering;
-            rightPower = midPower + drivesteering;
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
 
-            if (leftPower > minPowerNegative) {
-                leftPower = minPowerNegative;
-            }
-            if (rightPower < minPowerPositive) {
-                rightPower = minPowerPositive;
-            }
+            dds.setPosition(0);
 
-            lwa.setPower(leftPower);
-            lwb.setPower(leftPower);
-            rwa.setPower(rightPower);
-            rwb.setPower(rightPower);
+            sleep(100);
+
+            lwa.setPower(0.4);
+            lwb.setPower(0.4);
+            rwa.setPower(0.4);
+            rwb.setPower(0.4);
+
+            sleep(1000);
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+
+            sleep(100);
         }
+        else {
+            while(heading < -85)
+            {
+                waitOneFullHardwareCycle();
+                heading = Gyro.getIntegratedZValue();
+                telemetry.addData("zheading", heading);
 
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
+                waitOneFullHardwareCycle();
 
-        dds.setPosition(0);
+                heading = Gyro.getIntegratedZValue();
 
-        sleep(100);
+                targetHeading = -85;
 
-        lwa.setPower(0.4);
-        lwb.setPower(0.4);
-        rwa.setPower(0.4);
-        rwb.setPower(0.4);
+                headingError = targetHeading - heading;
 
-        sleep(1000);
+                drivesteering = Math.abs(driveGain * headingError);
 
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
+                if (drivesteering > 1) {
+                    drivesteering = 1;
+                    telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+                }
 
-        sleep(100);
+                leftPower = midPower - drivesteering;
 
+                if (leftPower > minPowerNegative) {
+                    leftPower = minPowerNegative;
+                }
+
+                lwa.setPower(leftPower);
+                lwb.setPower(leftPower);
+            }
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+            sleep(100);
+
+            lwa.setPower(-.80);
+            lwb.setPower(-.80);
+            rwa.setPower(-.80);
+            rwb.setPower(-.80);
+            sleep(3500);
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+            sleep(100);
+        }
     }
 }

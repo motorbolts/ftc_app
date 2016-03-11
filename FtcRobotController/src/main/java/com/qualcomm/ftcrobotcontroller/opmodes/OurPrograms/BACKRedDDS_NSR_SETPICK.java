@@ -207,13 +207,13 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
         double minPowerNegative = -0.2;
         driveGain = 0.005;
 
-        while((heading < -134 || heading > -134) && timer.time() < 20)
+        while((heading < -134 || heading > -134) && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
             heading = Gyro.getIntegratedZValue();
             telemetry.addData("zheading", heading);
 
-            while(heading > -134) {
+            while(heading > -134 && timer.time() < 15) {
 
                 waitOneFullHardwareCycle();
 
@@ -246,7 +246,7 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
                 rwb.setPower(rightPower);
             }
 
-            while(heading < -134)
+            while(heading < -134 && timer.time() < 15)
             {
                 waitOneFullHardwareCycle();
 
@@ -299,7 +299,7 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
 
 
-        while (!touch.isPressed() && timer.time() < 20) {
+        while (!touch.isPressed() && timer.time() < 15) {
 
             if ((colorSensor.blue()<4)) {
 
@@ -326,7 +326,7 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
         collector.setPower(0.0);
         sleep(100);
 
-        if(timer.time() < 20) {
+        if(timer.time() < 15) {
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
             rwa.setPower(-0.35);
@@ -344,6 +344,57 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
             sleep(900);
         }
+
+        midPower = -.5;
+
+        while(heading < -85)
+        {
+            waitOneFullHardwareCycle();
+            heading = Gyro.getIntegratedZValue();
+            telemetry.addData("zheading", heading);
+
+            waitOneFullHardwareCycle();
+
+            heading = Gyro.getIntegratedZValue();
+
+            targetHeading = -85;
+
+            headingError = targetHeading - heading;
+
+            drivesteering = Math.abs(driveGain * headingError);
+
+            if (drivesteering > 1) {
+                drivesteering = 1;
+                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+            }
+
+            leftPower = midPower - drivesteering;
+
+            if (leftPower > minPowerNegative) {
+                leftPower = minPowerNegative;
+            }
+
+            lwa.setPower(leftPower);
+            lwb.setPower(leftPower);
+        }
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+        sleep(100);
+
+        lwa.setPower(-.80);
+        lwb.setPower(-.80);
+        rwa.setPower(-.80);
+        rwb.setPower(-.80);
+        sleep(1700);
+
+        lwa.setPower(0.0);
+        lwb.setPower(0.0);
+        rwa.setPower(0.0);
+        rwb.setPower(0.0);
+        sleep(100);
 
     }
 }

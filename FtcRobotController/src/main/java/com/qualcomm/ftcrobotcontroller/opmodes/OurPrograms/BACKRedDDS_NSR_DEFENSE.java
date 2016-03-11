@@ -207,13 +207,13 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     double minPowerNegative = -0.2;
     driveGain = 0.005;
 
-    while((heading < -134 || heading > -134) && timer.time() < 20)
+    while((heading < -134 || heading > -134) && timer.time() < 15)
     {
         waitOneFullHardwareCycle();
         heading = Gyro.getIntegratedZValue();
         telemetry.addData("zheading", heading);
 
-        while(heading > -134) {
+        while(heading > -134 && timer.time() < 15) {
 
             waitOneFullHardwareCycle();
 
@@ -246,7 +246,7 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
             rwb.setPower(rightPower);
         }
 
-        while(heading < -134)
+        while(heading < -134 && timer.time() < 15)
         {
             waitOneFullHardwareCycle();
 
@@ -302,7 +302,7 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
 
 
-    while (!touch.isPressed() && timer.time() < 20) {
+    while (!touch.isPressed() && timer.time() < 15) {
 
         if ((colorSensor.blue()<4)) {
 
@@ -329,7 +329,7 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     collector.setPower(0.0);
     sleep(100);
 
-    if(timer.time() < 20) {
+    if(timer.time() < 15) {
         lwa.setPower(-0.35);
         lwb.setPower(-0.35);
         rwa.setPower(-0.35);
