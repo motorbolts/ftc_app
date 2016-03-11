@@ -124,6 +124,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         double midPower;
         double minPowerPositive = 0.2;
         double minPowerNegative = -0.2;
+        boolean climbersScored = false;
 
 
         Gyro.calibrate();
@@ -138,8 +139,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         midPower = -0.75;
         driveGain = 0.0875;
 
-        while(rwa.getCurrentPosition() > -8400 && timer.time() < 10)
-        {
+        while (rwa.getCurrentPosition() > -8400 && timer.time() < 10) {
             waitOneFullHardwareCycle();
 
             telemetry.addData("Encoder Value", rwa.getCurrentPosition());
@@ -153,12 +153,10 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             rightPower = midPower - drivesteering;
             leftPower = midPower + drivesteering;
 
-            if(leftPower > 1.0)
-            {
+            if (leftPower > 1.0) {
                 leftPower = 1.0;
             }
-            if(rightPower < -1.0)
-            {
+            if (rightPower < -1.0) {
                 rightPower = -1.0;
             }
 
@@ -188,16 +186,15 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         heading = Gyro.getIntegratedZValue();
         telemetry.addData("heading", heading);
 
-        while((heading < 136 || heading > 136) && timer.time() < 15)
-        {
+        while ((heading < 136 || heading > 136) && timer.time() < 15) {
             waitOneFullHardwareCycle();
-            heading= Gyro.getIntegratedZValue();
+            heading = Gyro.getIntegratedZValue();
             telemetry.addData("zHeading", heading);
 
-            while(heading < 136 && timer.time() < 15) {
+            while (heading < 136 && timer.time() < 15) {
 
                 waitOneFullHardwareCycle();
-                heading= Gyro.getIntegratedZValue();
+                heading = Gyro.getIntegratedZValue();
 
                 telemetry.addData("zHeading", heading);
 
@@ -207,7 +204,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
 
                 headingError = targetHeading - heading;
 
-                drivesteering = Math.abs( driveGain * headingError );
+                drivesteering = Math.abs(driveGain * headingError);
 
                 if (drivesteering > 1) {
                     drivesteering = 1;
@@ -234,10 +231,9 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             }
 
 
-            while(heading > 136 && timer.time() < 15)
-            {
+            while (heading > 136 && timer.time() < 15) {
                 waitOneFullHardwareCycle();
-                heading= Gyro.getIntegratedZValue();
+                heading = Gyro.getIntegratedZValue();
 
                 telemetry.addData("zHeading", heading);
 
@@ -247,7 +243,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
 
                 headingError = targetHeading - heading;
 
-                drivesteering = Math.abs( driveGain * headingError );
+                drivesteering = Math.abs(driveGain * headingError);
 
                 if (drivesteering > 1) {
                     drivesteering = 1;
@@ -331,7 +327,7 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             rwa.setPower(-0.35);
             rwb.setPower(-0.35);
 
-            sleep(225);
+            sleep(175);
 
 
             lwa.setPower(0.0);
@@ -341,6 +337,8 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
 
             sleep(100);
             dds.setPosition(0);
+
+            climbersScored = true;
 
             sleep(900);
         }
@@ -357,32 +355,69 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         lwb.setPower(0.0);
         rwa.setPower(0.0);
         rwb.setPower(0.0);
-
-        while (heading > 130) {
-            heading = Gyro.getHeading();
-            telemetry.addData("heading", heading);
-
-            rwa.setPower(0.5);
-            rwb.setPower(0.5);
-            lwa.setPower(-0.5);
-            lwb.setPower(-0.5);
-        }
-
-
-        lwa.setPower(-0.5);
-        lwb.setPower(-0.5);
-        rwa.setPower(-0.5);
-        rwb.setPower(-0.5);
-        sleep(1000);
-        dds.setPosition(1);
-
-        lwa.setPower(0.0);
-        lwb.setPower(0.0);
-        rwa.setPower(0.0);
-        rwb.setPower(0.0);
-
         sleep(500);
 
+        if (climbersScored == true) {
 
+            while (heading > 90) {
+                waitOneFullHardwareCycle();
+
+                heading = Gyro.getIntegratedZValue();
+                telemetry.addData("heading", heading);
+
+                rwa.setPower(-0.5);
+                rwb.setPower(-0.5);
+                lwa.setPower(0.5);
+                lwb.setPower(0.5);
+            }
+
+            lwa.setPower(0.8);
+            lwb.setPower(0.8);
+            rwa.setPower(0.8);
+            rwb.setPower(0.8);
+            sleep(1000);
+            dds.setPosition(1);
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+
+            sleep(500);
+        }
+
+        else
+        {
+            while (heading > 90)
+            {
+                waitOneFullHardwareCycle();
+                heading = Gyro.getIntegratedZValue();
+                telemetry.addData("heading", heading);
+
+                rwa.setPower(-0.5);
+                rwb.setPower(-0.5);
+                lwa.setPower(0.5);
+                lwb.setPower(0.5);
+            }
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+            sleep(500);
+
+            lwa.setPower(-0.8);
+            lwb.setPower(-0.8);
+            rwa.setPower(-0.8);
+            rwb.setPower(-0.8);
+            sleep(2500);
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+
+            sleep(500);
+        }
     }
 }

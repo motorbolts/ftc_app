@@ -142,9 +142,9 @@ public class RedTeleop extends OpMode {
         }
 
         if(gamepad2.right_trigger > 0.5) {
-            trigR.setPosition(0.8);
+            trigL.setPosition(0);
         } else {
-            trigR.setPosition(0);
+            trigL.setPosition(0.8);
         }
 
 
