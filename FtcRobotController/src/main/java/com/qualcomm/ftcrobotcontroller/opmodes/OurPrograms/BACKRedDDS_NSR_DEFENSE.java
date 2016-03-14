@@ -117,28 +117,32 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
     colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
-        //***INIT***//
+    //***INIT***//
 
-        dump.setPosition(1);
-        swivel.setPosition(0);
+    dump.setPosition(1);
+    swivel.setPosition(0);
 
-        trigL.setPosition(0.8);
-        trigR.setPosition(0.05);
+    trigL.setPosition(0.8);
+    trigR.setPosition(0.05);
 
-        dds.setPosition(1);
+    dds.setPosition(1);
 
-        holdL.setPosition(0.75);
-        holdR.setPosition(0.05);
+    holdL.setPosition(0.75);
+    holdR.setPosition(0.05);
 
-        holdC.setPosition(1);
+    holdC.setPosition(1);
 
     double heading;
     double targetHeading;
     double headingError;
     double drivesteering;
 
-        double leftPower;
-        double rightPower;
+    double leftPower;
+    double rightPower;
+
+    double lineDetected = 0;
+
+    boolean touchDetected = false;
 
     Gyro.calibrate();
 
@@ -315,6 +319,17 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
             lwb.setPower(0);
             rwa.setPower(.50);
             rwb.setPower(.50);
+            lineDetected ++;
+        }
+
+        if(lineDetected >= 100)
+        {
+            collector.setPower(0);
+        }
+
+        if(touch.isPressed())
+        {
+            touchDetected = true;
         }
     }
     waitOneFullHardwareCycle();
@@ -325,9 +340,14 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
     rwb.setPower(0.0);
     sleep(100);
 
-
     collector.setPower(0.0);
     sleep(100);
+
+    if(lineDetected > 25000 && touchDetected == false)
+    {
+        dds.setPosition(0);
+        sleep(1000);
+    }
 
     if(timer.time() < 15) {
         lwa.setPower(-0.35);
