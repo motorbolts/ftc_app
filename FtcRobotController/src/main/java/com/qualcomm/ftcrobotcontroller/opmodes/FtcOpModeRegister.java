@@ -37,11 +37,13 @@ import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_DEFENSE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_DELAY;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_LOWGOAL;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_LOWGOAL_SOLO;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_NSR_SETPICK;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKBlueDDS_STATE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_DEFENSE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_DELAY;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_LOWGOAL;
+import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_LOWGOAL_SOLO;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_NSR_SETPICK;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedDDS_STATE;
 import com.qualcomm.ftcrobotcontroller.opmodes.OurPrograms.BACKRedRAMP;
@@ -103,6 +105,8 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("Blue-LOW", BACKBlueDDS_NSR_LOWGOAL.class);
 
+    manager.register("Blue-SOLO", BACKBlueDDS_NSR_LOWGOAL_SOLO.class);
+
     manager.register("Blue-DEFENSE", BACKBlueDDS_NSR_DEFENSE.class);
 
     manager.register("Blue-SETPICK", BACKBlueDDS_NSR_SETPICK.class);
@@ -110,6 +114,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Blue-DELAY", BACKBlueDDS_NSR_DELAY.class);
 
     manager.register("Red-LOW", BACKRedDDS_NSR_LOWGOAL.class);
+
+    manager.register("Red-SOLO", BACKRedDDS_NSR_LOWGOAL_SOLO.class);
 
     manager.register("Red-DEFENSE", BACKRedDDS_NSR_DEFENSE.class);
 

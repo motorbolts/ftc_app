@@ -152,7 +152,7 @@ public class BACKRedDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
 
         collector.setPower(0);
 
-        double midPower = -0.75;
+        double midPower = -0.55;
         double driveGain = 0.0875;
 
         while(lwa.getCurrentPosition() > -9200 && timer.time() < 15)
@@ -364,6 +364,6 @@ public class BACKRedDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
         rwb.setPower(0.0);
 
         sleep(100);
-        
+
     }
 }

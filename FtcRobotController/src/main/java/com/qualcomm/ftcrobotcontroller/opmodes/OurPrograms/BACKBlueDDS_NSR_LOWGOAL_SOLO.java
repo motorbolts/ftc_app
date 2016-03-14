@@ -136,10 +136,10 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
         timer = new ElapsedTime();
 
         collector.setPower(0);
-        midPower = -0.75;
+        midPower = -0.55;
         driveGain = 0.0875;
 
-        while (rwa.getCurrentPosition() > -8400 && timer.time() < 12) {
+        while (rwa.getCurrentPosition() > -8400 && timer.time() < 18) {
             waitOneFullHardwareCycle();
 
             telemetry.addData("Encoder Value", rwa.getCurrentPosition());
