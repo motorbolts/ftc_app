@@ -119,18 +119,18 @@ public class BACKRedDDS_NSR_DEFENSE extends LinearOpMode {
 
         //***INIT***//
 
-    dump.setPosition(0);
-    swivel.setPosition(1);
+        dump.setPosition(1);
+        swivel.setPosition(0);
 
-    trigL.setPosition(0.8);
-    trigR.setPosition(0.05);
+        trigL.setPosition(0.8);
+        trigR.setPosition(0.05);
 
-    dds.setPosition(1);
+        dds.setPosition(1);
 
-    holdL.setPosition(0.75);
-    holdR.setPosition(0.05);
+        holdL.setPosition(0.75);
+        holdR.setPosition(0.05);
 
-    holdC.setPosition(1);
+        holdC.setPosition(1);
 
     double heading;
     double targetHeading;

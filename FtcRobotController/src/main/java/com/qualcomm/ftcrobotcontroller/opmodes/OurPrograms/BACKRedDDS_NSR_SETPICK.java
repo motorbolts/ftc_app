@@ -119,8 +119,8 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
 
         //***INIT***//
 
-        dump.setPosition(0);
-        swivel.setPosition(1);
+        dump.setPosition(1);
+        swivel.setPosition(0);
 
         trigL.setPosition(0.8);
         trigR.setPosition(0.05);

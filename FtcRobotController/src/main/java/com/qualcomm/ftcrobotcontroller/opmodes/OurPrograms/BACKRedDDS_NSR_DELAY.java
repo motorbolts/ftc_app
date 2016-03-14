@@ -101,18 +101,18 @@ public class BACKRedDDS_NSR_DELAY extends LinearOpMode {
     Gyro  = hardwareMap.gyroSensor.get("Gyro");
     colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
+        dump.setPosition(1);
+        swivel.setPosition(0);
 
-    //  leftPivot.setPosition(1);
-    // rightPivot.setPosition(0);
-    dump.setPosition(0);
-           trigL.setPosition(0.8);
-    trigR.setPosition(0.05);
-    //   leftCR.setPosition(0.5);
-    //     rightCR.setPosition(0.5);
-    dds.setPosition(1);
-    holdL.setPosition(0.75);
-    holdR.setPosition(0.05);
-    holdC.setPosition(1);
+        trigL.setPosition(0.8);
+        trigR.setPosition(0.05);
+
+        dds.setPosition(1);
+
+        holdL.setPosition(0.75);
+        holdR.setPosition(0.05);
+
+        holdC.setPosition(1);
     double lineSensorValue;
 
     double heading = 0;

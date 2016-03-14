@@ -137,7 +137,7 @@ public class BlueTeleop extends OpMode {
         if (gamepad1.right_bumper) {
             trigR.setPosition(0.8);
         } else {
-            trigR.setPosition(0.05);
+            trigR.setPosition(0.0);
         }
 
         if (gamepad2.left_trigger > 0.5)

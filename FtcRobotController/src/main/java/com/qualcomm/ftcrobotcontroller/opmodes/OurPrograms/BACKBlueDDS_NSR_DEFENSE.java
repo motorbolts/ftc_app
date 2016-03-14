@@ -348,7 +348,8 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     lwb.setPower(0.0);
     rwa.setPower(0.0);
     rwb.setPower(0.0);
-        sleep(100);
+    sleep(100);
+
 
     while(heading > 90)
     {
@@ -357,8 +358,8 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
 
         rwa.setPower(-0.5);
         rwb.setPower(-0.5);
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
+        lwa.setPower(0);
+        lwb.setPower(0);
     }
 
 

@@ -375,11 +375,11 @@ public class BACKBlueDDS_NSR_SETPICK extends LinearOpMode {
         rwb.setPower(0.0);
         sleep(500);
         dds.setPosition(1);
-        lwa.setPower(0.5);
-        lwb.setPower(0.5);
-        rwa.setPower(0.5);
-        rwb.setPower(0.5);
-        sleep(1500);
+        lwa.setPower(-0.5);
+        lwb.setPower(-0.5);
+        rwa.setPower(-0.5);
+        rwb.setPower(-0.5);
+        sleep(1000);
 
 
         lwa.setPower(0.0);

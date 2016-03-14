@@ -51,7 +51,7 @@ public class RedTeleop extends OpMode {
 
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
-        liftL.setDirection(DcMotor.Direction.REVERSE);
+        liftR.setDirection(DcMotor.Direction.REVERSE);
 
         collector = hardwareMap.dcMotor.get("collector");
         collector2 = hardwareMap.dcMotor.get("collector2");
@@ -71,8 +71,8 @@ public class RedTeleop extends OpMode {
 
         //***INIT***//
 
-        dump.setPosition(0);
-        swivel.setPosition(1);
+        dump.setPosition(1);
+        swivel.setPosition(0);
 
         trigL.setPosition(0.8);
         trigR.setPosition(0.05);
@@ -129,16 +129,16 @@ public class RedTeleop extends OpMode {
         }
 
 // Zipline release control
-        if (gamepad1.left_bumper) {
+        if (gamepad1.right_bumper) {
             trigL.setPosition(0);
         } else {
             trigL.setPosition(0.8);
         }
 
-        if (gamepad1.right_bumper) {
+        if (gamepad1.left_bumper) {
             trigR.setPosition(0.8);
         } else {
-            trigR.setPosition(0.05);
+            trigR.setPosition(0.0);
         }
 
         if(gamepad2.right_trigger > 0.5) {
@@ -150,15 +150,15 @@ public class RedTeleop extends OpMode {
 
 // Dumper scoring
         if (gamepad2.left_trigger > 0.5) {
-            dump.setPosition(1);
-        } else {
             dump.setPosition(0);
+        } else {
+            dump.setPosition(1);
         }
 
 //Dumper presets
         if (gamepad2.left_stick_button) {
-            swivel.setPosition(1);
-            swivelVal = 0.99;
+            swivel.setPosition(0);
+            swivelVal = 0.01;
         }
         //straight up
         if (gamepad2.right_stick_button) {
@@ -170,17 +170,17 @@ public class RedTeleop extends OpMode {
         swivelVal = Range.clip(swivelVal, 0, 1);
         swivelVal = Range.clip(swivelVal, 0, 1);
 
-        if (gamepad2.left_stick_y > 0.25 && (swivelVal < 0.99)) {
-            swivelVal = Range.clip(swivelVal, 0, 1);
-            swivelVal = Range.clip(swivelVal, 0.01, 1);
-            swivelVal = swivelVal + 0.01;
+        if (gamepad2.left_stick_y > 0.25) {
+            swivelVal = Range.clip(swivelVal, 0.01, 0.99);
+            swivelVal = Range.clip(swivelVal, 0.01, 0.99);
+            swivelVal = swivelVal - 0.01;
             swivel.setPosition(swivelVal);
         }
 
-        if (gamepad2.left_stick_y < -0.25 && (0.01 < swivelVal)) {
-            swivelVal = Range.clip(swivelVal, 0, 1);
-            swivelVal = Range.clip(swivelVal, 0, 1);
-            swivelVal = swivelVal - 0.01;
+        if (gamepad2.left_stick_y < -0.25) {
+            swivelVal = Range.clip(swivelVal, 0.01, 0.99);
+            swivelVal = Range.clip(swivelVal, 0.01, 0.99);
+            swivelVal = swivelVal + 0.01;
             swivel.setPosition(swivelVal);
         }
 
