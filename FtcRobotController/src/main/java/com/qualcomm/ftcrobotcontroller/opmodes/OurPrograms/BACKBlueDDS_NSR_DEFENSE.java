@@ -124,8 +124,9 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     double minPowerNegative = -0.23;
     double lineDetected = 0;
 
+    boolean touchDetected = false;
 
-        Gyro.calibrate();
+    Gyro.calibrate();
 
     // wait for the start button to be pressed
     waitForStart();
@@ -302,18 +303,17 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     lwb.setPower(0.8);
     rwa.setPower(0.8);
     rwb.setPower(0.8);
-    sleep(400);
+    sleep(450);
 
     lwa.setPower(0);
     lwb.setPower(0);
     rwa.setPower(0);
     rwb.setPower(0);
-    telemetry.addData("Event", "Done");
     sleep(100);
 
 
 
-    while (!touch.isPressed() && timer.time() < 15) {
+    while (!touch.isPressed() && timer.time() < 13) {
 
         lineSensorValue = lineSensor.getLightDetectedRaw();
 
@@ -328,10 +328,17 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
             lwb.setPower(0.0);
             rwa.setPower(0.5);
             rwb.setPower(0.5);
+            lineDetected ++;
         }
-        if(timer.time() < 12)
+
+        if(lineDetected >= 100)
         {
             collector.setPower(0);
+        }
+
+        if(touch.isPressed())
+        {
+            touchDetected = true;
         }
     }
 
@@ -345,7 +352,13 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     collector.setPower(0);
     sleep(100);
 
-    if(timer.time() < 15) {
+    if(lineDetected > 25000 && touchDetected == false)
+    {
+        dds.setPosition(0);
+        sleep(1000);
+    }
+
+    if(timer.time() < 13) {
         lwa.setPower(-0.35);
         lwb.setPower(-0.35);
         rwa.setPower(-0.35);

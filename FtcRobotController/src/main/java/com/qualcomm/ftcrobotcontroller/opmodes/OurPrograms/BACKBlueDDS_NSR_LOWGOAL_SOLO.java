@@ -124,9 +124,9 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
         double midPower;
         double minPowerPositive = 0.2;
         double minPowerNegative = -0.2;
-        boolean climbersScored = false;
-        double lineDetected = 0;
 
+        double lineDetected = 0;
+        boolean touchDetected = false;
 
 
         Gyro.calibrate();
@@ -327,10 +327,17 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
                 lwb.setPower(0.0);
                 rwa.setPower(0.5);
                 rwb.setPower(0.5);
+                lineDetected ++;
             }
-            if(timer.time() < 18)
+
+            if(lineDetected >= 100)
             {
                 collector.setPower(0);
+            }
+
+            if(touch.isPressed())
+            {
+                touchDetected = true;
             }
         }
 
@@ -344,7 +351,20 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
         collector.setPower(0.0);
         sleep(100);
 
+        if(lineDetected > 25000 && touchDetected == false)
+        {
+            dds.setPosition(0);
+            sleep(1000);
+        }
+
         if (timer.time() < 25) {
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+            sleep(300);
+
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
             rwa.setPower(-0.35);
@@ -360,8 +380,6 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
 
             sleep(100);
             dds.setPosition(0);
-
-            climbersScored = true;
 
             sleep(900);
         }
