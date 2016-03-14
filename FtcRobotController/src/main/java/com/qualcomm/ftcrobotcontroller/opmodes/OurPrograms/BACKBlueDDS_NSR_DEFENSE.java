@@ -122,20 +122,22 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     double midPower;
     double minPowerPositive = 0.23;
     double minPowerNegative = -0.23;
+    double lineDetected = 0;
 
-    Gyro.calibrate();
+
+        Gyro.calibrate();
 
     // wait for the start button to be pressed
     waitForStart();
 
     timer = new ElapsedTime();
 
-    collector.setPower(0);
+    collector.setPower(-1);
 
     midPower = -0.75;
     driveGain = 0.0875;
 
-    while(rwa.getCurrentPosition() > -8400 && timer.time() < 15)
+    while(rwa.getCurrentPosition() > -8900 && timer.time() < 15)
     {
         waitOneFullHardwareCycle();
 
@@ -175,7 +177,24 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     rwa.setPower(0);
     rwb.setPower(0);
     lwa.setPower(0);
-        lwb.setPower(0);
+    lwb.setPower(0);
+
+    sleep(100);
+
+    while (rwa.getCurrentPosition() < -8700 && timer.time() < 18) {
+        waitOneFullHardwareCycle();
+
+        lwa.setPower(0.75);
+        lwb.setPower(0.75);
+        rwa.setPower(0.75);
+        rwb.setPower(0.75);
+
+    }
+
+    rwa.setPower(0);
+    rwb.setPower(0);
+    lwa.setPower(0);
+    lwb.setPower(0);
 
     sleep(100);
 
@@ -310,6 +329,10 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
             rwa.setPower(0.5);
             rwb.setPower(0.5);
         }
+        if(timer.time() < 12)
+        {
+            collector.setPower(0);
+        }
     }
 
     lwa.setPower(0.0);
@@ -319,7 +342,7 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     sleep(100);
 
 
-    collector.setPower(0.0);
+    collector.setPower(0);
     sleep(100);
 
     if(timer.time() < 15) {

@@ -78,8 +78,8 @@ public class BlueTeleop extends OpMode {
 
             dds.setPosition(1);
 
-            holdL.setPosition(0.75);
-            holdR.setPosition(0.05);
+            holdL.setPosition(0.9);
+            holdR.setPosition(0.1);
 
             holdC.setPosition(1);
     }
@@ -215,14 +215,14 @@ public class BlueTeleop extends OpMode {
 //churro holders control
         if (gamepad2.left_bumper)  //release churros
         {
-            holdL.setPosition(0.75);
-            holdR.setPosition(0.05);
+            holdL.setPosition(0.9);
+            holdR.setPosition(0.1);
             holdC.setPosition(1);
         }
         if (gamepad2.right_bumper)  //hold churro
         {
             holdL.setPosition(0.1);
-            holdR.setPosition(0.70);
+            holdR.setPosition(0.9);
         }
 
 //lift holder control

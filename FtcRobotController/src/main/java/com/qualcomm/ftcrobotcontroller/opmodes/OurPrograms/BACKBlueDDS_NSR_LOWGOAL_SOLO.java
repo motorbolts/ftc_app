@@ -125,6 +125,8 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
         double minPowerPositive = 0.2;
         double minPowerNegative = -0.2;
         boolean climbersScored = false;
+        double lineDetected = 0;
+
 
 
         Gyro.calibrate();
@@ -135,11 +137,11 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
 
         timer = new ElapsedTime();
 
-        collector.setPower(0);
+        collector.setPower(-1);
         midPower = -0.55;
         driveGain = 0.0875;
 
-        while (rwa.getCurrentPosition() > -8400 && timer.time() < 18) {
+        while (rwa.getCurrentPosition() > -8900 && timer.time() < 18) {
             waitOneFullHardwareCycle();
 
             telemetry.addData("Encoder Value", rwa.getCurrentPosition());
@@ -170,6 +172,23 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
             lwb.setPower(leftPower);
             rwa.setPower(rightPower);
             rwb.setPower(rightPower);
+
+        }
+
+        rwa.setPower(0);
+        rwb.setPower(0);
+        lwa.setPower(0);
+        lwb.setPower(0);
+
+        sleep(100);
+
+        while (rwa.getCurrentPosition() < -8700 && timer.time() < 18) {
+            waitOneFullHardwareCycle();
+
+            lwa.setPower(0.55);
+            lwb.setPower(0.55);
+            rwa.setPower(0.55);
+            rwb.setPower(0.55);
 
         }
 
@@ -308,6 +327,10 @@ public class BACKBlueDDS_NSR_LOWGOAL_SOLO extends LinearOpMode {
                 lwb.setPower(0.0);
                 rwa.setPower(0.5);
                 rwb.setPower(0.5);
+            }
+            if(timer.time() < 18)
+            {
+                collector.setPower(0);
             }
         }
 

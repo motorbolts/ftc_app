@@ -126,6 +126,9 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         double minPowerNegative = -0.2;
         boolean climbersScored = false;
 
+        double lineDetected = 0;
+
+        boolean touchDetected = false;
 
         Gyro.calibrate();
 
@@ -135,11 +138,11 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
 
         timer = new ElapsedTime();
 
-        collector.setPower(0);
+        collector.setPower(-1);
         midPower = -0.75;
         driveGain = 0.0875;
 
-        while (rwa.getCurrentPosition() > -8400 && timer.time() < 10) {
+        while (rwa.getCurrentPosition() > -8900 && timer.time() < 10) {
             waitOneFullHardwareCycle();
 
             telemetry.addData("Encoder Value", rwa.getCurrentPosition());
@@ -170,6 +173,23 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
             lwb.setPower(leftPower);
             rwa.setPower(rightPower);
             rwb.setPower(rightPower);
+
+        }
+
+        rwa.setPower(0);
+        rwb.setPower(0);
+        lwa.setPower(0);
+        lwb.setPower(0);
+
+        sleep(100);
+
+        while (rwa.getCurrentPosition() < -8700 && timer.time() < 18) {
+            waitOneFullHardwareCycle();
+
+            lwa.setPower(0.75);
+            lwb.setPower(0.75);
+            rwa.setPower(0.75);
+            rwb.setPower(0.75);
 
         }
 
@@ -291,13 +311,14 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         sleep(100);
 
 
-        while (!touch.isPressed() && timer.time() < 15) {
+        while (!touch.isPressed() && timer.time() < 13) {
 
             lineSensorValue = lineSensor.getLightDetectedRaw();
 
             telemetry.addData("lineSensorValue", lineSensorValue);
 
             if (lineSensorValue < 10) {
+                telemetry.addData("lineDetected", lineDetected);
 
                 lwa.setPower(0.5);
                 lwb.setPower(0.5);
@@ -308,6 +329,17 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
                 lwb.setPower(0.0);
                 rwa.setPower(0.5);
                 rwb.setPower(0.5);
+                lineDetected ++;
+            }
+
+            if(lineDetected >= 100)
+            {
+                collector.setPower(0);
+            }
+
+            if(touch.isPressed())
+            {
+                touchDetected = true;
             }
         }
 
@@ -315,13 +347,25 @@ public class BACKBlueDDS_NSR_LOWGOAL extends LinearOpMode {
         lwb.setPower(0.0);
         rwa.setPower(0.0);
         rwb.setPower(0.0);
-        sleep(100);
-
+        sleep(300);
 
         collector.setPower(0.0);
         sleep(100);
 
-        if (timer.time() < 15) {
+        if(lineDetected > 25000 && touchDetected == false)
+        {
+            dds.setPosition(0);
+            sleep(1000);
+        }
+
+        if (timer.time() < 13) {
+
+            lwa.setPower(0.0);
+            lwb.setPower(0.0);
+            rwa.setPower(0.0);
+            rwb.setPower(0.0);
+            sleep(300);
+
             lwa.setPower(-0.35);
             lwb.setPower(-0.35);
             rwa.setPower(-0.35);
