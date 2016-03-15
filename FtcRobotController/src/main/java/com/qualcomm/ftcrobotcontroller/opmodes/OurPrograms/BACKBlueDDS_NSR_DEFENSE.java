@@ -387,16 +387,45 @@ public class BACKBlueDDS_NSR_DEFENSE extends LinearOpMode {
     sleep(100);
 
 
-    while(heading > 90)
-    {
-        heading = Gyro.getIntegratedZValue();
-        telemetry.addData("heading", heading);
+        while(heading > 90)
+        {
+            waitOneFullHardwareCycle();
+            heading= Gyro.getIntegratedZValue();
 
-        rwa.setPower(-0.5);
-        rwb.setPower(-0.5);
-        lwa.setPower(0);
-        lwb.setPower(0);
-    }
+            telemetry.addData("zHeading", heading);
+
+            telemetry.addData("Event", "Overshot");
+
+            targetHeading = 90;
+
+            headingError = targetHeading - heading;
+
+            drivesteering = Math.abs( driveGain * headingError );
+
+            if (drivesteering > 1) {
+                drivesteering = 1;
+                telemetry.addData("Caught illegal value", "reset drivesteering to 1");
+            }
+
+            rightPower = midPower - drivesteering;
+            leftPower = midPower + drivesteering;
+
+            if (rightPower > minPowerNegative) {
+                rightPower = minPowerNegative;
+            }
+            if (leftPower < minPowerPositive) {
+                leftPower = minPowerPositive;
+            }
+
+            telemetry.addData("leftPower", leftPower);
+            telemetry.addData("rightPower", rightPower);
+
+            lwa.setPower(leftPower);
+            lwb.setPower(leftPower);
+            rwa.setPower(rightPower);
+            rwb.setPower(rightPower);
+        }
+
 
 
     lwa.setPower(0.0);

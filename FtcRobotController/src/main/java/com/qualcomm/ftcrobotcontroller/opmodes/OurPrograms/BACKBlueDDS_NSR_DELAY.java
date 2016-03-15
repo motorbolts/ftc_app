@@ -134,7 +134,7 @@ public class BACKBlueDDS_NSR_DELAY extends LinearOpMode {
     midPower = -0.75;
     driveGain = 0.0875;
 
-    while(rwa.getCurrentPosition() > -6500 && timer.time() < 28)
+    while(rwa.getCurrentPosition() > -6300 && timer.time() < 28)
     {
         waitOneFullHardwareCycle();
 
@@ -287,7 +287,7 @@ public class BACKBlueDDS_NSR_DELAY extends LinearOpMode {
     midPower = 0.75;
     driveGain = 0.0875;
 
-    while(rwa.getCurrentPosition() < -1500 && timer.time() < 29) {
+    while(rwa.getCurrentPosition() < -2100 && timer.time() < 29) {
         waitOneFullHardwareCycle();
 
         telemetry.addData("Encoder Value", rwa.getCurrentPosition());

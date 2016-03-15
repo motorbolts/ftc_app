@@ -300,7 +300,7 @@ public class BACKRedDDS_NSR_SETPICK extends LinearOpMode {
         rwa.setPower(0.75);
         rwb.setPower(0.75);
         sleep(500);
-        
+
         while (!touch.isPressed() && timer.time() < 15) {
 
             if ((colorSensor.blue() < 2)) {
